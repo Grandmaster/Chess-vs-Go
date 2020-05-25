@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess vs. Go</title>
+  </head>
+  <body>
+    <h1>This site will allow players to play the new game.</h1>
+    <p>Before canvas.</p>
+    <canvas width="300" height="200"></canvas>
+    <p>After canvas</p>
+    <script>
+      let context = document.getElementsByTagName("canvas")[0].getContext("2d");
+      console.log(context);
+      context.fillStyle = "red";
+      //   context.fillRect(10, 10, 100, 50);
+      context.strokeStyle = "blue";
+      context.lineWidth = 10;
+      context.strokeRect(10, 10, 100, 50);
+    </script>
+  </body>
+</html>
