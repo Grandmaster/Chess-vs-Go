@@ -21,27 +21,25 @@ y_counter = 0;
 for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
   for (let x = margin / 2; x <= boxsize * boxnum; x += boxsize) {
     context.strokeRect(x, y, boxsize, boxsize);
-    // Adding grid labels on top and bottom of grid
+    // Adding grid point labels on top and bottom of grid
     if (y == margin / 2) {
       context.font = "20px serif";
-      context.fillText(alphabet[x_counter], x, y - margin / 4);
+      context.fillText(alphabet[x_counter], x - 5, y - margin / 4);
       x_counter++;
     } else if (y + boxsize > boxsize * boxnum) {
       context.font = "20px serif";
-      context.fillText(alphabet[x_counter], x, y + boxsize + margin / 4);
+      context.fillText(alphabet[x_counter], x - 5, y + boxsize + margin / 4);
       x_counter++;
     } else x_counter = 0;
 
-    // Adding grid labels on left and right of grid
+    // Adding grid point labels on left and right of grid
     if (x == margin / 2) {
       context.font = "20px serif";
-      context.fillText(alphabet[y_counter], x - margin / 4, y);
-      console.log(y_counter);
+      context.fillText(alphabet[y_counter], x - margin / 4, y + 5);
     } else if (x + boxsize > boxsize * boxnum) {
       context.font = "20px serif";
-      context.fillText(alphabet[y_counter], x + boxsize + margin / 4, y);
+      context.fillText(alphabet[y_counter], x + boxsize + margin / 4, y + 5);
       y_counter++;
-      console.log(y_counter);
     }
   }
 }
