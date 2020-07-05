@@ -33,6 +33,7 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
     } else if (y + boxsize > boxsize * boxnum) {
       context.font = "20px serif";
       context.fillText(alphabet[x_counter], x - 5, y + boxsize + margin / 4);
+      gridpoints_array.push([x, y + boxsize]);
     }
 
     // Adding grid point labels on left and right of grid
@@ -43,6 +44,7 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
     } else if (x + boxsize > boxsize * boxnum) {
       context.font = "20px serif";
       context.fillText(alphabet[y_counter], x + boxsize + margin / 4, y + 5);
+      gridpoints_array.push([x + boxsize, y]);
       y_counter++;
     }
 
