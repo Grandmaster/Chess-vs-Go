@@ -25,6 +25,7 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
     context.strokeRect(x, y, boxsize, boxsize);
     gridpoints_array.push([x, y]);
     gridpoints_labels.push([alphabet[x_counter], alphabet[y_counter]]);
+
     // Adding grid point labels on top and bottom of grid
     if (y == margin / 2) {
       context.font = "20px serif";
