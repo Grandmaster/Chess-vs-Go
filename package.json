@@ -1,0 +1,27 @@
+{
+  "name": "Chess-vs-Go",
+  "version": "1.0.0",
+  "description": "A web game that combines the classic games of chess and go",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "watch": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grandmaster/Chess-vs-Go.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Grandmaster/Chess-vs-Go/issues"
+  },
+  "homepage": "https://github.com/Grandmaster/Chess-vs-Go#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "matrix-map": "^1.0.13",
+    "path": "^0.12.7"
+  }
+}
