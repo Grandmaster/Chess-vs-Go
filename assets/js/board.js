@@ -52,5 +52,5 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
   }
 }
 
-console.log(gridpoints_array);
-console.log(gridpoints_labels);
+// console.log(gridpoints_array);
+// console.log(gridpoints_labels);
