@@ -1,4 +1,6 @@
 // Code that keeps track of the state of the board game, by manipulating data in a matrix
+// =============================================================================================
+
 $(document).ready(() => {
   console.log("The window is ready!");
   // Game state as an array
