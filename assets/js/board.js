@@ -18,14 +18,38 @@ console.log(boxnum);
 console.log(boxsize);
 x_counter = 0;
 y_counter = 0;
+let y_count_prev = y_counter;
+alt_counter = 0;
 gridpoints_array = [];
 gridpoints_labels = [];
 
+// Function to help change color of squares
+function flip(counter, val1, val2) {
+  if (counter == val1) {
+    return val2;
+  } else if (counter == val2) {
+    return val1;
+  }
+}
+
 for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
   for (let x = margin / 2; x <= boxsize * boxnum; x += boxsize) {
-    context.strokeRect(x, y, boxsize, boxsize);
+    if (y_count_prev !== y_counter) {
+      alt_counter = flip(alt_counter, 0, 1);
+      y_count_prev = y_counter;
+    }
+    if (alt_counter == 0) {
+      context.strokeRect(x, y, boxsize, boxsize);
+      alt_counter = flip(alt_counter, 0, 1);
+    } else if (alt_counter == 1) {
+      context.fillStyle = "rgba(139,69,19,0.5)";
+      context.fillRect(x, y, boxsize, boxsize);
+      context.strokeRect(x, y, boxsize, boxsize);
+      alt_counter = flip(alt_counter, 0, 1);
+    }
     gridpoints_array.push([x, y]);
     gridpoints_labels.push([alphabet[x_counter], alphabet[y_counter]]);
+    context.fillStyle = "black";
 
     // Adding grid point labels on top and bottom of grid
     if (y == margin / 2) {
@@ -46,6 +70,7 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
       context.font = "20px serif";
       context.fillText(alphabet[y_counter], x + boxsize + margin / 4, y + 5);
       gridpoints_array.push([x + boxsize, y]);
+      y_count_prev = y_counter;
       y_counter++;
     }
 
@@ -53,5 +78,5 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
   }
 }
 
-console.log(gridpoints_array);
+// console.log(gridpoints_array);
 // console.log(gridpoints_labels);
