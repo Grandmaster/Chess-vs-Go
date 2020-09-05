@@ -21,7 +21,6 @@
   "homepage": "https://github.com/Grandmaster/Chess-vs-Go#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "godash": "^1.5.0",
     "path": "^0.12.7"
   }
 }
