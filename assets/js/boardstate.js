@@ -3,12 +3,13 @@
 
 $(document).ready(() => {
   console.log("The window is ready!");
-  // Game state as an array
-  let pointnum = parseInt(boxnum) + 1;
-  let stonestate = [];
-  let row = new Array(pointnum).fill(0);
-  for (let i = 0; i < pointnum; i++) {
-    stonestate.push(row);
+  // Total game state as an array
+  let elementnum = 2 * parseInt(boxnum) + 1;
+  console.log(elementnum);
+  let gamestate = [];
+  let row = new Array(elementnum).fill(0);
+  for (let i = 0; i < elementnum; i++) {
+    gamestate.push(row);
   }
-  console.log(stonestate);
+  console.log(gamestate);
 });
