@@ -12,9 +12,9 @@ let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 // Building the board
 context.strokeStyle = "black";
 context.lineWidth = 1;
-var boxnum = prompt("How many boxes should be in your grid?");
+var boxnum = 8;
 let boxsize = Math.floor((canvas.width - margin) / boxnum);
-console.log(boxnum);
+console.log(typeof boxnum);
 console.log(boxsize);
 x_counter = 0;
 y_counter = 0;
