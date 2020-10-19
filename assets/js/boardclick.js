@@ -1,8 +1,18 @@
 // Code that handles the click events that happen on the board.
 // ================================================================
 
-// Counter to determine when to switch stone color
+// Counter to determine when to switch stone color. Stones are drawn on the fly by canvas
 playcount = 0;
+
+// Object that stores chess pieces that can be used on Canvas. Pieces retrieved from Font Awesome.
+const chess_pieces = {
+  king: "\uf43f",
+  queen: "\uf445",
+  pawn: "\uf443",
+  knight: "\uf441",
+  rook: "\uf447",
+  bishop: "\uf43a",
+};
 
 // Detecting where on the grid the click happened
 canvas.addEventListener("click", (event) => {
@@ -31,6 +41,7 @@ canvas.addEventListener("click", (event) => {
         } else context.fillStyle = "white";
 
         context.fill();
+        context.fillText(chess_pieces.king, 300, 300);
         playcount++;
       }
     }

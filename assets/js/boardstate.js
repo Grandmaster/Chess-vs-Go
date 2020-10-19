@@ -3,11 +3,9 @@
 
 $(document).ready(() => {
   console.log("The window is ready!");
-  // Converting user input to a number
-  num_box = parseInt(boxnum);
 
   // Go game state as an array
-  let pointnum = num_box + 1;
+  let pointnum = boxnum + 1;
   let gostate = [];
   let go_row = new Array(pointnum).fill(0);
   for (let i = 0; i < pointnum; i++) {
@@ -15,7 +13,7 @@ $(document).ready(() => {
   }
 
   // Chess game state as an array
-  let gridnum = num_box;
+  let gridnum = boxnum;
   let chessstate = [];
   let chess_row = new Array(gridnum).fill(0);
   for (let i = 0; i < gridnum; i++) {
@@ -35,4 +33,5 @@ $(document).ready(() => {
   }
 
   let computedGameState = TotalGameState(gostate, chessstate);
+  console.log(computedGameState);
 });
