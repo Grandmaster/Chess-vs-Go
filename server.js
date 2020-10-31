@@ -20,6 +20,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("You disconnected");
   });
+  // Socket test
+  r = 0;
+  var int = setInterval(() => {
+    socket.emit("test", `My server sent this ${r} times`);
+    r++;
+    if (r > 10) clearInterval(int);
+  }, 5000);
 });
 
 // Starting server

@@ -25,6 +25,9 @@
     <script src="./js/boardstate.js"></script>
     <script>
       var socket = io();
+      socket.on("test", (msg) => {
+        console.log(msg);
+      });
     </script>
   </body>
 </html>
