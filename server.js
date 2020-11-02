@@ -6,6 +6,9 @@ var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var port = 3000;
 
+// Managing game states
+var go = require("./game_state/go_state");
+
 // Using code from assets folder
 app.use(express.static("assets"));
 
@@ -14,19 +17,9 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./index.html"));
 });
 
-// Two-way connection via socket.io
+// Socket connection
 io.on("connection", (socket) => {
-  console.log("You connected");
-  socket.on("disconnect", () => {
-    console.log("You disconnected");
-  });
-  // Socket test
-  r = 0;
-  var int = setInterval(() => {
-    socket.emit("test", `My server sent this ${r} times`);
-    r++;
-    if (r > 10) clearInterval(int);
-  }, 5000);
+  go.connectMessage(socket);
 });
 
 // Starting server
