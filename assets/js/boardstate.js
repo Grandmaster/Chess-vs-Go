@@ -34,4 +34,7 @@ $(document).ready(() => {
 
   let computedGameState = TotalGameState(gostate, chessstate);
   console.log(computedGameState);
+
+  // godash test
+  console.log(godash);
 });
