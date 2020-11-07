@@ -1,19 +1,19 @@
 // Code that builds the board the game is played on.
 // ==================================================================
 const canvas = document.getElementsByTagName("canvas")[0];
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = 750;
+canvas.height = 750;
 
 // Initial data
 let context = canvas.getContext("2d");
-let margin = 100;
+let margin = 150;
 let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 // Building the board
 context.strokeStyle = "black";
 context.lineWidth = 1;
 var boxnum = 8;
-var boxsize = Math.floor((canvas.width - margin) / boxnum);
+var boxsize = (canvas.width - margin) / boxnum;
 console.log(boxsize);
 x_counter = 0;
 y_counter = 0;
@@ -77,5 +77,4 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
   }
 }
 
-// console.log(gridpoints_array);
-// console.log(gridpoints_labels);
+console.log(gridpoints_array);

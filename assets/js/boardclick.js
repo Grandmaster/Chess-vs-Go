@@ -32,3 +32,6 @@ $(document).ready(() => {
     playcount++;
   });
 });
+
+// Function that calculates Euclidean distance between two points
+function distance(p1, p2) {}
