@@ -37,6 +37,12 @@ $(document).ready(() => {
       }
     }
 
+    // Getting index of chosen point to pass to godash.board
+    x_i = x_true / 75;
+    y_i = y_true / 75;
+    var point = [x_i, y_i];
+    console.log(point);
+
     // Placing a game piece (a stone) on the relevant point
     context.beginPath();
     context.arc(x_true, y_true, boxsize / 3, 0, 2 * Math.PI, true);
