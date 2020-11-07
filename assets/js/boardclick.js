@@ -20,16 +20,30 @@ $(document).ready(() => {
     // Finding where on the board the click happened
     let x_point = event.clientX - canvas.offsetLeft;
     let y_point = event.clientY - canvas.offsetTop;
-    console.log([x_point, y_point]);
+    x_true = 0;
+    y_true = 0;
 
-    x_range = _.range(10);
+    // Code to find the nearest playable point to the clicked pixel, if within a certain range. Uses lodash
+    x_range = _.range(x_point - 20, x_point + 21, 1);
+    y_range = _.range(y_point - 20, y_point + 21, 1);
+    for (let x of x_range) {
+      for (let y of y_range) {
+        if (x % 75 == 0) {
+          x_true = x;
+        }
+        if (y % 75 == 0) {
+          y_true = y;
+        }
+      }
+    }
+
     // Placing a game piece (a stone) on the relevant point
     context.beginPath();
-    context.arc(x_point, y_point, boxsize / 3, 0, 2 * Math.PI, true);
+    context.arc(x_true, y_true, boxsize / 3, 0, 2 * Math.PI, true);
     if (playcount % 2 == 0) {
       context.fillStyle = "black";
     } else context.fillStyle = "white";
-    context.fill();
+    if (x_true != 0 && y_true != 0) context.fill();
     playcount++;
   });
 });
