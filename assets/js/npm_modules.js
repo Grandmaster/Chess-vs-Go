@@ -39,11 +39,14 @@
   {
     1: [
       function (require, module, exports) {
-        require("lodash");
+        const _ = require("lodash");
         require("immutable");
         const godash = require("godash").default;
         if (!window.godash) {
           window.godash = godash;
+        }
+        if (!window._) {
+          window._ = _;
         }
       },
       { godash: 2, immutable: 3, lodash: 4 },

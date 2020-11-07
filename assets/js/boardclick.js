@@ -22,6 +22,7 @@ $(document).ready(() => {
     let y_point = event.clientY - canvas.offsetTop;
     console.log([x_point, y_point]);
 
+    x_range = _.range(10);
     // Placing a game piece (a stone) on the relevant point
     context.beginPath();
     context.arc(x_point, y_point, boxsize / 3, 0, 2 * Math.PI, true);
@@ -32,6 +33,3 @@ $(document).ready(() => {
     playcount++;
   });
 });
-
-// Function that calculates Euclidean distance between two points
-function distance(p1, p2) {}
