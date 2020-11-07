@@ -1,6 +1,12 @@
 // Code that handles the click events that happen on the board.
 // ================================================================
 
+// Layer of canvas that will have the go stones
+const canvas_go = document.getElementById("layer2");
+canvas_go.width = 750;
+canvas_go.height = 750;
+var ctx = canvas_go.getContext("2d");
+
 $(document).ready(() => {
   // Counter to determine when to switch stone color. Stones are drawn on the fly by canvas
   playcount = 0;
@@ -20,7 +26,7 @@ $(document).ready(() => {
   var go_board = new godash.Board(9);
 
   // Event listener for clicks on the board
-  canvas.addEventListener("click", (event) => {
+  canvas_go.addEventListener("click", (event) => {
     // Finding where on the board the click happened
     let x_point = event.clientX - canvas.offsetLeft;
     let y_point = Math.floor(
@@ -56,7 +62,7 @@ $(document).ready(() => {
     }
     go_board = godash.addMove(go_board, point, color);
     if (x_true != 0 && y_true != 0) {
-      currentGoBoard(go_board, context, boxsize);
+      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     }
     playcount++;
   });

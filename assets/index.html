@@ -17,7 +17,16 @@
   </head>
   <body>
     <!-- <h1>This site will allow players to play the new game.</h1> -->
-    <canvas></canvas>
+    <div style="position: relative">
+      <canvas
+        id="layer1"
+        style="position: absolute; left: 0; top: 0; z-index: 0"
+      ></canvas>
+      <canvas
+        id="layer2"
+        style="position: absolute; left: 0; top: 0; z-index: 1"
+      ></canvas>
+    </div>
     <script src="./js/board.js"></script>
     <script src="./js/board_methods/go_methods.js"></script>
     <script src="./js/boardclick.js"></script>
