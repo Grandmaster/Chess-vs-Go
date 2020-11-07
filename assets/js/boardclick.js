@@ -19,7 +19,9 @@ $(document).ready(() => {
   canvas.addEventListener("click", (event) => {
     // Finding where on the board the click happened
     let x_point = event.clientX - canvas.offsetLeft;
-    let y_point = event.clientY - canvas.offsetTop;
+    let y_point = Math.floor(
+      event.clientY - canvas.offsetTop + window.pageYOffset
+    );
     x_true = 0;
     y_true = 0;
 
@@ -41,7 +43,6 @@ $(document).ready(() => {
     x_i = x_true / 75;
     y_i = y_true / 75;
     var point = [x_i, y_i];
-    console.log(point);
 
     // Placing a game piece (a stone) on the relevant point
     context.beginPath();
