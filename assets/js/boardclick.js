@@ -49,17 +49,15 @@ $(document).ready(() => {
     var point = new godash.Coordinate(x_i, y_i);
 
     // Placing a game piece (a stone) on the relevant point
-    context.beginPath();
-    context.arc(x_true, y_true, boxsize / 3, 0, 2 * Math.PI, true);
     if (playcount % 2 == 0) {
       color = godash.BLACK;
     } else {
       color = godash.WHITE;
     }
-    context.fillStyle = color;
-    if (x_true != 0 && y_true != 0) context.fill();
-    playcount++;
     go_board = godash.addMove(go_board, point, color);
-    console.log(go_board.moves.toString());
+    if (x_true != 0 && y_true != 0) {
+      currentGoBoard(go_board, context, boxsize);
+    }
+    playcount++;
   });
 });
