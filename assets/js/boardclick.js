@@ -14,36 +14,19 @@ const chess_pieces = {
   bishop: "\uf43a",
 };
 
-// Detecting where on the grid the click happened
+// Event listener for clicks on the board
 canvas.addEventListener("click", (event) => {
-  console.log([
-    event.clientX - canvas.offsetLeft,
-    event.clientY - canvas.offsetTop,
-  ]);
-  for (let point of gridpoints_array) {
-    if (
-      point[0] - 10 <= event.clientX - canvas.offsetLeft &&
-      event.clientX - canvas.offsetLeft <= point[0] + 10
-    ) {
-      if (
-        point[1] - 10 <= event.clientY - canvas.offsetTop &&
-        event.clientY - canvas.offsetTop <= point[1] + 10
-      ) {
-        index = gridpoints_array.indexOf(point);
-        labels = gridpoints_labels[index];
-        console.log(`You clicked on point (${labels[0]},${labels[1]})`);
+  // Finding where on the board the click happened
+  let x_point = event.clientX - canvas.offsetLeft;
+  let y_point = event.clientY - canvas.offsetTop;
+  console.log([x_point, y_point]);
 
-        // Placing a game piece (a stone) on the relevant point
-        context.beginPath();
-        context.arc(point[0], point[1], boxsize / 3, 0, 2 * Math.PI, true);
-        if (playcount % 2 == 0) {
-          context.fillStyle = "black";
-        } else context.fillStyle = "white";
-
-        context.fill();
-        context.fillText(chess_pieces.king, 300, 300);
-        playcount++;
-      }
-    }
-  }
+  // Placing a game piece (a stone) on the relevant point
+  context.beginPath();
+  context.arc(x_point, y_point, boxsize / 3, 0, 2 * Math.PI, true);
+  if (playcount % 2 == 0) {
+    context.fillStyle = "black";
+  } else context.fillStyle = "white";
+  context.fill();
+  playcount++;
 });
