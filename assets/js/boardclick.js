@@ -8,8 +8,7 @@ canvas_go.height = 750;
 var ctx = canvas_go.getContext("2d");
 
 $(document).ready(() => {
-  // Counter to determine when to switch stone color. Stones are drawn on the fly by canvas
-  playcount = 0;
+  // Black goes first
   color = godash.BLACK;
 
   // Object that stores chess pieces that can be used on Canvas. Pieces retrieved from Font Awesome.
@@ -55,15 +54,10 @@ $(document).ready(() => {
     var point = new godash.Coordinate(x_i, y_i);
 
     // Placing a game piece (a stone) on the relevant point
-    if (playcount % 2 == 0) {
-      color = godash.BLACK;
-    } else {
-      color = godash.WHITE;
-    }
     go_board = godash.addMove(go_board, point, color);
     if (x_true != 0 && y_true != 0) {
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     }
-    playcount++;
+    color = godash.oppositeColor(color);
   });
 });
