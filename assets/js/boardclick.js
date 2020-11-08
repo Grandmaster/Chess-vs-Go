@@ -2,7 +2,7 @@
 // ================================================================
 
 // Layer of canvas that will have the go stones
-const canvas_go = document.getElementById("layer2");
+const canvas_go = document.getElementById("go_layer");
 canvas_go.width = 750;
 canvas_go.height = 750;
 var ctx = canvas_go.getContext("2d");
