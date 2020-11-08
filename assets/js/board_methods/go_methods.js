@@ -10,8 +10,8 @@ function currentGoBoard(board, context, width, height, boxsize) {
   board.moves.forEach((val, key) => {
     context.beginPath();
     context.arc(
-      key.x * boxsize,
-      key.y * boxsize,
+      (key.x + 1) * boxsize,
+      (key.y + 1) * boxsize,
       boxsize / 3,
       0,
       2 * Math.PI,
