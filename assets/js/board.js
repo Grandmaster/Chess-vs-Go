@@ -1,6 +1,6 @@
 // Code that builds the board the game is played on.
 // ==================================================================
-const canvas = document.getElementById("layer1");
+const canvas = document.getElementById("base_layer");
 console.log(canvas);
 canvas.width = 750;
 canvas.height = 750;

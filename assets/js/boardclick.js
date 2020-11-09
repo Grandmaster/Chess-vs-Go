@@ -55,7 +55,7 @@ $(document).ready(() => {
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
       var img = new Image();
       img.onload = () => {
-        ctx.drawImage(img, 350, 350, 70, 70);
+        ctx.drawImage(img, 75, 75, 70, 70);
       };
       img.src = chess_pieces.pawn;
       console.log(img);
