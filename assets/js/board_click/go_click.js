@@ -1,4 +1,4 @@
-// Code that handles the click events that happen on the board.
+// Code that handles the go/weiqi/baduk click events that happen on the board.
 // ================================================================
 
 // Layer of canvas that will have the go stones
