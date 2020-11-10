@@ -11,12 +11,6 @@ $(document).ready(() => {
   // Black goes first
   color = godash.BLACK;
 
-  // Object that stores chess pieces that can be used on Canvas, by storing the url of the image;
-  // Pieces made in Krita.
-  const chess_pieces = {
-    pawn: "./images/Pawn.png",
-  };
-
   // Object that keeps track of go/weiqi/baduk state of game, courtesy of godash
   var go_board = new godash.Board(9);
 
@@ -53,12 +47,6 @@ $(document).ready(() => {
     go_board = godash.addMove(go_board, point, color);
     if (x_true != -1 && y_true != -1) {
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
-      var img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, 75, 75, 70, 70);
-      };
-      img.src = chess_pieces.pawn;
-      console.log(img);
     }
     color = godash.oppositeColor(color);
   });
