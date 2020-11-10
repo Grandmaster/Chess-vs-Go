@@ -22,9 +22,6 @@ $(document).ready(() => {
 
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
-    // Prevent infinite loop with parent div
-    event.stopPropagation();
-    console.log(event);
     // Finding where on the board the click happened
     let x_point = event.clientX - canvas.offsetLeft;
     let y_point = Math.floor(

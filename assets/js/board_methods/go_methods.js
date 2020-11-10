@@ -20,5 +20,4 @@ function currentGoBoard(board, context, width, height, boxsize) {
     context.fillStyle = val;
     context.fill();
   });
-  console.log(board.toString());
 }

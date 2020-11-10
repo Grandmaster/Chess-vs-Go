@@ -16,13 +16,11 @@ $(document).ready(() => {
       clientY: event.clientY,
     });
     canvas_go.dispatchEvent(clickEvent);
-    console.log(event);
 
     // Finding where on the board the click happened
     let x_point = event.clientX - canvas.offsetLeft;
     let y_point = Math.floor(
       event.clientY - canvas.offsetTop + window.pageYOffset
     );
-    console.log([x_point, y_point]);
   });
 });
