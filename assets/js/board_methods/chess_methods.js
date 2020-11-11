@@ -40,6 +40,7 @@ function possibleMoves(piece_obj) {
   // All possible locations the piece can move to (pawn)
   var xp = [piece_obj.x_pos - 1, piece_obj.x_pos + 1];
   var yp = [piece_obj.y_pos - 1, piece_obj.y_pos + 1];
+  var moves = [];
 
   // Highlighting the squares that the piece can move to
   for (let x of xp) {
@@ -47,16 +48,17 @@ function possibleMoves(piece_obj) {
     y_point = piece_obj.y_pos * boxsize;
     contxt.fillStyle = "green";
     contxt.fillRect(x_point, y_point, boxsize, boxsize);
+    moves.push([x, piece_obj.y_pos]);
   }
   for (let y of yp) {
     y_point = y * boxsize;
     x_point = piece_obj.x_pos * boxsize;
     contxt.fillStyle = "green";
     contxt.fillRect(x_point, y_point, boxsize, boxsize);
+    moves.push([piece_obj.x_pos, y]);
   }
 
   // Storing options in queue
-  var moves = xp.concat(yp).concat([piece_obj.x_pos, piece_obj.y_pos]);
   queue.push(piece_obj);
   queue.push(moves);
 }
