@@ -39,12 +39,16 @@ function possibleMoves(piece_obj) {
 
   // Highlighting the squares that the piece can move to
   for (let x of xp) {
-    for (let y of yp) {
-      x_point = x * boxsize;
-      y_point = y * boxsize;
-      context.fillStyle = "green";
-      context.fillRect(x_point, y_point, boxsize, boxsize);
-    }
+    x_point = x * boxsize;
+    y_point = piece_obj.y_pos * boxsize;
+    context.fillStyle = "green";
+    context.fillRect(x_point, y_point, boxsize, boxsize);
+  }
+  for (let y of yp) {
+    y_point = y * boxsize;
+    x_point = piece_obj.x_pos * boxsize;
+    context.fillStyle = "green";
+    context.fillRect(x_point, y_point, boxsize, boxsize);
   }
 }
 // Function that moves a piece already on the board (pawns only, for now)

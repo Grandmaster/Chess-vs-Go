@@ -54,7 +54,7 @@ $(document).ready(() => {
     y_i = y_true / 75;
 
     // Getting color data, in case user is making a possible move
-    pixelData = contxt.getImageData(event.offsetX, event.offsetY, 1, 1);
+    pixelData = contxt.getImageData(x_point, y_point, 1, 1);
     console.log(pixelData);
 
     // Placing the relevant piece (a pawn, for now) on the target square
