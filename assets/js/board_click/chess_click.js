@@ -49,14 +49,22 @@ $(document).ready(() => {
       }
     }
 
+    // Getting index of chosen square, for movement
+    x_i = x_true / 75;
+    y_i = y_true / 75;
+
+    // Getting color data, in case user is making a possible move
+    pixelData = contxt.getImageData(event.offsetX, event.offsetY, 1, 1);
+    console.log(pixelData);
+
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
-      placePiece(
-        x_true,
-        y_true,
-        chess_pieces.pawn,
-        Object.keys(chess_pieces)[0]
-      );
+      for (let piece of pieces_in_play) {
+        if (piece.x_pos == x_i && piece.y_pos == y_i) {
+          possibleMoves(piece);
+        }
+      }
+      placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
     }
   });
 });
