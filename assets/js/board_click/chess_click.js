@@ -65,6 +65,7 @@ $(document).ready(() => {
         }
       }
       placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
+      currentChessBoard(pieces_in_play);
     }
   });
 });

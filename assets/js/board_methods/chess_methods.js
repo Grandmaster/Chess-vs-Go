@@ -4,6 +4,18 @@
 // Variable that keeps track of pieces in play
 var pieces_in_play = [];
 
+// Function that constructs the board on canvas from internal state
+function currentChessBoard(piece_array) {
+  // Display each piece in the array on canvas, at relevant squares
+  pieces_in_play.forEach((val) => {
+    var img = new Image();
+    img.onload = () => {
+      contxt.drawImage(img, val.x_pos * 75, val.y_pos * 75, boxsize, boxsize);
+    };
+    img.src = val.img;
+  });
+}
+
 // Function that creates and keeps track of chess pieces added to the board
 function placePiece(x, y, piece, type) {
   // Creating new object that represents piece, and putting it in play
@@ -11,16 +23,10 @@ function placePiece(x, y, piece, type) {
     x_pos: x,
     y_pos: y,
     type: type,
+    img: piece,
   };
   pieces_in_play.push(newpiece);
   console.log(pieces_in_play);
-
-  // Placing the piece on the board
-  var img = new Image();
-  img.onload = () => {
-    contxt.drawImage(img, x * 75, y * 75, boxsize, boxsize);
-  };
-  img.src = piece;
 }
 
 // Function that highlights possible locations to move existing piece on board
