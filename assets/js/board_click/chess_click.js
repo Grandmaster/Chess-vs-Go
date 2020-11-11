@@ -53,10 +53,6 @@ $(document).ready(() => {
     x_i = x_true / 75;
     y_i = y_true / 75;
 
-    // Getting color data, in case user is making a possible move
-    pixelData = contxt.getImageData(x_point, y_point, 1, 1);
-    console.log(pixelData);
-
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
       for (let piece of pieces_in_play) {
@@ -64,8 +60,27 @@ $(document).ready(() => {
           possibleMoves(piece);
         }
       }
-      placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
-      currentChessBoard(pieces_in_play);
+
+      // Move existing piece, if queue is not empty
+      if (queue.length != 0) {
+        pmoves = queue[0].moves;
+        if (pmoves.includes(x_i) && pmoves.includes(y_i)) {
+          var piece = queue.pop();
+          delete piece.moves;
+          movePiece(piece, x_i, y_i);
+          console.log("in here");
+          console.log(pieces_in_play);
+        }
+      } else {
+        placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
+        currentChessBoard(
+          pieces_in_play,
+          contxt,
+          canvas_chess.width,
+          canvas_chess.height
+        );
+      }
     }
+    console.log(queue);
   });
 });

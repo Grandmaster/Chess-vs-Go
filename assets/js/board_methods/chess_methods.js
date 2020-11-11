@@ -4,13 +4,18 @@
 // Variable that keeps track of pieces in play
 var pieces_in_play = [];
 
+// Keeping track of possible moves, in case player wants to move existing piece
+var queue = [];
+
 // Function that constructs the board on canvas from internal state
-function currentChessBoard(piece_array) {
+function currentChessBoard(piece_array, context, width, height) {
+  context.clearRect(0, 0, width, height);
+
   // Display each piece in the array on canvas, at relevant squares
-  pieces_in_play.forEach((val) => {
+  piece_array.forEach((val) => {
     var img = new Image();
     img.onload = () => {
-      contxt.drawImage(img, val.x_pos * 75, val.y_pos * 75, boxsize, boxsize);
+      context.drawImage(img, val.x_pos * 75, val.y_pos * 75, boxsize, boxsize);
     };
     img.src = val.img;
   });
@@ -26,7 +31,6 @@ function placePiece(x, y, piece, type) {
     img: piece,
   };
   pieces_in_play.push(newpiece);
-  console.log(pieces_in_play);
 }
 
 // Function that highlights possible locations to move existing piece on board
@@ -41,15 +45,23 @@ function possibleMoves(piece_obj) {
   for (let x of xp) {
     x_point = x * boxsize;
     y_point = piece_obj.y_pos * boxsize;
-    context.fillStyle = "green";
-    context.fillRect(x_point, y_point, boxsize, boxsize);
+    contxt.fillStyle = "green";
+    contxt.fillRect(x_point, y_point, boxsize, boxsize);
   }
   for (let y of yp) {
     y_point = y * boxsize;
     x_point = piece_obj.x_pos * boxsize;
-    context.fillStyle = "green";
-    context.fillRect(x_point, y_point, boxsize, boxsize);
+    contxt.fillStyle = "green";
+    contxt.fillRect(x_point, y_point, boxsize, boxsize);
   }
+
+  // Storing options in queue
+  var piece_to_move = piece_obj;
+  piece_to_move.moves = xp.concat(yp);
+  queue.push(piece_to_move);
 }
 // Function that moves a piece already on the board (pawns only, for now)
-function movePiece(piece_obj, x_new, y_new) {}
+function movePiece(piece_obj, x_new, y_new) {
+  piece_obj.x_pos = x_new;
+  piece_obj.y_pos = y_new;
+}
