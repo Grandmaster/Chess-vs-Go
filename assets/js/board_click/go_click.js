@@ -43,7 +43,7 @@ $(document).ready(() => {
     y_i = y_true / 75 - 1;
 
     // Placing a game piece (a stone) on the relevant point
-    if (x_true != -1 && y_true != -1) {
+    if (x_i != -1 && y_i != -1) {
       var point = new godash.Coordinate(x_i, y_i);
       go_board = godash.addMove(go_board, point, color);
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
