@@ -18,7 +18,7 @@ function placePiece(x, y, piece, type) {
   // Placing the piece on the board
   var img = new Image();
   img.onload = () => {
-    ctx.drawImage(img, x, y, boxsize, boxsize);
+    contxt.drawImage(img, x, y, boxsize, boxsize);
   };
   img.src = piece;
 }

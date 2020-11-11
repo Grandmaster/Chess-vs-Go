@@ -47,7 +47,7 @@ $(document).ready(() => {
       var point = new godash.Coordinate(x_i, y_i);
       go_board = godash.addMove(go_board, point, color);
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
+      color = godash.oppositeColor(color);
     }
-    color = godash.oppositeColor(color);
   });
 });
