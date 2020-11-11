@@ -9,7 +9,7 @@ var contxt = canvas_chess.getContext("2d");
 
 // Object that stores chess pieces that can be used on Canvas, by storing the url of the image;
 // Pieces made in Krita.
-var chess_piece = {
+const chess_pieces = {
   pawn: "./images/Pawn.png",
 };
 
@@ -51,12 +51,12 @@ $(document).ready(() => {
 
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
-      var img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, x_true, y_true, boxsize, boxsize);
-      };
-      img.src = chess_piece.pawn;
-      console.log(img);
+      placePiece(
+        x_true,
+        y_true,
+        chess_pieces.pawn,
+        Object.keys(chess_pieces)[0]
+      );
     }
   });
 });

@@ -41,11 +41,11 @@ $(document).ready(() => {
     // Getting index of chosen point to pass to godash.board
     x_i = x_true / 75 - 1;
     y_i = y_true / 75 - 1;
-    var point = new godash.Coordinate(x_i, y_i);
 
     // Placing a game piece (a stone) on the relevant point
-    go_board = godash.addMove(go_board, point, color);
     if (x_true != -1 && y_true != -1) {
+      var point = new godash.Coordinate(x_i, y_i);
+      go_board = godash.addMove(go_board, point, color);
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     }
     color = godash.oppositeColor(color);
