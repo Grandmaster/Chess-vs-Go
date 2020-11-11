@@ -56,9 +56,9 @@ function possibleMoves(piece_obj) {
   }
 
   // Storing options in queue
-  var piece_to_move = piece_obj;
-  piece_to_move.moves = xp.concat(yp);
-  queue.push(piece_to_move);
+  var moves = xp.concat(yp).concat([piece_obj.x_pos, piece_obj.y_pos]);
+  queue.push(piece_obj);
+  queue.push(moves);
 }
 // Function that moves a piece already on the board (pawns only, for now)
 function movePiece(piece_obj, x_new, y_new) {

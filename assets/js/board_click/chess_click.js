@@ -55,23 +55,33 @@ $(document).ready(() => {
 
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
-      for (let piece of pieces_in_play) {
-        if (piece.x_pos == x_i && piece.y_pos == y_i) {
-          possibleMoves(piece);
+      // Move existing piece, if queue is not empty
+      if (queue.length != 0) {
+        pmoves = queue[1];
+        if (pmoves.includes(x_i) && pmoves.includes(y_i)) {
+          var piece = queue[0];
+          movePiece(piece, x_i, y_i);
+          currentChessBoard(
+            pieces_in_play,
+            contxt,
+            canvas_chess.width,
+            canvas_chess.height
+          );
+          queue = [];
         }
       }
 
-      // Move existing piece, if queue is not empty
-      if (queue.length != 0) {
-        pmoves = queue[0].moves;
-        if (pmoves.includes(x_i) && pmoves.includes(y_i)) {
-          var piece = queue.pop();
-          delete piece.moves;
-          movePiece(piece, x_i, y_i);
-          console.log("in here");
-          console.log(pieces_in_play);
+      // Populate queue with possible moves if existing piece is clicked on
+      var c = 0;
+      for (let piece of pieces_in_play) {
+        if (piece.x_pos == x_i && piece.y_pos == y_i) {
+          possibleMoves(piece);
+          c++;
         }
-      } else {
+      }
+
+      // Place piece if the first two cases don't apply
+      if (c == 0) {
         placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
         currentChessBoard(
           pieces_in_play,
@@ -81,6 +91,6 @@ $(document).ready(() => {
         );
       }
     }
-    console.log(queue);
+    console.log(pieces_in_play);
   });
 });
