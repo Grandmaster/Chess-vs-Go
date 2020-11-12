@@ -62,7 +62,35 @@ function possibleMoves(piece_obj) {
   queue.push(piece_obj);
   queue.push(moves);
 }
-// Function that moves a piece already on the board (pawns only, for now)
+
+// Function that highlights possible captures by chosen pawns (different than movement for pawns only)
+function possiblePawnCaptures(piece_obj, game_array) {
+  // In this game, pawns can capture both forward and backward
+
+  // All possible locations the pawn can capture to, highlighted in red
+  var xp = [piece_obj.x_pos - 1, piece_obj.x_pos + 1];
+  var yp = [piece_obj.y_pos - 1, piece_obj.y_pos + 1];
+  var captures = [];
+  for (let x of xp) {
+    for (let y of yp) {
+      for (let piece of game_array) {
+        if (
+          piece.x_pos == x &&
+          piece.y_pos == y &&
+          piece_obj.type !== piece.type
+        ) {
+          x_point = x * boxsize;
+          y_point = y * boxsize;
+          contxt.fillStyle = "red";
+          contxt.fillRect(x_point, y_point, boxsize, boxsize);
+          captures.push([x, y]);
+          console.log("captures highlighted");
+        }
+      }
+    }
+  }
+}
+// Function that moves a piece already on the board
 function movePiece(piece_obj, x_new, y_new) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;

@@ -60,12 +60,13 @@ $(document).ready(() => {
 
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
-      // Populate queue with possible moves if existing piece is clicked on
+      // Populate queue with possible moves and captures if existing piece is clicked on, and queue is empty
       var c = 0;
       if (queue.length == 0) {
         for (let piece of pieces_in_play) {
           if (piece.x_pos == x_i && piece.y_pos == y_i) {
             possibleMoves(piece);
+            possiblePawnCaptures(piece, pieces_in_play);
             c++;
           }
         }
