@@ -10,10 +10,14 @@ var contxt = canvas_chess.getContext("2d");
 // Object that stores chess pieces that can be used on Canvas, by storing the url of the image;
 // Pieces made in Krita.
 const chess_pieces = {
-  pawn: "./images/Pawn.png",
+  black_pawn: "./images/Pawn - black.png",
+  white_pawn: "./images/Pawn - white.png",
 };
 
 $(document).ready(() => {
+  // Black goes first, for now
+  var color = "b";
+
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
     // Since this is the top layer, pass click event to go_layer with mouse location
@@ -88,13 +92,34 @@ $(document).ready(() => {
 
       // Place piece if the first two cases don't apply
       if (c == 0) {
-        placePiece(x_i, y_i, chess_pieces.pawn, Object.keys(chess_pieces)[0]);
+        switch (color) {
+          case "b":
+            placePiece(
+              x_i,
+              y_i,
+              chess_pieces.black_pawn,
+              Object.keys(chess_pieces)[0]
+            );
+            break;
+
+          case "w":
+            placePiece(
+              x_i,
+              y_i,
+              chess_pieces.white_pawn,
+              Object.keys(chess_pieces)[1]
+            );
+        }
         currentChessBoard(
           pieces_in_play,
           contxt,
           canvas_chess.width,
           canvas_chess.height
         );
+
+        // Switch color after every move
+        if (color == "b") color = "w";
+        else if (color == "w") color = "b";
       }
     }
   });
