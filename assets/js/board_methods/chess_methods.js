@@ -67,3 +67,13 @@ function movePiece(piece_obj, x_new, y_new) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
 }
+
+// Function that switches the color of play
+function switchColor(color) {
+  switch (color) {
+    case "black":
+      return "white";
+    case "white":
+      return "black";
+  }
+}

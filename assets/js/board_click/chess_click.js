@@ -16,7 +16,7 @@ const chess_pieces = {
 
 $(document).ready(() => {
   // Black goes first, for now
-  var color = "b";
+  var color = "black";
 
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
@@ -85,6 +85,7 @@ $(document).ready(() => {
               canvas_chess.height
             );
             queue = [];
+            color = switchColor(color);
             c++;
           }
         }
@@ -93,7 +94,7 @@ $(document).ready(() => {
       // Place piece if the first two cases don't apply
       if (c == 0) {
         switch (color) {
-          case "b":
+          case "black":
             placePiece(
               x_i,
               y_i,
@@ -102,7 +103,7 @@ $(document).ready(() => {
             );
             break;
 
-          case "w":
+          case "white":
             placePiece(
               x_i,
               y_i,
@@ -118,8 +119,7 @@ $(document).ready(() => {
         );
 
         // Switch color after every move
-        if (color == "b") color = "w";
-        else if (color == "w") color = "b";
+        color = switchColor(color);
       }
     }
   });
