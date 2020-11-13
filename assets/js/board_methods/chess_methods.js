@@ -13,12 +13,23 @@ function currentChessBoard(piece_array, context, width, height) {
 
   // Display each piece in the array on canvas, at relevant squares
   piece_array.forEach((val) => {
-    var img = new Image();
-    img.onload = () => {
-      context.drawImage(img, val.x_pos * 75, val.y_pos * 75, boxsize, boxsize);
-    };
-    img.src = val.img;
+    renderPiece(val, context);
   });
+}
+
+// Function that draws the image of the piece on the canvas
+function renderPiece(piece_obj, context) {
+  var img = new Image();
+  img.onload = () => {
+    context.drawImage(
+      img,
+      piece_obj.x_pos * boxsize,
+      piece_obj.y_pos * boxsize,
+      boxsize,
+      boxsize
+    );
+  };
+  img.src = piece_obj.img;
 }
 
 // Function that creates and keeps track of chess pieces added to the board
@@ -34,7 +45,7 @@ function placePiece(x, y, piece, type) {
 }
 
 // Function that highlights possible locations to move existing piece on board
-function possibleMoves(piece_obj) {
+function possibleMoves(piece_obj, game_array) {
   // In this game, pawns can make one move in any cardinal direction, not just forward.
 
   // All possible locations the piece can move to (pawn)
@@ -48,6 +59,10 @@ function possibleMoves(piece_obj) {
     y_point = piece_obj.y_pos * boxsize;
     contxt.fillStyle = "green";
     contxt.fillRect(x_point, y_point, boxsize, boxsize);
+    var present_piece = findPiece(x, piece_obj.y_pos, game_array);
+    if (typeof present_piece !== "undefined") {
+      renderPiece(present_piece, contxt);
+    }
     moves.push([x, piece_obj.y_pos]);
   }
   for (let y of yp) {
@@ -55,6 +70,10 @@ function possibleMoves(piece_obj) {
     x_point = piece_obj.x_pos * boxsize;
     contxt.fillStyle = "green";
     contxt.fillRect(x_point, y_point, boxsize, boxsize);
+    var present_piece = findPiece(piece_obj.x_pos, y, game_array);
+    if (typeof present_piece !== "undefined") {
+      renderPiece(present_piece, contxt);
+    }
     moves.push([piece_obj.x_pos, y]);
   }
 
@@ -83,8 +102,11 @@ function possiblePawnCaptures(piece_obj, game_array) {
           y_point = y * boxsize;
           contxt.fillStyle = "red";
           contxt.fillRect(x_point, y_point, boxsize, boxsize);
+          var present_piece = findPiece(x, y, game_array);
+          if (typeof present_piece !== "undefined") {
+            renderPiece(piece, contxt);
+          }
           captures.push([x, y]);
-          console.log("captures highlighted");
         }
       }
     }

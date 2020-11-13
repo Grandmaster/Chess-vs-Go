@@ -67,7 +67,7 @@ $(document).ready(() => {
       if (queue.length == 0) {
         for (let piece of pieces_in_play) {
           if (piece.x_pos == x_i && piece.y_pos == y_i) {
-            possibleMoves(piece);
+            possibleMoves(piece, pieces_in_play);
             possiblePawnCaptures(piece, pieces_in_play);
             c++;
           }
@@ -132,7 +132,6 @@ $(document).ready(() => {
         // Switch color after every move
         color = switchColor(color);
       }
-      console.log(pieces_in_play);
     }
   });
 });
