@@ -4,6 +4,9 @@
 // Variable that keeps track of pieces in play
 var pieces_in_play = [];
 
+// Variable that keeps track of pieces on the 'bench'
+var pieces_on_bench = [];
+
 // Keeping track of possible moves, in case player wants to move existing piece
 var queue = [];
 
