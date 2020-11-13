@@ -17,10 +17,9 @@ $(document).ready(() => {
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
     // Finding where on the board the click happened
-    let x_point = event.clientX - canvas.offsetLeft;
-    let y_point = Math.floor(
-      event.clientY - canvas.offsetTop + window.pageYOffset
-    );
+    var rect = canvas_go.getBoundingClientRect();
+    let x_point = Math.floor(event.clientX - rect.left);
+    let y_point = Math.floor(event.clientY - rect.top);
     x_true = 0;
     y_true = 0;
 

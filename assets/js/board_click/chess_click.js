@@ -30,10 +30,9 @@ $(document).ready(() => {
     canvas_go.dispatchEvent(clickEvent);
 
     // Finding where on the board the click happened
-    let x_point = event.clientX - canvas.offsetLeft;
-    let y_point = Math.floor(
-      event.clientY - canvas.offsetTop + window.pageYOffset
-    );
+    var rect = canvas_chess.getBoundingClientRect();
+    let x_point = Math.floor(event.clientX - rect.left);
+    let y_point = Math.floor(event.clientY - rect.top);
 
     // The piece images are drawn from the top-left corner of the squares. So those are the target pixels
     xp = Math.floor(x_point - boxsize / 2);
