@@ -12,6 +12,8 @@ var contxt = canvas_chess.getContext("2d");
 const chess_pieces = {
   black_pawn: "./images/Pawn - black.png",
   white_pawn: "./images/Pawn - white.png",
+  black_king: "./images/King - black.png",
+  white_king: "./images.King - white.png",
 };
 
 $(document).ready(() => {
