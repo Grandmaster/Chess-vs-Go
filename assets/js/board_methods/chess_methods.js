@@ -89,11 +89,19 @@ function possiblePawnCaptures(piece_obj, game_array) {
       }
     }
   }
+  // Adding captures to queue
+  queue.push(captures);
 }
 // Function that moves a piece already on the board
 function movePiece(piece_obj, x_new, y_new) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
+}
+
+// Function that captures a piece if moved onto by another
+function capturePiece(piece, array) {
+  var l = array.indexOf(piece);
+  array.splice(l, 1);
 }
 
 // Function that switches the color of play
@@ -104,4 +112,11 @@ function switchColor(color) {
     case "white":
       return "black";
   }
+}
+
+// Function that returns a specific piece given its location
+function findPiece(x, y, array) {
+  return array.find((element) => {
+    return element.x_pos == x && element.y_pos == y;
+  });
 }

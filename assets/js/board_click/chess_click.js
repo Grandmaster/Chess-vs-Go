@@ -72,9 +72,17 @@ $(document).ready(() => {
         }
       }
 
-      // Move existing piece, if queue is not empty
+      // Move existing piece and/or capture, if queue is not empty
       if (queue.length != 0 && c == 0) {
         pmoves = queue[1];
+        captures = queue[2];
+        for (let capture of captures) {
+          if (_.isEqual(_.sortBy(capture), _.sortBy(arr))) {
+            var p = findPiece(x_i, y_i, pieces_in_play);
+            capturePiece(p, pieces_in_play);
+            pmoves = pmoves.concat(captures);
+          }
+        }
         for (let move of pmoves) {
           if (_.isEqual(_.sortBy(move), _.sortBy(arr))) {
             var piece = queue[0];
@@ -122,6 +130,7 @@ $(document).ready(() => {
         // Switch color after every move
         color = switchColor(color);
       }
+      console.log(pieces_in_play);
     }
   });
 });
