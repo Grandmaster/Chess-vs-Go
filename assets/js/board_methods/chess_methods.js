@@ -4,8 +4,9 @@
 // Variable that keeps track of pieces in play
 var pieces_in_play = [];
 
-// Keeping track of possible moves, in case player wants to move existing piece
-var queue = [];
+// Keeping track of possible moves, in case player wants to move existing piece or place a piece
+var move_queue = [];
+var place_queue = [];
 
 // Function that constructs the board on canvas from internal state
 function currentChessBoard(piece_array, context, width, height) {
@@ -77,9 +78,9 @@ function possibleMoves(piece_obj, game_array) {
     moves.push([piece_obj.x_pos, y]);
   }
 
-  // Storing options in queue
-  queue.push(piece_obj);
-  queue.push(moves);
+  // Storing options in move_queue
+  move_queue.push(piece_obj);
+  move_queue.push(moves);
 }
 
 // Function that highlights possible captures by chosen pawns (different than movement for pawns only)
@@ -111,8 +112,8 @@ function possiblePawnCaptures(piece_obj, game_array) {
       }
     }
   }
-  // Adding captures to queue
-  queue.push(captures);
+  // Adding captures to move_queue
+  move_queue.push(captures);
 }
 // Function that moves a piece already on the board
 function movePiece(piece_obj, x_new, y_new) {
@@ -144,7 +145,20 @@ function findPiece(x, y, array) {
 }
 
 // Function that displays choice of piece to insert on bench
-function choosePiece(piece, bench) {}
+function choosePiece(piece, bbench, wbench) {
+  var choice = piece.replace(/ /, "_");
+  var color = choice.slice(0, 5);
+  switch (color) {
+    case "black":
+      return bbench.find((element) => {
+        return element.type == choice;
+      });
+    case "white":
+      return wbench.find((element) => {
+        return element.type == choice;
+      });
+  }
+}
 
 // Function that fills the bench of each player
 function fillBench(pieces) {

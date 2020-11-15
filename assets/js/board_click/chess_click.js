@@ -13,18 +13,18 @@ const chess_pieces = {
   black_pawn: "./images/Pawn - black.png",
   white_pawn: "./images/Pawn - white.png",
   black_king: "./images/King - black.png",
-  white_king: "./images.King - white.png",
+  white_king: "./images/King - white.png",
 };
 
 // Options of piece to put on board
 var options = document.getElementById("choice");
 
+// Fill benches
+var benches = fillBench(chess_pieces);
+
 $(document).ready(() => {
   // Black goes first, for now
   var color = "black";
-
-  // Fill benches
-  var benches = fillBench(chess_pieces);
 
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
@@ -69,9 +69,9 @@ $(document).ready(() => {
     if (x_true != 0 && y_true != 0) {
       // Testing
       options.style.display = "block";
-      // Populate queue with possible moves and captures if existing piece is clicked on, and queue is empty
+      // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
       var c = 0;
-      if (queue.length == 0) {
+      if (move_queue.length == 0) {
         for (let piece of pieces_in_play) {
           if (piece.x_pos == x_i && piece.y_pos == y_i) {
             possibleMoves(piece, pieces_in_play);
@@ -81,10 +81,10 @@ $(document).ready(() => {
         }
       }
 
-      // Move existing piece and/or capture, if queue is not empty
-      if (queue.length != 0 && c == 0) {
-        pmoves = queue[1];
-        captures = queue[2];
+      // Move existing piece and/or capture, if move_queue is not empty
+      if (move_queue.length != 0 && c == 0) {
+        pmoves = move_queue[1];
+        captures = move_queue[2];
         for (let capture of captures) {
           if (_.isEqual(_.sortBy(capture), _.sortBy(arr))) {
             var p = findPiece(x_i, y_i, pieces_in_play);
@@ -94,7 +94,7 @@ $(document).ready(() => {
         }
         for (let move of pmoves) {
           if (_.isEqual(_.sortBy(move), _.sortBy(arr))) {
-            var piece = queue[0];
+            var piece = move_queue[0];
             movePiece(piece, x_i, y_i);
             currentChessBoard(
               pieces_in_play,
@@ -102,32 +102,23 @@ $(document).ready(() => {
               canvas_chess.width,
               canvas_chess.height
             );
-            queue = [];
+            move_queue = [];
             color = switchColor(color);
             c++;
           }
         }
       }
 
-      // Place piece if the first two cases don't apply
-      if (c == 0) {
+      // Place piece if the first two cases don't apply, and place_queue is not empty
+      if (c == 0 && place_queue.length !== 0) {
+        var piece = place_queue.pop();
         switch (color) {
           case "black":
-            placePiece(
-              x_i,
-              y_i,
-              chess_pieces.black_pawn,
-              Object.keys(chess_pieces)[0]
-            );
+            placePiece(x_i, y_i, piece.img, piece.type);
             break;
 
           case "white":
-            placePiece(
-              x_i,
-              y_i,
-              chess_pieces.white_pawn,
-              Object.keys(chess_pieces)[1]
-            );
+            placePiece(x_i, y_i, piece.img, piece.type);
         }
         currentChessBoard(
           pieces_in_play,
