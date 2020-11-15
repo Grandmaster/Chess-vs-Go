@@ -22,7 +22,9 @@ $(document).ready(() => {
 
   // Fill benches
   var benches = fillBench(chess_pieces);
-  console.log(benches.black);
+
+  // Testing
+  var options = document.getElementById("choice");
 
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
@@ -65,6 +67,8 @@ $(document).ready(() => {
 
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
+      // Testing
+      options.style.display = "block";
       // Populate queue with possible moves and captures if existing piece is clicked on, and queue is empty
       var c = 0;
       if (queue.length == 0) {
