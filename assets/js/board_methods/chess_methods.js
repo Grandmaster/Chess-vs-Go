@@ -4,9 +4,6 @@
 // Variable that keeps track of pieces in play
 var pieces_in_play = [];
 
-// Variable that keeps track of pieces on the 'bench'
-var pieces_on_bench = [];
-
 // Keeping track of possible moves, in case player wants to move existing piece
 var queue = [];
 
@@ -144,4 +141,39 @@ function findPiece(x, y, array) {
   return array.find((element) => {
     return element.x_pos == x && element.y_pos == y;
   });
+}
+
+// Function that displays choice of piece to insert on bench
+function choosePiece(piece, bench) {}
+
+// Function that fills the bench of each player
+function fillBench(pieces) {
+  // There should be 8 pawns, 2 officials of each type, 1 queen and 1 king on a bench
+
+  var black_bench = [];
+  var white_bench = [];
+
+  for (let name in pieces) {
+    var piece = {
+      type: name,
+      img: pieces[name],
+    };
+    switch (name) {
+      case "black_pawn":
+        black_bench = black_bench.concat(Array(8).fill(piece));
+        break;
+      case "white_pawn":
+        white_bench = white_bench.concat(Array(8).fill(piece));
+        break;
+      case "black_king":
+        black_bench.push(piece);
+        break;
+      case "white_king":
+        white_bench.push(piece);
+    }
+  }
+  return {
+    black: black_bench,
+    white: white_bench,
+  };
 }

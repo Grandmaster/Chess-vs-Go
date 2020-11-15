@@ -20,6 +20,10 @@ $(document).ready(() => {
   // Black goes first, for now
   var color = "black";
 
+  // Fill benches
+  var benches = fillBench(chess_pieces);
+  console.log(benches.black);
+
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
     // Since this is the top layer, pass click event to go_layer with mouse location

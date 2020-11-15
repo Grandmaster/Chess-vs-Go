@@ -2,3 +2,10 @@
   background-image: url("./images/Melamine-wood-001.png");
   font-family: "Font Awesome 5 Free";
 }
+html,
+body {
+  width: 100%;
+}
+#choice {
+  display: none;
+}
