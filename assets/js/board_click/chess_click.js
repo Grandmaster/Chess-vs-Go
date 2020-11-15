@@ -16,15 +16,15 @@ const chess_pieces = {
   white_king: "./images.King - white.png",
 };
 
+// Options of piece to put on board
+var options = document.getElementById("choice");
+
 $(document).ready(() => {
   // Black goes first, for now
   var color = "black";
 
   // Fill benches
   var benches = fillBench(chess_pieces);
-
-  // Testing
-  var options = document.getElementById("choice");
 
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
