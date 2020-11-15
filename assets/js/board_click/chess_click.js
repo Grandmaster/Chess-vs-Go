@@ -67,8 +67,6 @@ $(document).ready(() => {
 
     // Placing the relevant piece (a pawn, for now) on the target square
     if (x_true != 0 && y_true != 0) {
-      // Testing
-      options.style.display = "block";
       // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
       var c = 0;
       if (move_queue.length == 0) {
@@ -107,6 +105,14 @@ $(document).ready(() => {
             c++;
           }
         }
+      }
+
+      // Display piece options if player wants to place a piece on an empty square
+      if (c == 0 && place_queue.length == 0) {
+        options.style.display = "block";
+        options.style.left = x_i;
+        options.style.top = y_i;
+        console.log(options.style.left);
       }
 
       // Place piece if the first two cases don't apply, and place_queue is not empty

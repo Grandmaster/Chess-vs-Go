@@ -29,38 +29,24 @@
   </head>
   <body>
     <!-- Will need to find a way to scale the canvas -->
-    <div class="tile is-ancestor" style="width: 100%">
-      <div class="tile is-vertical is-2 is-parent">
-        <div class="tile is-child">
-          <p>Black</p>
-        </div>
-      </div>
-      <div class="tile is-parent is-vertical is-8">
-        <div style="position: relative" class="tile is-child">
-          <canvas
-            id="base_layer"
-            style="position: absolute; left: 0; top: 0; z-index: 0"
-          ></canvas>
-          <canvas
-            id="go_layer"
-            style="position: absolute; left: 0; top: 0; z-index: 1"
-          ></canvas>
-          <canvas
-            id="chess_layer"
-            style="position: absolute; left: 0; top: 0; z-index: 2"
-          ></canvas>
-          <div id="choice" style="position: absolute; z-index: 3">
-            <p>black pawn</p>
-            <p>white pawn</p>
-            <p>black king</p>
-            <p>white king</p>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent is-2">
-        <div class="tile is-child">
-          <p>White</p>
-        </div>
+    <div style="position: relative" class="tile is-child canvas-container">
+      <canvas
+        id="base_layer"
+        style="position: absolute; left: 0; top: 0; z-index: 0"
+      ></canvas>
+      <canvas
+        id="go_layer"
+        style="position: absolute; left: 0; top: 0; z-index: 1"
+      ></canvas>
+      <canvas
+        id="chess_layer"
+        style="position: absolute; left: 0; top: 0; z-index: 2"
+      ></canvas>
+      <div id="choice" style="position: absolute; z-index: 3">
+        <p>black pawn</p>
+        <p>white pawn</p>
+        <p>black king</p>
+        <p>white king</p>
       </div>
     </div>
     <script src="./js/board.js"></script>
