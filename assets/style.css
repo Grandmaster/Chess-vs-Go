@@ -5,6 +5,7 @@
 html,
 body {
   width: 100%;
+  height: 100%;
 }
 #choice {
   display: none;
@@ -12,9 +13,9 @@ body {
 }
 .canvas-container {
   display: inline-block;
+  height: 100%;
 }
-.canvas-container:after {
-  content: " ";
-  display: block;
-  clear: both;
+canvas {
+  width: 750px;
+  height: 750px;
 }

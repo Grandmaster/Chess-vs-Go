@@ -49,33 +49,27 @@ function placePiece(x, y, piece, type) {
 function possibleMoves(piece_obj, game_array) {
   // In this game, pawns can make one move in any cardinal direction, not just forward.
 
-  // All possible locations the piece can move to (pawn)
-  var xp = [piece_obj.x_pos - 1, piece_obj.x_pos + 1];
-  var yp = [piece_obj.y_pos - 1, piece_obj.y_pos + 1];
+  // All possible locations the piece can move to
+  var name = piece_obj.type.slice(6);
+  switch (name) {
+    case "pawn":
+      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
+    case "king":
+      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
+  }
   var moves = [];
 
   // Highlighting the squares that the piece can move to
-  for (let x of xp) {
-    x_point = x * boxsize;
-    y_point = piece_obj.y_pos * boxsize;
+  for (let square of range) {
+    x_point = square[0] * boxsize;
+    y_point = square[1] * boxsize;
     contxt.fillStyle = "green";
     contxt.fillRect(x_point, y_point, boxsize, boxsize);
-    var present_piece = findPiece(x, piece_obj.y_pos, game_array);
+    var present_piece = findPiece(square[0], square[1], game_array);
     if (typeof present_piece !== "undefined") {
       renderPiece(present_piece, contxt);
     }
-    moves.push([x, piece_obj.y_pos]);
-  }
-  for (let y of yp) {
-    y_point = y * boxsize;
-    x_point = piece_obj.x_pos * boxsize;
-    contxt.fillStyle = "green";
-    contxt.fillRect(x_point, y_point, boxsize, boxsize);
-    var present_piece = findPiece(piece_obj.x_pos, y, game_array);
-    if (typeof present_piece !== "undefined") {
-      renderPiece(present_piece, contxt);
-    }
-    moves.push([piece_obj.x_pos, y]);
+    moves.push([square[0], square[1]]);
   }
 
   // Storing options in move_queue
@@ -190,4 +184,31 @@ function fillBench(pieces) {
     black: black_bench,
     white: white_bench,
   };
+}
+
+// Function that generates the possible moves a piece can make, given its location
+function generateMoves(piece, location) {
+  var name = piece.type.slice(6);
+  var x = location[0];
+  var y = location[1];
+  switch (name) {
+    case "pawn":
+      return (range = [
+        [x - 1, y],
+        [x + 1, y],
+        [x, y + 1],
+        [x, y - 1],
+      ]);
+    case "king":
+      return (range = [
+        [x - 1, y],
+        [x - 1, y - 1],
+        [x - 1, y + 1],
+        [x, y - 1],
+        [x, y + 1],
+        [x + 1, y + 1],
+        [x + 1, y],
+        [x + 1, y - 1],
+      ]);
+  }
 }
