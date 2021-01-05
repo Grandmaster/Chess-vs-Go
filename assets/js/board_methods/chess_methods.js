@@ -173,6 +173,12 @@ function fillBench(pieces) {
       case "white_pawn":
         white_bench = white_bench.concat(Array(8).fill(piece));
         break;
+      case "black_knight":
+        black_bench = black_bench.concat(Array(2).fill(piece));
+        break;
+      case "white_knight":
+        white_bench = white_bench.concat(Array(2).fill(piece));
+        break;
       case "black_king":
         black_bench.push(piece);
         break;

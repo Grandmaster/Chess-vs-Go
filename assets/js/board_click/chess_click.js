@@ -14,6 +14,8 @@ const chess_pieces = {
   white_pawn: "./images/Pawn - white.png",
   black_king: "./images/King - black.png",
   white_king: "./images/King - white.png",
+  black_knight: "./images/Knight - black.png",
+  white_knight: "./images/Knight - white.png",
 };
 
 // Options of piece to put on board
