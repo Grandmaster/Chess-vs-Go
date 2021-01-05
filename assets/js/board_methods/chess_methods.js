@@ -54,6 +54,8 @@ function possibleMoves(piece_obj, game_array) {
   switch (name) {
     case "pawn":
       range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
+    case "knight":
+      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
     case "king":
       range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
   }
@@ -204,6 +206,17 @@ function generateMoves(piece, location) {
         [x + 1, y],
         [x, y + 1],
         [x, y - 1],
+      ]);
+    case "knight":
+      return (range = [
+        [x + 1, y + 2],
+        [x - 1, y + 2],
+        [x + 1, y - 2],
+        [x - 1, y - 2],
+        [x + 2, y + 1],
+        [x + 2, y - 1],
+        [x - 2, y + 1],
+        [x - 2, y - 1],
       ]);
     case "king":
       return (range = [
