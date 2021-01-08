@@ -175,19 +175,27 @@ function fillBench(pieces) {
       case "white_pawn":
         white_bench = white_bench.concat(Array(8).fill(piece));
         break;
+      case "black_bishop":
       case "black_knight":
+      case "black_rook":
         black_bench = black_bench.concat(Array(2).fill(piece));
         break;
       case "white_knight":
+      case "white_rook":
+      case "white_bishop":
         white_bench = white_bench.concat(Array(2).fill(piece));
         break;
       case "black_king":
+      case "black_queen":
         black_bench.push(piece);
         break;
       case "white_king":
+      case "white_queen":
         white_bench.push(piece);
+        break;
     }
   }
+  console.log(black_bench);
   return {
     black: black_bench,
     white: white_bench,
