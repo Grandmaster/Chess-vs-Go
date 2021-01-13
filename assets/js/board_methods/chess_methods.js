@@ -195,7 +195,6 @@ function fillBench(pieces) {
         break;
     }
   }
-  console.log(black_bench);
   return {
     black: black_bench,
     white: white_bench,
@@ -237,5 +236,20 @@ function generateMoves(piece, location) {
         [x + 1, y],
         [x + 1, y - 1],
       ]);
+  }
+}
+
+// Function that generates the moves for the bishop, rook and queen
+function rangedOfficialMoves(name, location) {
+  // All values of x and y range from 1-8
+  var x = location[0];
+  var y = location[1];
+  // Values that will change in the loops
+  var x_l = x;
+  var y_l = y;
+
+  switch (name) {
+    case "bishop":
+      var arr = [];
   }
 }

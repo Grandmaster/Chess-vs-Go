@@ -73,7 +73,7 @@ $(document).ready(() => {
     y_i = y_true / 75;
     arr = [x_i, y_i];
 
-    // Placing the relevant piece (a pawn, for now) on the target square
+    // Placing the relevant piece on the target square
     if (x_true != 0 && y_true != 0) {
       // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
       var c = 0;
@@ -143,6 +143,7 @@ $(document).ready(() => {
 
         // Switch color after every move
         color = switchColor(color);
+        console.log(arr);
       }
     }
   });
