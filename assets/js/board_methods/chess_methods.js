@@ -62,6 +62,8 @@ function possibleMoves(piece_obj, game_array) {
     var present_piece = findPiece(square[0], square[1], game_array);
     if (typeof present_piece !== "undefined") {
       renderPiece(present_piece, contxt);
+      contxt.fillStyle = "red";
+      contxt.fillRect(x_point, y_point, boxsize, boxsize);
     }
     moves.push([square[0], square[1]]);
   }
@@ -292,7 +294,7 @@ function rangedOfficialMoves(name, location) {
       }
       return arr;
 
-    // Queen's case
+    // Queen's case; moves are combination of rook and bishop moves
     case "queen":
       var arr = [];
       var xb = x;
