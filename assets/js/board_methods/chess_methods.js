@@ -50,7 +50,6 @@ function possibleMoves(piece_obj, game_array) {
   // In this game, pawns can make one move in any cardinal direction, not just forward.
 
   // All possible locations the piece can move to
-  var name = piece_obj.type.slice(6);
   range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
   var moves = [];
 
@@ -230,6 +229,8 @@ function generateMoves(piece, location) {
         [x + 1, y - 1],
       ]);
     case "rook":
+    case "bishop":
+    case "queen":
       return (range = rangedOfficialMoves(name, location));
   }
 }
@@ -241,15 +242,46 @@ function rangedOfficialMoves(name, location) {
   var y = location[1];
   var xr = _.range(1, 9);
   var yr = _.range(1, 9);
+  var xi = xr.indexOf(x);
+  var yi = yr.indexOf(y);
 
   switch (name) {
+    // Bishop's case
     case "bishop":
       var arr = [];
-      break;
+      var xb = x;
+      var yb = y;
+      while (xb > 1 && yb > 1) {
+        xb -= 1;
+        yb -= 1;
+        arr.push([xb, yb]);
+      }
+      var xc = x;
+      var yc = y;
+      while (xc < 8 && yc < 8) {
+        xc += 1;
+        yc += 1;
+        arr.push([xc, yc]);
+      }
+      var xd = x;
+      var yd = y;
+      while (xd > 1 && yd < 8) {
+        xd -= 1;
+        yd += 1;
+        arr.push([xd, yd]);
+      }
+      var xe = x;
+      var ye = y;
+      while (xe < 8 && ye > 1) {
+        xe += 1;
+        ye -= 1;
+        arr.push([xe, ye]);
+      }
+      return arr;
+
+    // Rook's case
     case "rook":
       var arr = [];
-      var xi = xr.indexOf(x);
-      var yi = yr.indexOf(y);
       xr.splice(xi, 1);
       yr.splice(yi, 1);
       for (let i of yr) {
@@ -259,6 +291,46 @@ function rangedOfficialMoves(name, location) {
         arr.push([j, y]);
       }
       return arr;
+
+    // Queen's case
     case "queen":
+      var arr = [];
+      var xb = x;
+      var yb = y;
+      while (xb > 1 && yb > 1) {
+        xb -= 1;
+        yb -= 1;
+        arr.push([xb, yb]);
+      }
+      var xc = x;
+      var yc = y;
+      while (xc < 8 && yc < 8) {
+        xc += 1;
+        yc += 1;
+        arr.push([xc, yc]);
+      }
+      var xd = x;
+      var yd = y;
+      while (xd > 1 && yd < 8) {
+        xd -= 1;
+        yd += 1;
+        arr.push([xd, yd]);
+      }
+      var xe = x;
+      var ye = y;
+      while (xe < 8 && ye > 1) {
+        xe += 1;
+        ye -= 1;
+        arr.push([xe, ye]);
+      }
+      xr.splice(xi, 1);
+      yr.splice(yi, 1);
+      for (let i of yr) {
+        arr.push([x, i]);
+      }
+      for (let j of xr) {
+        arr.push([j, y]);
+      }
+      return arr;
   }
 }
