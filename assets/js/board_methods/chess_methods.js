@@ -51,14 +51,7 @@ function possibleMoves(piece_obj, game_array) {
 
   // All possible locations the piece can move to
   var name = piece_obj.type.slice(6);
-  switch (name) {
-    case "pawn":
-      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
-    case "knight":
-      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
-    case "king":
-      range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
-  }
+  range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
   var moves = [];
 
   // Highlighting the squares that the piece can move to
@@ -236,6 +229,8 @@ function generateMoves(piece, location) {
         [x + 1, y],
         [x + 1, y - 1],
       ]);
+    case "rook":
+      return (range = rangedOfficialMoves(name, location));
   }
 }
 
@@ -244,12 +239,26 @@ function rangedOfficialMoves(name, location) {
   // All values of x and y range from 1-8
   var x = location[0];
   var y = location[1];
-  // Values that will change in the loops
-  var x_l = x;
-  var y_l = y;
+  var xr = _.range(1, 9);
+  var yr = _.range(1, 9);
 
   switch (name) {
     case "bishop":
       var arr = [];
+      break;
+    case "rook":
+      var arr = [];
+      var xi = xr.indexOf(x);
+      var yi = yr.indexOf(y);
+      xr.splice(xi, 1);
+      yr.splice(yi, 1);
+      for (let i of yr) {
+        arr.push([x, i]);
+      }
+      for (let j of xr) {
+        arr.push([j, y]);
+      }
+      return arr;
+    case "queen":
   }
 }
