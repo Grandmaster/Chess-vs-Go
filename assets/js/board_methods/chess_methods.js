@@ -50,7 +50,11 @@ function possibleMoves(piece_obj, game_array) {
   // In this game, pawns can make one move in any cardinal direction, not just forward.
 
   // All possible locations the piece can move to
-  range = generateMoves(piece_obj, [piece_obj.x_pos, piece_obj.y_pos]);
+  range = generateMoves(
+    piece_obj,
+    [piece_obj.x_pos, piece_obj.y_pos],
+    game_array
+  );
   var moves = [];
 
   // Highlighting the squares that the piece can move to
@@ -196,7 +200,7 @@ function fillBench(pieces) {
 }
 
 // Function that generates the possible moves a piece can make, given its location
-function generateMoves(piece, location) {
+function generateMoves(piece, location, game_array) {
   var name = piece.type.slice(6);
   var x = location[0];
   var y = location[1];
@@ -233,12 +237,12 @@ function generateMoves(piece, location) {
     case "rook":
     case "bishop":
     case "queen":
-      return (range = rangedOfficialMoves(name, location));
+      return (range = rangedOfficialMoves(name, location, game_array));
   }
 }
 
 // Function that generates the moves for the bishop, rook and queen
-function rangedOfficialMoves(name, location) {
+function rangedOfficialMoves(name, location, game_array) {
   // All values of x and y range from 1-8
   var x = location[0];
   var y = location[1];
@@ -251,33 +255,64 @@ function rangedOfficialMoves(name, location) {
     // Bishop's case
     case "bishop":
       var arr = [];
+
+      // break parameter
+      var b = 0;
+
       var xb = x;
       var yb = y;
       while (xb > 1 && yb > 1) {
         xb -= 1;
         yb -= 1;
         arr.push([xb, yb]);
+        for (let piece of game_array) {
+          if (piece.x_pos == xb && piece.y_pos == yb) {
+            b++;
+          }
+        }
+        if (b > 0) break;
       }
       var xc = x;
       var yc = y;
+      b = 0;
       while (xc < 8 && yc < 8) {
         xc += 1;
         yc += 1;
         arr.push([xc, yc]);
+        for (let piece of game_array) {
+          if (piece.x_pos == xc && piece.y_pos == yc) {
+            b++;
+          }
+        }
+        if (b > 0) break;
       }
       var xd = x;
       var yd = y;
+      b = 0;
       while (xd > 1 && yd < 8) {
         xd -= 1;
         yd += 1;
         arr.push([xd, yd]);
+        for (let piece of game_array) {
+          if (piece.x_pos == xd && piece.y_pos == yd) {
+            b++;
+          }
+        }
+        if (b > 0) break;
       }
       var xe = x;
       var ye = y;
+      b = 0;
       while (xe < 8 && ye > 1) {
         xe += 1;
         ye -= 1;
         arr.push([xe, ye]);
+        for (let piece of game_array) {
+          if (piece.x_pos == xe && piece.y_pos == ye) {
+            b++;
+          }
+        }
+        if (b > 0) break;
       }
       return arr;
 
