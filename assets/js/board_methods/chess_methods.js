@@ -319,6 +319,23 @@ function rangedOfficialMoves(name, location, game_array) {
     // Rook's case
     case "rook":
       var arr = [];
+      var xb = 0;
+      var xrc = xr;
+      var yrc = yr;
+
+      // Code to prevent rook from jumping over pieces to its left
+      while (xi > 1) {
+        xi -= 1;
+        var piece_block = findPiece(xi, y, game_array);
+        if (typeof piece_block !== "undefined") {
+          xb = xi;
+        }
+        if (xb !== 0) break;
+      }
+      xr.splice(0, xb - 1);
+      xi = xr.indexOf(x);
+      xb = x;
+
       xr.splice(xi, 1);
       yr.splice(yi, 1);
       for (let i of yr) {
