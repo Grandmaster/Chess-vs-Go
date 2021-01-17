@@ -254,170 +254,150 @@ function rangedOfficialMoves(name, location, game_array) {
   switch (name) {
     // Bishop's case
     case "bishop":
-      var arr = [];
-
-      // break parameter
-      var b = 0;
-
-      var xb = x;
-      var yb = y;
-      while (xb > 1 && yb > 1) {
-        xb -= 1;
-        yb -= 1;
-        arr.push([xb, yb]);
-        for (let piece of game_array) {
-          if (piece.x_pos == xb && piece.y_pos == yb) {
-            b++;
-          }
-        }
-        if (b > 0) break;
-      }
-      var xc = x;
-      var yc = y;
-      b = 0;
-      while (xc < 8 && yc < 8) {
-        xc += 1;
-        yc += 1;
-        arr.push([xc, yc]);
-        for (let piece of game_array) {
-          if (piece.x_pos == xc && piece.y_pos == yc) {
-            b++;
-          }
-        }
-        if (b > 0) break;
-      }
-      var xd = x;
-      var yd = y;
-      b = 0;
-      while (xd > 1 && yd < 8) {
-        xd -= 1;
-        yd += 1;
-        arr.push([xd, yd]);
-        for (let piece of game_array) {
-          if (piece.x_pos == xd && piece.y_pos == yd) {
-            b++;
-          }
-        }
-        if (b > 0) break;
-      }
-      var xe = x;
-      var ye = y;
-      b = 0;
-      while (xe < 8 && ye > 1) {
-        xe += 1;
-        ye -= 1;
-        arr.push([xe, ye]);
-        for (let piece of game_array) {
-          if (piece.x_pos == xe && piece.y_pos == ye) {
-            b++;
-          }
-        }
-        if (b > 0) break;
-      }
-      return arr;
-
+      return bishopRange(location, game_array);
     // Rook's case
     case "rook":
-      var arr = [];
-      var xb = 0;
-      var yb = 0;
-      var xrc = xr;
-      var yrc = yr;
-
-      // Code to prevent rook from jumping over pieces to its left
-      for (let i = xr[xi - 1]; i >= 1; i--) {
-        var piece_block = findPiece(i, y, game_array);
-        if (typeof piece_block !== "undefined") xb = i;
-        if (xb !== 0) break;
-      }
-      var xbi = xr.indexOf(xb);
-      xr.splice(0, xbi);
-      xb = 0;
-      xi = xr.indexOf(x);
-
-      // Same as above, but with pieces to its right
-      for (let i = xr[xi + 1]; i <= 8; i++) {
-        var piece_block = findPiece(i, y, game_array);
-        if (typeof piece_block !== "undefined") xb = i;
-        if (xb !== 0) break;
-      }
-      xbi = xr.indexOf(xb);
-      if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
-      xb = 0;
-      xi = xr.indexOf(x);
-
-      // Same as above, but with pieces above it
-      for (let j = yr[yi - 1]; j >= 1; j--) {
-        var piece_block = findPiece(x, j, game_array);
-        if (typeof piece_block !== "undefined") yb = j;
-        if (yb !== 0) break;
-      }
-      ybi = yr.indexOf(yb);
-      yr.splice(0, ybi);
-      yb = 0;
-      yi = yr.indexOf(y);
-
-      // Same as above, but with pieces below it
-      for (let j = yr[yi + 1]; j <= 8; j++) {
-        var piece_block = findPiece(x, j, game_array);
-        if (typeof piece_block !== "undefined") yb = j;
-        if (yb !== 0) break;
-      }
-      ybi = yr.indexOf(yb);
-      if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
-      yb = 0;
-      yi = yr.indexOf(y);
-
-      xr.splice(xi, 1);
-      yr.splice(yi, 1);
-      console.log(xr);
-      for (let i of yr) {
-        arr.push([x, i]);
-      }
-      for (let j of xr) {
-        arr.push([j, y]);
-      }
-      return arr;
+      return rookRange(location, game_array);
 
     // Queen's case; moves are combination of rook and bishop moves
     case "queen":
-      var arr = [];
-      var xb = x;
-      var yb = y;
-      while (xb > 1 && yb > 1) {
-        xb -= 1;
-        yb -= 1;
-        arr.push([xb, yb]);
-      }
-      var xc = x;
-      var yc = y;
-      while (xc < 8 && yc < 8) {
-        xc += 1;
-        yc += 1;
-        arr.push([xc, yc]);
-      }
-      var xd = x;
-      var yd = y;
-      while (xd > 1 && yd < 8) {
-        xd -= 1;
-        yd += 1;
-        arr.push([xd, yd]);
-      }
-      var xe = x;
-      var ye = y;
-      while (xe < 8 && ye > 1) {
-        xe += 1;
-        ye -= 1;
-        arr.push([xe, ye]);
-      }
-      xr.splice(xi, 1);
-      yr.splice(yi, 1);
-      for (let i of yr) {
-        arr.push([x, i]);
-      }
-      for (let j of xr) {
-        arr.push([j, y]);
-      }
-      return arr;
+      arr1 = bishopRange(location, game_array);
+      arr2 = rookRange(location, game_array);
+      return arr1.concat(arr2);
   }
+}
+
+// Function that calculates the range of moves for the rook
+function rookRange(location, game_array) {
+  var x = location[0];
+  var y = location[1];
+  var xr = _.range(1, 9);
+  var yr = _.range(1, 9);
+  var xi = xr.indexOf(x);
+  var yi = yr.indexOf(y);
+  var arr = [];
+  var xb = 0;
+  var yb = 0;
+
+  // Code to prevent rook from jumping over pieces to its left
+  for (let i = xr[xi - 1]; i >= 1; i--) {
+    var piece_block = findPiece(i, y, game_array);
+    if (typeof piece_block !== "undefined") xb = i;
+    if (xb !== 0) break;
+  }
+  var xbi = xr.indexOf(xb);
+  xr.splice(0, xbi);
+  xb = 0;
+  xi = xr.indexOf(x);
+
+  // Same as above, but with pieces to its right
+  for (let i = xr[xi + 1]; i <= 8; i++) {
+    var piece_block = findPiece(i, y, game_array);
+    if (typeof piece_block !== "undefined") xb = i;
+    if (xb !== 0) break;
+  }
+  xbi = xr.indexOf(xb);
+  if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
+  xb = 0;
+  xi = xr.indexOf(x);
+
+  // Same as above, but with pieces above it
+  for (let j = yr[yi - 1]; j >= 1; j--) {
+    var piece_block = findPiece(x, j, game_array);
+    if (typeof piece_block !== "undefined") yb = j;
+    if (yb !== 0) break;
+  }
+  ybi = yr.indexOf(yb);
+  yr.splice(0, ybi);
+  yb = 0;
+  yi = yr.indexOf(y);
+
+  // Same as above, but with pieces below it
+  for (let j = yr[yi + 1]; j <= 8; j++) {
+    var piece_block = findPiece(x, j, game_array);
+    if (typeof piece_block !== "undefined") yb = j;
+    if (yb !== 0) break;
+  }
+  ybi = yr.indexOf(yb);
+  if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
+  yb = 0;
+  yi = yr.indexOf(y);
+
+  xr.splice(xi, 1);
+  yr.splice(yi, 1);
+  console.log(xr);
+  for (let i of yr) {
+    arr.push([x, i]);
+  }
+  for (let j of xr) {
+    arr.push([j, y]);
+  }
+  return arr;
+}
+
+// Function that calculates the range of moves for the bishop
+function bishopRange(location, game_array) {
+  var x = location[0];
+  var y = location[1];
+  var arr = [];
+
+  // break parameter
+  var b = 0;
+
+  var xb = x;
+  var yb = y;
+  while (xb > 1 && yb > 1) {
+    xb -= 1;
+    yb -= 1;
+    arr.push([xb, yb]);
+    for (let piece of game_array) {
+      if (piece.x_pos == xb && piece.y_pos == yb) {
+        b++;
+      }
+    }
+    if (b > 0) break;
+  }
+  var xc = x;
+  var yc = y;
+  b = 0;
+  while (xc < 8 && yc < 8) {
+    xc += 1;
+    yc += 1;
+    arr.push([xc, yc]);
+    for (let piece of game_array) {
+      if (piece.x_pos == xc && piece.y_pos == yc) {
+        b++;
+      }
+    }
+    if (b > 0) break;
+  }
+  var xd = x;
+  var yd = y;
+  b = 0;
+  while (xd > 1 && yd < 8) {
+    xd -= 1;
+    yd += 1;
+    arr.push([xd, yd]);
+    for (let piece of game_array) {
+      if (piece.x_pos == xd && piece.y_pos == yd) {
+        b++;
+      }
+    }
+    if (b > 0) break;
+  }
+  var xe = x;
+  var ye = y;
+  b = 0;
+  while (xe < 8 && ye > 1) {
+    xe += 1;
+    ye -= 1;
+    arr.push([xe, ye]);
+    for (let piece of game_array) {
+      if (piece.x_pos == xe && piece.y_pos == ye) {
+        b++;
+      }
+    }
+    if (b > 0) break;
+  }
+  return arr;
 }
