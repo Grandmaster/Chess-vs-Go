@@ -324,20 +324,19 @@ function rangedOfficialMoves(name, location, game_array) {
       var yrc = yr;
 
       // Code to prevent rook from jumping over pieces to its left
-      while (xi > 1) {
-        xi -= 1;
-        var piece_block = findPiece(xi, y, game_array);
-        if (typeof piece_block !== "undefined") {
-          xb = xi;
-        }
+      for (let i = xr[xi - 1]; i >= 1; i--) {
+        var piece_block = findPiece(i, y, game_array);
+        if (typeof piece_block !== "undefined") xb = i;
         if (xb !== 0) break;
       }
-      xr.splice(0, xb - 1);
+      var xbi = xr.indexOf(xb);
+      xr.splice(0, xbi);
+      xb = 0;
       xi = xr.indexOf(x);
-      xb = x;
 
       xr.splice(xi, 1);
       yr.splice(yi, 1);
+      console.log(xr);
       for (let i of yr) {
         arr.push([x, i]);
       }
