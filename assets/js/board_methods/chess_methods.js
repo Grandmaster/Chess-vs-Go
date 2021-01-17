@@ -320,6 +320,7 @@ function rangedOfficialMoves(name, location, game_array) {
     case "rook":
       var arr = [];
       var xb = 0;
+      var yb = 0;
       var xrc = xr;
       var yrc = yr;
 
@@ -344,6 +345,28 @@ function rangedOfficialMoves(name, location, game_array) {
       if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
       xb = 0;
       xi = xr.indexOf(x);
+
+      // Same as above, but with pieces above it
+      for (let j = yr[yi - 1]; j >= 1; j--) {
+        var piece_block = findPiece(x, j, game_array);
+        if (typeof piece_block !== "undefined") yb = j;
+        if (yb !== 0) break;
+      }
+      ybi = yr.indexOf(yb);
+      yr.splice(0, ybi);
+      yb = 0;
+      yi = yr.indexOf(y);
+
+      // Same as above, but with pieces below it
+      for (let j = yr[yi + 1]; j <= 8; j++) {
+        var piece_block = findPiece(x, j, game_array);
+        if (typeof piece_block !== "undefined") yb = j;
+        if (yb !== 0) break;
+      }
+      ybi = yr.indexOf(yb);
+      if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
+      yb = 0;
+      yi = yr.indexOf(y);
 
       xr.splice(xi, 1);
       yr.splice(yi, 1);
