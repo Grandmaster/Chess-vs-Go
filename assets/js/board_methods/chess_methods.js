@@ -334,6 +334,17 @@ function rangedOfficialMoves(name, location, game_array) {
       xb = 0;
       xi = xr.indexOf(x);
 
+      // Same as above, but with pieces to its right
+      for (let i = xr[xi + 1]; i <= 8; i++) {
+        var piece_block = findPiece(i, y, game_array);
+        if (typeof piece_block !== "undefined") xb = i;
+        if (xb !== 0) break;
+      }
+      xbi = xr.indexOf(xb);
+      if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
+      xb = 0;
+      xi = xr.indexOf(x);
+
       xr.splice(xi, 1);
       yr.splice(yi, 1);
       console.log(xr);
