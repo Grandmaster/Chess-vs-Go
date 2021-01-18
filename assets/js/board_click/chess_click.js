@@ -81,7 +81,10 @@ $(document).ready(() => {
         for (let piece of pieces_in_play) {
           if (piece.x_pos == x_i && piece.y_pos == y_i) {
             possibleMoves(piece, pieces_in_play);
-            possiblePawnCaptures(piece, pieces_in_play);
+            var piecetype = piece.type.slice(6);
+            if (piecetype == "pawn") {
+              possiblePawnCaptures(piece, pieces_in_play);
+            }
             c++;
           }
         }
@@ -143,7 +146,6 @@ $(document).ready(() => {
 
         // Switch color after every move
         color = switchColor(color);
-        console.log(arr);
       }
     }
   });

@@ -56,6 +56,7 @@ function possibleMoves(piece_obj, game_array) {
     game_array
   );
   var moves = [];
+  var captures = [];
 
   // Highlighting the squares that the piece can move to
   for (let square of range) {
@@ -68,6 +69,7 @@ function possibleMoves(piece_obj, game_array) {
       renderPiece(present_piece, contxt);
       contxt.fillStyle = "red";
       contxt.fillRect(x_point, y_point, boxsize, boxsize);
+      captures.push([square[0], square[1]]);
     }
     moves.push([square[0], square[1]]);
   }
@@ -75,6 +77,7 @@ function possibleMoves(piece_obj, game_array) {
   // Storing options in move_queue
   move_queue.push(piece_obj);
   move_queue.push(moves);
+  move_queue.push(captures);
 }
 
 // Function that highlights possible captures by chosen pawns (different than movement for pawns only)
