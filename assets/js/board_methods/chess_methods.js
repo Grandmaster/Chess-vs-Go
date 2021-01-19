@@ -57,6 +57,20 @@ function possibleMoves(piece_obj, game_array) {
   );
   var moves = [];
   var captures = [];
+  var color = piece_obj.type.slice(0, 5);
+
+  // Removing squares occupied by allies from the range
+  range = range.filter((square) => {
+    let x = square[0];
+    let y = square[1];
+    let test = true;
+    let standing_piece = findPiece(x, y, game_array);
+    if (typeof standing_piece !== "undefined") {
+      let standing_color = standing_piece.type.slice(0, 5);
+      if (color == standing_color) test = false;
+    }
+    return test;
+  });
 
   // Highlighting the squares that the piece can move to
   for (let square of range) {
