@@ -22,5 +22,5 @@ function currentGoBoard(board, context, width, height, boxsize) {
   });
 }
 
-// TODO: Function that calculates territory controlled by each player (in living groups) using flood fill algorithm
+// TODO: Function that calculates territory controlled by each player (in living groups only) using flood fill algorithm
 function calculateTerritory(board) {}
