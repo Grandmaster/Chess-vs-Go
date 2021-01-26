@@ -22,5 +22,9 @@ function currentGoBoard(board, context, width, height, boxsize) {
   });
 }
 
-// TODO: Function that calculates territory controlled by each player (in living groups only) using flood fill algorithm
-function calculateTerritory(board) {}
+// TODO: Function that calculates transient territory controlled by each player using flood fill algorithm
+function calculateTerritory(board) {
+  if (board.moves.size == 0) {
+    return "no stones on board";
+  }
+}
