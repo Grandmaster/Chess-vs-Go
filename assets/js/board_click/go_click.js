@@ -48,5 +48,7 @@ $(document).ready(() => {
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
       color = godash.oppositeColor(color);
     }
+
+    console.log(immutable);
   });
 });

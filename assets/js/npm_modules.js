@@ -40,13 +40,16 @@
     1: [
       function (require, module, exports) {
         const _ = require("lodash");
-        require("immutable");
+        const immutable = require("immutable");
         const godash = require("godash").default;
         if (!window.godash) {
           window.godash = godash;
         }
         if (!window._) {
           window._ = _;
+        }
+        if (!window.immutable) {
+          window.immutable = immutable;
         }
       },
       { godash: 2, immutable: 3, lodash: 4 },
@@ -11001,11 +11004,12 @@
               : Map()
             ).asMutable();
             collection.__iterate(function (v, k) {
-              groups.update(grouper.call(context, v, k, collection), function (
-                a
-              ) {
-                return (a = a || []), a.push(isKeyedIter ? [k, v] : v), a;
-              });
+              groups.update(
+                grouper.call(context, v, k, collection),
+                function (a) {
+                  return (a = a || []), a.push(isKeyedIter ? [k, v] : v), a;
+                }
+              );
             });
             var coerce = collectionClass(collection);
             return groups
@@ -20281,16 +20285,19 @@
                   var index = -1;
                   iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
-                  var result = baseMap(collection, function (
-                    value,
-                    key,
-                    collection
-                  ) {
-                    var criteria = arrayMap(iteratees, function (iteratee) {
-                      return iteratee(value);
-                    });
-                    return { criteria: criteria, index: ++index, value: value };
-                  });
+                  var result = baseMap(
+                    collection,
+                    function (value, key, collection) {
+                      var criteria = arrayMap(iteratees, function (iteratee) {
+                        return iteratee(value);
+                      });
+                      return {
+                        criteria: criteria,
+                        index: ++index,
+                        value: value,
+                      };
+                    }
+                  );
 
                   return baseSortBy(result, function (object, other) {
                     return compareMultiple(object, other, orders);
@@ -23054,11 +23061,12 @@
                         return [];
                       }
                       object = Object(object);
-                      return arrayFilter(nativeGetSymbols(object), function (
-                        symbol
-                      ) {
-                        return propertyIsEnumerable.call(object, symbol);
-                      });
+                      return arrayFilter(
+                        nativeGetSymbols(object),
+                        function (symbol) {
+                          return propertyIsEnumerable.call(object, symbol);
+                        }
+                      );
                     };
 
                 /**
@@ -23881,18 +23889,16 @@
                   if (string.charCodeAt(0) === 46 /* . */) {
                     result.push("");
                   }
-                  string.replace(rePropName, function (
-                    match,
-                    number,
-                    quote,
-                    subString
-                  ) {
-                    result.push(
-                      quote
-                        ? subString.replace(reEscapeChar, "$1")
-                        : number || match
-                    );
-                  });
+                  string.replace(
+                    rePropName,
+                    function (match, number, quote, subString) {
+                      result.push(
+                        quote
+                          ? subString.replace(reEscapeChar, "$1")
+                          : number || match
+                      );
+                    }
+                  );
                   return result;
                 });
 
@@ -31329,13 +31335,12 @@
                       accumulator = {};
                     }
                   }
-                  (isArrLike ? arrayEach : baseForOwn)(object, function (
-                    value,
-                    index,
-                    object
-                  ) {
-                    return iteratee(accumulator, value, index, object);
-                  });
+                  (isArrLike ? arrayEach : baseForOwn)(
+                    object,
+                    function (value, index, object) {
+                      return iteratee(accumulator, value, index, object);
+                    }
+                  );
                   return accumulator;
                 }
 
@@ -32417,42 +32422,45 @@
                       : "lodash.templateSources[" + ++templateCounter + "]") +
                     "\n";
 
-                  string.replace(reDelimiters, function (
-                    match,
-                    escapeValue,
-                    interpolateValue,
-                    esTemplateValue,
-                    evaluateValue,
-                    offset
-                  ) {
-                    interpolateValue || (interpolateValue = esTemplateValue);
+                  string.replace(
+                    reDelimiters,
+                    function (
+                      match,
+                      escapeValue,
+                      interpolateValue,
+                      esTemplateValue,
+                      evaluateValue,
+                      offset
+                    ) {
+                      interpolateValue || (interpolateValue = esTemplateValue);
 
-                    // Escape characters that can't be included in string literals.
-                    source += string
-                      .slice(index, offset)
-                      .replace(reUnescapedString, escapeStringChar);
+                      // Escape characters that can't be included in string literals.
+                      source += string
+                        .slice(index, offset)
+                        .replace(reUnescapedString, escapeStringChar);
 
-                    // Replace delimiters with snippets.
-                    if (escapeValue) {
-                      isEscaping = true;
-                      source += "' +\n__e(" + escapeValue + ") +\n'";
-                    }
-                    if (evaluateValue) {
-                      isEvaluating = true;
-                      source += "';\n" + evaluateValue + ";\n__p += '";
-                    }
-                    if (interpolateValue) {
-                      source +=
-                        "' +\n((__t = (" +
-                        interpolateValue +
-                        ")) == null ? '' : __t) +\n'";
-                    }
-                    index = offset + match.length;
+                      // Replace delimiters with snippets.
+                      if (escapeValue) {
+                        isEscaping = true;
+                        source += "' +\n__e(" + escapeValue + ") +\n'";
+                      }
+                      if (evaluateValue) {
+                        isEvaluating = true;
+                        source += "';\n" + evaluateValue + ";\n__p += '";
+                      }
+                      if (interpolateValue) {
+                        source +=
+                          "' +\n((__t = (" +
+                          interpolateValue +
+                          ")) == null ? '' : __t) +\n'";
+                      }
+                      index = offset + match.length;
 
-                    // The JS engine embedded in Adobe products needs `match` returned in
-                    // order to produce the correct `offset` value.
-                    return match;
-                  });
+                      // The JS engine embedded in Adobe products needs `match` returned in
+                      // order to produce the correct `offset` value.
+                      return match;
+                    }
+                  );
 
                   source += "';\n";
 
@@ -34607,24 +34615,24 @@
                 });
 
                 // Add `LazyWrapper` methods that accept an `iteratee` value.
-                arrayEach(["filter", "map", "takeWhile"], function (
-                  methodName,
-                  index
-                ) {
-                  var type = index + 1,
-                    isFilter =
-                      type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
+                arrayEach(
+                  ["filter", "map", "takeWhile"],
+                  function (methodName, index) {
+                    var type = index + 1,
+                      isFilter =
+                        type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
 
-                  LazyWrapper.prototype[methodName] = function (iteratee) {
-                    var result = this.clone();
-                    result.__iteratees__.push({
-                      iteratee: getIteratee(iteratee, 3),
-                      type: type,
-                    });
-                    result.__filtered__ = result.__filtered__ || isFilter;
-                    return result;
-                  };
-                });
+                    LazyWrapper.prototype[methodName] = function (iteratee) {
+                      var result = this.clone();
+                      result.__iteratees__.push({
+                        iteratee: getIteratee(iteratee, 3),
+                        type: type,
+                      });
+                      result.__filtered__ = result.__filtered__ || isFilter;
+                      return result;
+                    };
+                  }
+                );
 
                 // Add `LazyWrapper` methods for `_.head` and `_.last`.
                 arrayEach(["head", "last"], function (methodName, index) {
