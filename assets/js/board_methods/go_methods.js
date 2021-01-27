@@ -27,4 +27,14 @@ function calculateTerritory(board) {
   if (board.moves.size == 0) {
     return "no stones on board";
   }
+  // Range of indices for points on the board
+  var rx = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  var ry = rx;
+  var rp = [];
+
+  for (let i of rx) {
+    for (let j of ry) {
+      rp.push([i, j]);
+    }
+  }
 }
