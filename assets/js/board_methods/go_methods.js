@@ -22,13 +22,29 @@ function currentGoBoard(board, context, width, height, boxsize) {
   });
 }
 
+// Range of indices for calculating territory.
+var range = generateRange();
+
 // TODO: Function that calculates transient territory controlled by each player using flood fill algorithm
 function calculateTerritory(board) {
-  if (board.moves.size == 0) {
-    return "no stones on board";
+  // This should only run when there are stones of either color on the board
+  if (board.moves.size < 2) {
+    return "need stones of both colors";
   }
 
-  let range = generateRange();
+  // Territory array init
+  let arr = [0, 0];
+
+  // Parent array
+  let big_arr = [];
+
+  // Goes through every point in the range
+  while (range.length !== 0) {
+    let index = range.shift();
+    let point = new godash.Coordinate(index[0], index[1]);
+    arr.push(point);
+    floodPull(board, point, arr[0], arr[1], arr, range);
+  }
 }
 
 // Function that creates range of indices to calculate territory. For now, assumes 9x9 board
@@ -45,4 +61,62 @@ function generateRange() {
   }
 
   return rp;
+}
+
+// Function that implements the actual flood fill algorithm in calculating territory.
+// For this function, in the 'territory array', the first 2 numbers are how many black and white stones the
+// algorithm has encountered, which will be used to determine ownership of territory
+function floodPull(board, c, b, w, t, r) {
+  // Stop if the coordinate is out of range
+  if (c.x < 0 || c.x > 8 || c.y < 0 || c.y > 8) return;
+  let stone = board.moves.get(c);
+
+  // Stop if the function lands on a stone
+  if (stone == "black") {
+    b++;
+    t[0] = b;
+    return;
+  } else if (stone == "white") {
+    w++;
+    t[1] = w;
+    return;
+  } else {
+    // If the above two cases do not apply, add the point to the 'territory array' and continue
+    t.push(c);
+  }
+
+  console.log([c.x, c.y]);
+
+  // Generating new co-ordinates
+  let c_right = new godash.Coordinate(c.x + 1, c.y);
+  let c_left = new godash.Coordinate(c.x - 1, c.y);
+  let c_up = new godash.Coordinate(c.x, c.y - 1);
+  let c_down = new godash.Coordinate(c.x, c.y + 1);
+
+  // Check to make sure these points are points that have not been reached, and using recursion if not
+  if (!checkandFindIndex(c_right, r)[0]) {
+    floodPull(board, c_right, b, w, t, r);
+  } else if (!checkandFindIndex(c_left, r)[0]) {
+    floodPull(board, c_left, b, w, t, r);
+  } else if (!checkandFindIndex(c_up, r)[0]) {
+    floodPull(board, c_up, b, w, t, r);
+  } else if (!checkandFindIndex(c_down, r)[0]) {
+    floodPull(board, c_down, b, w, t, r);
+  }
+}
+
+// Function to check if an index(2-element array) is in another array of 2-element arrays. Takes in coordinates
+function checkandFindIndex(coord, arr) {
+  ind = [coord.x, coord.y];
+  i = 0;
+  for (let elem of arr) {
+    if (elem[0] == ind[0] && elem[1] == ind[1]) {
+      console.log("true");
+      return [true, i];
+    }
+    i++;
+  }
+  console.log(i);
+  console.log("false");
+  return [false, -1];
 }
