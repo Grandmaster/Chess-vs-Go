@@ -36,18 +36,18 @@ function calculateTerritory(board) {
   let arr = [0, 0];
 
   // Parent array
-  let big_arr = [];
+  let field = [];
 
   // Goes through every point in the range
   while (range.length !== 0) {
     let index = range[0];
     let point = new godash.Coordinate(index[0], index[1]);
     floodPull(board, point, arr[0], arr[1], arr, range);
-    big_arr.push(arr);
+    field.push(arr);
     arr = [0, 0];
     // Determine total # of coordinates visited
     let l = 0;
-    for (let r of big_arr) {
+    for (let r of field) {
       l += r.length - 2;
       l += r[0] + r[1];
     }
@@ -56,17 +56,14 @@ function calculateTerritory(board) {
     stoneDump = [];
   }
 
-  // Cleaning up the parent array
-  let ind = -1;
-  for (let t of big_arr) {
-    if (t.length <= 2) {
-      ind = big_arr.indexOf(t);
-    }
-    if (ind !== -1) big_arr.splice(ind, 1);
-    ind = -1;
-  }
+  console.log(field);
 
-  console.log(big_arr);
+  // Cleaning up the parent array
+  field = field.filter((arr) => {
+    return arr.length > 2;
+  });
+
+  console.log(field);
 
   // Repopulate range for next use of calculateTerritory
   range = generateRange();
