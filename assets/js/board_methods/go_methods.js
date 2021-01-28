@@ -43,8 +43,32 @@ function calculateTerritory(board) {
     let index = range[0];
     let point = new godash.Coordinate(index[0], index[1]);
     floodPull(board, point, arr[0], arr[1], arr, range);
-    console.log(arr);
+    big_arr.push(arr);
+    arr = [0, 0];
+    // Determine total # of coordinates visited
+    let l = 0;
+    for (let r of big_arr) {
+      l += r.length - 2;
+      l += r[0] + r[1];
+    }
+    console.log(big_arr);
+    console.log(stoneDump);
+    console.log(l);
+    // This helps to keep accurate count of stones, which helps calculate territory
+    if (l < 81) restoreCoord(stoneDump, range);
+    stoneDump = [];
   }
+
+  // Cleaning up the parent array
+  let ind = -1;
+  for (let t of big_arr) {
+    if (t.length <= 2) {
+      ind = big_arr.indexOf(t);
+    }
+    if (ind !== -1) big_arr.splice(ind, 1);
+  }
+
+  console.log(big_arr);
 
   // Repopulate range for next use of calculateTerritory
   range = generateRange();
@@ -66,6 +90,9 @@ function generateRange() {
   return rp;
 }
 
+// Array of stone locations
+var stoneDump = [];
+
 // Function that implements the actual flood fill algorithm in calculating territory.
 // For this function, in the 'territory array', the first 2 numbers are how many black and white stones the
 // algorithm has encountered, which will be used to determine ownership of territory
@@ -78,10 +105,12 @@ function floodPull(board, c, b, w, t, r) {
   // Stop if the function lands on a stone
   if (stone == "black") {
     t[0]++;
+    stoneDump.push(c);
     removeCoord(c, r);
     return;
   } else if (stone == "white") {
     t[1]++;
+    stoneDump.push(c);
     removeCoord(c, r);
     return;
   } else {
@@ -90,32 +119,20 @@ function floodPull(board, c, b, w, t, r) {
     removeCoord(c, r);
   }
 
-  console.log([c.x, c.y]);
-
   // Generating new co-ordinates
   let c_right = new godash.Coordinate(c.x + 1, c.y);
   let c_left = new godash.Coordinate(c.x - 1, c.y);
   let c_up = new godash.Coordinate(c.x, c.y - 1);
   let c_down = new godash.Coordinate(c.x, c.y + 1);
 
-  // Check to make sure these points are points that have not been reached, and using recursion if not
-  // if (!checkandFindIndex(c_right, r)[0]) {
-  //   floodPull(board, c_right, b, w, t, r);
-  // } else if (!checkandFindIndex(c_left, r)[0]) {
-  //   floodPull(board, c_left, b, w, t, r);
-  // } else if (!checkandFindIndex(c_up, r)[0]) {
-  //   floodPull(board, c_up, b, w, t, r);
-  // } else if (!checkandFindIndex(c_down, r)[0]) {
-  //   floodPull(board, c_down, b, w, t, r);
-  // }
-
+  // Recursion
   floodPull(board, c_right, b, w, t, r);
   floodPull(board, c_left, b, w, t, r);
   floodPull(board, c_up, b, w, t, r);
   floodPull(board, c_down, b, w, t, r);
 }
 
-// Function that takes in a coordinate and returns its index in the range, if it is there
+// Function that takes in a coordinate and returns its index in the range of locations, if it is there
 function findCoord(c, r) {
   var l = [c.x, c.y];
   var ind = -1;
@@ -131,4 +148,13 @@ function findCoord(c, r) {
 function removeCoord(c, r) {
   let ind = findCoord(c, r);
   if (ind !== -1) r.splice(ind, 1);
+}
+
+// Function that adds coordinates in an array to the range of locations. To be used to put stone locations back
+// into the range, to help determine ownership of territory
+function restoreCoord(c_arr, r) {
+  for (let c of c_arr) {
+    let l = [c.x, c.y];
+    r.push(l);
+  }
 }
