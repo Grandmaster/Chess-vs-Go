@@ -25,7 +25,7 @@ function currentGoBoard(board, context, width, height, boxsize) {
 // Range of indices for calculating territory.
 var range = generateRange();
 
-// TODO: Function that calculates transient territory controlled by each player using flood fill algorithm
+// Function that calculates transient territory controlled by each player using flood fill algorithm
 function calculateTerritory(board) {
   // This should only run when there are stones of either color on the board
   if (board.moves.size < 2) {
@@ -51,9 +51,6 @@ function calculateTerritory(board) {
       l += r.length - 2;
       l += r[0] + r[1];
     }
-    console.log(big_arr);
-    console.log(stoneDump);
-    console.log(l);
     // This helps to keep accurate count of stones, which helps calculate territory
     if (l < 81) restoreCoord(stoneDump, range);
     stoneDump = [];
@@ -66,6 +63,7 @@ function calculateTerritory(board) {
       ind = big_arr.indexOf(t);
     }
     if (ind !== -1) big_arr.splice(ind, 1);
+    ind = -1;
   }
 
   console.log(big_arr);
