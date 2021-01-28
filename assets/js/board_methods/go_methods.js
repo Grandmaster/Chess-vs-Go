@@ -40,11 +40,14 @@ function calculateTerritory(board) {
 
   // Goes through every point in the range
   while (range.length !== 0) {
-    let index = range.shift();
+    let index = range[0];
     let point = new godash.Coordinate(index[0], index[1]);
-    arr.push(point);
     floodPull(board, point, arr[0], arr[1], arr, range);
+    console.log(arr);
   }
+
+  // Repopulate range for next use of calculateTerritory
+  range = generateRange();
 }
 
 // Function that creates range of indices to calculate territory. For now, assumes 9x9 board
@@ -67,22 +70,24 @@ function generateRange() {
 // For this function, in the 'territory array', the first 2 numbers are how many black and white stones the
 // algorithm has encountered, which will be used to determine ownership of territory
 function floodPull(board, c, b, w, t, r) {
-  // Stop if the coordinate is out of range
+  // Stop if the coordinate is out of range, or if it has been visited already
   if (c.x < 0 || c.x > 8 || c.y < 0 || c.y > 8) return;
+  if (findCoord(c, r) == -1) return;
   let stone = board.moves.get(c);
 
   // Stop if the function lands on a stone
   if (stone == "black") {
-    b++;
-    t[0] = b;
+    t[0]++;
+    removeCoord(c, r);
     return;
   } else if (stone == "white") {
-    w++;
-    t[1] = w;
+    t[1]++;
+    removeCoord(c, r);
     return;
   } else {
     // If the above two cases do not apply, add the point to the 'territory array' and continue
     t.push(c);
+    removeCoord(c, r);
   }
 
   console.log([c.x, c.y]);
@@ -94,29 +99,36 @@ function floodPull(board, c, b, w, t, r) {
   let c_down = new godash.Coordinate(c.x, c.y + 1);
 
   // Check to make sure these points are points that have not been reached, and using recursion if not
-  if (!checkandFindIndex(c_right, r)[0]) {
-    floodPull(board, c_right, b, w, t, r);
-  } else if (!checkandFindIndex(c_left, r)[0]) {
-    floodPull(board, c_left, b, w, t, r);
-  } else if (!checkandFindIndex(c_up, r)[0]) {
-    floodPull(board, c_up, b, w, t, r);
-  } else if (!checkandFindIndex(c_down, r)[0]) {
-    floodPull(board, c_down, b, w, t, r);
-  }
+  // if (!checkandFindIndex(c_right, r)[0]) {
+  //   floodPull(board, c_right, b, w, t, r);
+  // } else if (!checkandFindIndex(c_left, r)[0]) {
+  //   floodPull(board, c_left, b, w, t, r);
+  // } else if (!checkandFindIndex(c_up, r)[0]) {
+  //   floodPull(board, c_up, b, w, t, r);
+  // } else if (!checkandFindIndex(c_down, r)[0]) {
+  //   floodPull(board, c_down, b, w, t, r);
+  // }
+
+  floodPull(board, c_right, b, w, t, r);
+  floodPull(board, c_left, b, w, t, r);
+  floodPull(board, c_up, b, w, t, r);
+  floodPull(board, c_down, b, w, t, r);
 }
 
-// Function to check if an index(2-element array) is in another array of 2-element arrays. Takes in coordinates
-function checkandFindIndex(coord, arr) {
-  ind = [coord.x, coord.y];
-  i = 0;
-  for (let elem of arr) {
-    if (elem[0] == ind[0] && elem[1] == ind[1]) {
-      console.log("true");
-      return [true, i];
+// Function that takes in a coordinate and returns its index in the range, if it is there
+function findCoord(c, r) {
+  var l = [c.x, c.y];
+  var ind = -1;
+  for (let i of r) {
+    if (l[0] == i[0] && l[1] == i[1]) {
+      ind = r.indexOf(i);
     }
-    i++;
   }
-  console.log(i);
-  console.log("false");
-  return [false, -1];
+  return ind;
+}
+
+// Function that takes in a coordinate and removes it from the range of locations, if it's there
+function removeCoord(c, r) {
+  let ind = findCoord(c, r);
+  if (ind !== -1) r.splice(ind, 1);
 }
