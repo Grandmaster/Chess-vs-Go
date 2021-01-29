@@ -49,7 +49,11 @@ $(document).ready(() => {
       color = godash.oppositeColor(color);
     }
 
-    // Calculating territory controlled by each player
-    calculateTerritory(go_board);
+    console.log(ctx.fillStyle);
+
+    // Calculating territory controlled by each player, and displaying it
+    calculateTerritory(go_board, ctx);
+
+    console.log(ctx.fillStyle);
   });
 });

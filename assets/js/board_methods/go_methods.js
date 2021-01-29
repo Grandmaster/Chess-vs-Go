@@ -26,7 +26,7 @@ function currentGoBoard(board, context, width, height, boxsize) {
 var range = generateRange();
 
 // Function that calculates transient territory controlled by each player using flood fill algorithm
-function calculateTerritory(board) {
+function calculateTerritory(board, context) {
   // This should only run when there are stones of either color on the board
   if (board.moves.size < 2) {
     return "need stones of both colors";
@@ -56,8 +56,6 @@ function calculateTerritory(board) {
     stoneDump = [];
   }
 
-  console.log(field);
-
   // Cleaning up the parent array
   field = field.filter((arr) => {
     return arr.length > 2;
@@ -67,6 +65,9 @@ function calculateTerritory(board) {
 
   // Repopulate range for next use of calculateTerritory
   range = generateRange();
+
+  // Display results
+  displayTerritory(field, context);
 }
 
 // Function that creates range of indices to calculate territory. For now, assumes 9x9 board
@@ -152,4 +153,43 @@ function restoreCoord(c_arr, r) {
     let l = [c.x, c.y];
     r.push(l);
   }
+}
+
+// Function that displays territory occupied by each player. Takes in 'field' array and canvas context
+function displayTerritory(field, context) {
+  field.forEach((area) => {
+    let points = [];
+    // Black territory
+    if (area[0] !== 0 && area[1] == 0) {
+      // All coordinates in the area
+      points = area.slice(2);
+      context.fillStyle = "blue";
+
+      // Drawng the 'X' for each point
+      points.forEach((p) => {
+        let x = (p.x + 1) * boxsize;
+        let y = (p.y + 1) * boxsize;
+        context.beginPath();
+        context.moveTo(x - 20, y - 20);
+        context.lineTo(x + 20, y + 20);
+        context.moveTo(x + 20, y - 20);
+        context.lineTo(x - 20, y + 20);
+        context.stroke();
+      });
+    } else if (area[0] == 0 && area[1] !== 0) {
+      // Same as above, but for white territory
+      points = area.slice(2);
+      context.fillStyle = "red";
+      points.forEach((p) => {
+        let x = (p.x + 1) * boxsize;
+        let y = (p.y + 1) * boxsize;
+        context.beginPath();
+        context.moveTo(x - 20, y - 20);
+        context.lineTo(x + 20, y + 20);
+        context.moveTo(x + 20, y - 20);
+        context.lineTo(x - 20, y + 20);
+        context.stroke();
+      });
+    }
+  });
 }
