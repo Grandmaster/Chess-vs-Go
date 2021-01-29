@@ -157,13 +157,14 @@ function restoreCoord(c_arr, r) {
 
 // Function that displays territory occupied by each player. Takes in 'field' array and canvas context
 function displayTerritory(field, context) {
+  context.lineWidth = 2;
   field.forEach((area) => {
     let points = [];
     // Black territory
     if (area[0] !== 0 && area[1] == 0) {
       // All coordinates in the area
       points = area.slice(2);
-      context.fillStyle = "blue";
+      context.strokeStyle = "black";
 
       // Drawng the 'X' for each point
       points.forEach((p) => {
@@ -179,7 +180,7 @@ function displayTerritory(field, context) {
     } else if (area[0] == 0 && area[1] !== 0) {
       // Same as above, but for white territory
       points = area.slice(2);
-      context.fillStyle = "red";
+      context.strokeStyle = "white";
       points.forEach((p) => {
         let x = (p.x + 1) * boxsize;
         let y = (p.y + 1) * boxsize;
