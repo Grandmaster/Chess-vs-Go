@@ -30,18 +30,19 @@ var range = generateRange();
 // Number of stones on the board
 var stoneCount = 0;
 
+// Array that represents board state
+var field = [];
+
 // Function that calculates transient territory controlled by each player using flood fill algorithm
 function calculateTerritory(board, context) {
-  // This should only run when there are stones of either color on the board
-  if (board.moves.size < 2) {
+  // This function should only run when there are stones of either color on the board
+  if (!board.moves.includes("white") || !board.moves.includes("black")) {
     return "need stones of both colors";
   }
 
   // Territory array init
   let arr = [0, 0];
-
-  // Parent array
-  let field = [];
+  field = [];
 
   // Goes through every point in the range
   while (range.length !== 0) {
