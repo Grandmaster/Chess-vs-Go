@@ -14,7 +14,6 @@ context.strokeStyle = "black";
 context.lineWidth = 1;
 var boxnum = 8;
 var boxsize = (canvas.width - margin) / boxnum;
-console.log(boxsize);
 x_counter = 0;
 y_counter = 0;
 let y_count_prev = y_counter;

@@ -5,9 +5,11 @@
 function currentGoBoard(board, context, width, height, boxsize) {
   // Clearing the board for each state update
   context.clearRect(0, 0, width, height);
+  stoneCount = 0;
 
   // Placing a stone on the relevant point on the board for each stone in input board
   board.moves.forEach((val, key) => {
+    stoneCount++;
     context.beginPath();
     context.arc(
       (key.x + 1) * boxsize,
@@ -24,6 +26,9 @@ function currentGoBoard(board, context, width, height, boxsize) {
 
 // Range of indices for calculating territory.
 var range = generateRange();
+
+// Number of stones on the board
+var stoneCount = 0;
 
 // Function that calculates transient territory controlled by each player using flood fill algorithm
 function calculateTerritory(board, context) {
@@ -49,8 +54,8 @@ function calculateTerritory(board, context) {
     let l = 0;
     for (let r of field) {
       l += r.length - 2;
-      l += r[0] + r[1];
     }
+    l += stoneCount;
     // This helps to keep accurate count of stones, which helps calculate territory
     if (l < 81) restoreCoord(stoneDump, range);
     stoneDump = [];
