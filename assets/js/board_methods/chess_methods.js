@@ -72,6 +72,21 @@ function possibleMoves(piece_obj, game_array) {
     return test;
   });
 
+  // Removing squares occupied by any piece if the moving piece is a pawn, because
+  // it cannot capture with its normal moves
+  if (piece_obj.type.slice(6) == "pawn") {
+    range = range.filter((square) => {
+      let x = square[0];
+      let y = square[1];
+      let test = true;
+      let standing_piece = findPiece(x, y, game_array);
+      if (typeof standing_piece !== "undefined") {
+        test = false;
+      }
+      return test;
+    });
+  }
+
   // Highlighting the squares that the piece can move to
   for (let square of range) {
     x_point = square[0] * boxsize;
@@ -124,6 +139,7 @@ function possiblePawnCaptures(piece_obj, game_array) {
     }
   }
   // Adding captures to move_queue
+  move_queue.pop();
   move_queue.push(captures);
 }
 // Function that moves a piece already on the board
