@@ -154,6 +154,7 @@ function possiblePawnCaptures(piece_obj, game_array) {
   s.forEach((element) => {
     captures.push(element);
   });
+  displayCaptureStones(targetStones, ctx);
 
   // Adding captures to move_queue
   move_queue.pop();

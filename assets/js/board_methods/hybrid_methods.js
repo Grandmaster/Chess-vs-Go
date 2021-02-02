@@ -46,6 +46,19 @@ function pawnLandingSquares(piece, targets) {
   return arr;
 }
 
+// Function to display the fact that certain stones are available for capture
+function displayCaptureStones(targets, context) {
+  targets.forEach((element) => {
+    let x = (element.x + 1) * boxsize;
+    let y = (element.y + 1) * boxsize;
+    context.beginPath();
+    context.arc(x, y, boxsize / 5, 0, 2 * Math.PI, true);
+    context.strokeStyle = "red";
+    context.lineWidth = 2;
+    context.stroke();
+  });
+}
+
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
 function pawnCapturesStone(piece, board, target) {}
