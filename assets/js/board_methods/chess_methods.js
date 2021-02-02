@@ -148,6 +148,13 @@ function possiblePawnCaptures(piece_obj, game_array) {
       }
     }
   }
+
+  // Locations the pawn can capture to, via means of capturing a stone
+  let s = pawnLandingSquares(piece_obj, targetStones);
+  s.forEach((element) => {
+    captures.push(element);
+  });
+
   // Adding captures to move_queue
   move_queue.pop();
   move_queue.push(captures);
