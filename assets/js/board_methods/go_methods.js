@@ -67,8 +67,6 @@ function calculateTerritory(board, context) {
     return arr.length > 2;
   });
 
-  console.log(field);
-
   // Repopulate range for next use of calculateTerritory
   range = generateRange();
 

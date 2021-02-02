@@ -6,6 +6,24 @@
 // - It is occupied by a player's stone, or
 // - The point is empty, but falls under territory (go) controlled by the player
 
+// Boolean that determines whether there is an opportunity for a pawn to capture a stone
+var stonesCanBeCaptured = false;
+
+// Stones the pawn can capture
+var targetStones = [];
+
+// Function to locate stones on the vertices of a given square
+function stonesCornerSquare(square) {
+  let x = square[0];
+  let y = square[1];
+  // Coordinates of corners of square, from go canvas layer
+  let tl = new godash.Coordinate(x - 1, y - 1);
+  let tr = new godash.Coordinate(x, y - 1);
+  let bl = new godash.Coordinate(x - 1, y);
+  let br = new godash.Coordinate(x, y);
+  return [tl, tr, bl, br];
+}
+
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
-function pawnCapturesStone() {}
+function pawnCapturesStone(piece, board) {}

@@ -46,7 +46,7 @@ function placePiece(x, y, piece, type) {
 }
 
 // Function that highlights possible locations to move existing piece on board
-function possibleMoves(piece_obj, game_array) {
+function possibleMoves(piece_obj, game_array, board) {
   // In this game, pawns can make one move in any cardinal direction, not just forward.
 
   // All possible locations the piece can move to
@@ -73,7 +73,8 @@ function possibleMoves(piece_obj, game_array) {
   });
 
   // Removing squares occupied by any piece if the moving piece is a pawn, because
-  // it cannot capture with its normal moves
+  // it cannot capture with its normal moves. Also, highlights the stones the pawn
+  // can capture, if any
   if (piece_obj.type.slice(6) == "pawn") {
     range = range.filter((square) => {
       let x = square[0];
@@ -85,6 +86,14 @@ function possibleMoves(piece_obj, game_array) {
       }
       return test;
     });
+    let stones = stonesCornerSquare([piece_obj.x_pos, piece_obj.y_pos]);
+    for (let c of stones) {
+      let stone = board.moves.get(c);
+      if (typeof stone !== "undefined" && stone !== color) {
+        targetStones.push(c);
+        stonesCanBeCaptured = true;
+      }
+    }
   }
 
   // Highlighting the squares that the piece can move to

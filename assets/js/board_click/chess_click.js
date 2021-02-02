@@ -80,7 +80,7 @@ $(document).ready(() => {
       if (move_queue.length == 0) {
         for (let piece of pieces_in_play) {
           if (piece.x_pos == x_i && piece.y_pos == y_i) {
-            possibleMoves(piece, pieces_in_play);
+            possibleMoves(piece, pieces_in_play, goBoardforChess);
             var piecetype = piece.type.slice(6);
             if (piecetype == "pawn") {
               possiblePawnCaptures(piece, pieces_in_play);
@@ -123,7 +123,6 @@ $(document).ready(() => {
         options.style.display = "block";
         options.style.left = x_i;
         options.style.top = y_i;
-        console.log(options.style.left);
       }
 
       // Place piece if the first two cases don't apply, and place_queue is not empty

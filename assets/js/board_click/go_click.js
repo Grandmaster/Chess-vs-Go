@@ -7,12 +7,16 @@ canvas_go.width = 750;
 canvas_go.height = 750;
 var ctx = canvas_go.getContext("2d");
 
+// Go board variable to pass to chess side of the game
+var goBoardforChess;
+
 $(document).ready(() => {
   // Black goes first
   color = godash.BLACK;
 
   // Object that keeps track of go/weiqi/baduk state of game, courtesy of godash
   var go_board = new godash.Board(9);
+  goBoardforChess = go_board;
 
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
@@ -47,9 +51,12 @@ $(document).ready(() => {
       go_board = godash.addMove(go_board, point, color);
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
       color = godash.oppositeColor(color);
-    }
 
-    // Calculating territory controlled by each player, and displaying it
-    calculateTerritory(go_board, ctx);
+      // Calculating territory controlled by each player, and displaying it
+      calculateTerritory(go_board, ctx);
+
+      // Updating chess version of go board for hybrid methods
+      goBoardforChess = go_board;
+    }
   });
 });
