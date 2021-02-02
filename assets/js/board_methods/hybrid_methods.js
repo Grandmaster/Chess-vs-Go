@@ -24,6 +24,28 @@ function stonesCornerSquare(square) {
   return [tl, tr, bl, br];
 }
 
+// Function to locate square pawn would move to if it captures stone. Takes target stone coords
+function pawnLandingSquares(piece, targets) {
+  let arr = [];
+  let x = piece.x_pos;
+  let y = piece.y_pos;
+  targets.forEach((element) => {
+    let xc = element.x;
+    let yc = element.y;
+    // Using corners of square to locate diagonal squares
+    if (xc == x - 1 && yc == y - 1) {
+      arr.push([x - 1, y - 1]);
+    } else if (xc == x && yc == y - 1) {
+      arr.push([x + 1, y - 1]);
+    } else if (xc == x - 1 && yc == y) {
+      arr.push([x - 1, y + 1]);
+    } else if (xc == x && yc == y) {
+      arr.push([x + 1, y + 1]);
+    }
+  });
+  return arr;
+}
+
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
-function pawnCapturesStone(piece, board) {}
+function pawnCapturesStone(piece, board, target) {}

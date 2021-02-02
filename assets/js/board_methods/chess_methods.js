@@ -86,6 +86,7 @@ function possibleMoves(piece_obj, game_array, board) {
       }
       return test;
     });
+    targetStones = [];
     let stones = stonesCornerSquare([piece_obj.x_pos, piece_obj.y_pos]);
     for (let c of stones) {
       let stone = board.moves.get(c);
