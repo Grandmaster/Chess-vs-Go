@@ -36,13 +36,6 @@ $(document).ready(() => {
 
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
-    // Since this is the top layer, pass click event to go_layer with mouse location
-    var clickEvent = new MouseEvent("click", {
-      clientX: event.clientX,
-      clientY: event.clientY,
-    });
-    canvas_go.dispatchEvent(clickEvent);
-
     // Finding where on the board the click happened
     var rect = canvas_chess.getBoundingClientRect();
     let x_point = Math.floor(event.clientX - rect.left);

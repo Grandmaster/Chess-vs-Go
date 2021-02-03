@@ -20,6 +20,13 @@ $(document).ready(() => {
 
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
+    // Since this is the top layer, pass event to chess layer with mouse location
+    var clickEvent = new MouseEvent("click", {
+      clientX: event.clientX,
+      clientY: event.clientY,
+    });
+    canvas_chess.dispatchEvent(clickEvent);
+
     // Finding where on the board the click happened
     var rect = canvas_go.getBoundingClientRect();
     let x_point = Math.floor(event.clientX - rect.left);
@@ -44,6 +51,7 @@ $(document).ready(() => {
     // Getting index of chosen point to pass to godash.board
     x_i = x_true / 75 - 1;
     y_i = y_true / 75 - 1;
+    console.log(`${x_i}, ${y_i}`);
 
     // Placing a game piece (a stone) on the relevant point
     if (x_i != -1 && y_i != -1) {
