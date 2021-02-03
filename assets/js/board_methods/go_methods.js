@@ -63,7 +63,6 @@ function calculateTerritory(board, context) {
     // This helps to keep accurate count of stones, which helps calculate territory
     if (l < 81) restoreCoord(stoneDump, range);
     stoneDump = [];
-    console.log("in here");
 
     // Break condition
     i++;

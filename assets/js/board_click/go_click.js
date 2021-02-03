@@ -55,12 +55,14 @@ $(document).ready(() => {
     // Gameplay on the relevant point
     if (x_i != -1 && y_i != -1) {
       var point = new godash.Coordinate(x_i, y_i);
+      let stone = go_board.moves.get(point);
 
       // Capturing a stone with a pawn if all conditions are met
-      let stone = go_board.moves.get(point);
       if (stone !== "undefined" && stonesCanBeCaptured) {
         let l = pawnLandingSquares(crouchingPiece, [point]);
         pawnCapturesStone(crouchingPiece, go_board, point, l);
+        color = godash.oppositeColor(color);
+        console.log(go_board.moves);
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -71,7 +73,6 @@ $(document).ready(() => {
         // Resetting for next instance
         stonesCanBeCaptured = false;
         crouchingPiece = 0;
-        console.log(pieces_in_play);
       } else {
         // Placing a stone on the relevant point, if it's empty
         go_board = godash.addMove(go_board, point, color);
@@ -83,6 +84,7 @@ $(document).ready(() => {
           boxsize
         );
         color = godash.oppositeColor(color);
+        console.log(go_board.moves);
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
