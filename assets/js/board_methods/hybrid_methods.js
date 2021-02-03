@@ -70,7 +70,6 @@ function pawnCapturesStone(piece, board, target, landing) {
   let xn = landing[0][0];
   let yn = landing[0][1];
   movePiece(piece, xn, yn);
-  move_queue = [];
   currentChessBoard(
     pieces_in_play,
     contxt,

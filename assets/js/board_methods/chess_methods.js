@@ -165,6 +165,7 @@ function possiblePawnCaptures(piece_obj, game_array) {
 function movePiece(piece_obj, x_new, y_new) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
+  move_queue = [];
 }
 
 // Function that captures a piece if moved onto by another
