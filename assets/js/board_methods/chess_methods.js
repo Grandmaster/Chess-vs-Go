@@ -93,6 +93,7 @@ function possibleMoves(piece_obj, game_array, board) {
       if (typeof stone !== "undefined" && stone !== color) {
         targetStones.push(c);
         stonesCanBeCaptured = true;
+        crouchingPiece = piece_obj;
       }
     }
   }

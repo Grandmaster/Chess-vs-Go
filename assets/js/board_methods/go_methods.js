@@ -44,6 +44,9 @@ function calculateTerritory(board, context) {
   let arr = [0, 0];
   field = [];
 
+  // Break parameter
+  let i = 0;
+
   // Goes through every point in the range
   while (range.length !== 0) {
     let index = range[0];
@@ -60,6 +63,11 @@ function calculateTerritory(board, context) {
     // This helps to keep accurate count of stones, which helps calculate territory
     if (l < 81) restoreCoord(stoneDump, range);
     stoneDump = [];
+    console.log("in here");
+
+    // Break condition
+    i++;
+    if (i > 100) break;
   }
 
   // Cleaning up the parent array

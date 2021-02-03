@@ -12,6 +12,9 @@ var stonesCanBeCaptured = false;
 // Stones the pawn can capture
 var targetStones = [];
 
+// Pawn that is in position to capture
+var crouchingPiece;
+
 // Function to locate stones on the vertices of a given square
 function stonesCornerSquare(square) {
   let x = square[0];
@@ -61,4 +64,17 @@ function displayCaptureStones(targets, context) {
 
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
-function pawnCapturesStone(piece, board, target) {}
+function pawnCapturesStone(piece, board, target, landing) {
+  board = godash.removeStone(board, target);
+  currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
+  let xn = landing[0][0];
+  let yn = landing[0][1];
+  movePiece(piece, xn, yn);
+  move_queue = [];
+  currentChessBoard(
+    pieces_in_play,
+    contxt,
+    canvas_chess.width,
+    canvas_chess.height
+  );
+}

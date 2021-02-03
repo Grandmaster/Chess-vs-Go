@@ -52,18 +52,44 @@ $(document).ready(() => {
     x_i = x_true / 75 - 1;
     y_i = y_true / 75 - 1;
 
-    // Placing a game piece (a stone) on the relevant point
+    // Gameplay on the relevant point
     if (x_i != -1 && y_i != -1) {
       var point = new godash.Coordinate(x_i, y_i);
-      go_board = godash.addMove(go_board, point, color);
-      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
-      color = godash.oppositeColor(color);
 
-      // Calculating territory controlled by each player, and displaying it
-      calculateTerritory(go_board, ctx);
+      // Capturing a stone with a pawn if all conditions are met
+      let stone = go_board.moves.get(point);
+      if (stone !== "undefined" && stonesCanBeCaptured) {
+        let l = pawnLandingSquares(crouchingPiece, [point]);
+        pawnCapturesStone(crouchingPiece, go_board, point, l);
 
-      // Updating chess version of go board for hybrid methods
-      goBoardforChess = go_board;
+        // Calculating territory controlled by each player, and displaying it
+        calculateTerritory(go_board, ctx);
+
+        // Updating chess version of go board for hybrid methods
+        goBoardforChess = go_board;
+
+        // Resetting for next instance
+        stonesCanBeCaptured = false;
+        crouchingPiece = 0;
+        console.log(pieces_in_play);
+      } else {
+        // Placing a stone on the relevant point, if it's empty
+        go_board = godash.addMove(go_board, point, color);
+        currentGoBoard(
+          go_board,
+          ctx,
+          canvas_go.width,
+          canvas_go.height,
+          boxsize
+        );
+        color = godash.oppositeColor(color);
+
+        // Calculating territory controlled by each player, and displaying it
+        calculateTerritory(go_board, ctx);
+
+        // Updating chess version of go board for hybrid methods
+        goBoardforChess = go_board;
+      }
     }
   });
 });

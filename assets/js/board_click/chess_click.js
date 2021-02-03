@@ -81,6 +81,7 @@ $(document).ready(() => {
             c++;
           }
         }
+        console.log(1);
       }
 
       // Move existing piece and/or capture, if move_queue is not empty
@@ -109,6 +110,7 @@ $(document).ready(() => {
             c++;
           }
         }
+        console.log(2);
       }
 
       // Display piece options if player wants to place a piece on an empty square
@@ -138,6 +140,7 @@ $(document).ready(() => {
 
         // Switch color after every move
         color = switchColor(color);
+        console.log(3);
       }
     }
   });
