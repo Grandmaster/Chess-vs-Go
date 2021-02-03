@@ -51,7 +51,6 @@ $(document).ready(() => {
     // Getting index of chosen point to pass to godash.board
     x_i = x_true / 75 - 1;
     y_i = y_true / 75 - 1;
-    console.log(`${x_i}, ${y_i}`);
 
     // Placing a game piece (a stone) on the relevant point
     if (x_i != -1 && y_i != -1) {

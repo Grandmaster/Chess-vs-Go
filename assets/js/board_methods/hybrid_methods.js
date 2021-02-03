@@ -54,7 +54,7 @@ function displayCaptureStones(targets, context) {
     context.beginPath();
     context.arc(x, y, boxsize / 5, 0, 2 * Math.PI, true);
     context.strokeStyle = "red";
-    context.lineWidth = 2;
+    context.lineWidth = 4;
     context.stroke();
   });
 }
