@@ -78,3 +78,7 @@ function pawnCapturesStone(piece, board, target, landing) {
   );
   return board;
 }
+
+// In this game, when an official (except the king) having moved lands on a square with enemy stones on its vertices, it can
+// convert one of them to a stone of its own color
+function officialConvertsStone(piece, board, target) {}

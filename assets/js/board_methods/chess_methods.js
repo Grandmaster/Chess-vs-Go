@@ -166,6 +166,7 @@ function movePiece(piece_obj, x_new, y_new) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
   move_queue = [];
+  console.log(piece_obj.type.slice(6));
 }
 
 // Function that captures a piece if moved onto by another
