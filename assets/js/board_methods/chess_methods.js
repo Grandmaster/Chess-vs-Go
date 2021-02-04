@@ -162,11 +162,21 @@ function possiblePawnCaptures(piece_obj, game_array) {
   move_queue.push(captures);
 }
 // Function that moves a piece already on the board
-function movePiece(piece_obj, x_new, y_new) {
+function movePiece(piece_obj, x_new, y_new, board) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
   move_queue = [];
-  console.log(piece_obj.type.slice(6));
+  let type = piece_obj.type.slice(6);
+  let color = piece_obj.type.slice(0, 5);
+  if (type !== "pawn") {
+    let cs = stonesCornerSquare([x_new, y_new]);
+    for (let c of cs) {
+      let s = board.moves.get(c);
+      if (typeof s !== "undefined" && s !== color) {
+        console.log("poop");
+      }
+    }
+  }
 }
 
 // Function that captures a piece if moved onto by another

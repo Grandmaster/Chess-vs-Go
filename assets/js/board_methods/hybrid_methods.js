@@ -9,6 +9,9 @@
 // Boolean that determines whether there is an opportunity for a pawn to capture a stone
 var stonesCanBeCaptured = false;
 
+// Boolean that determines whether there is an opportunity for an official to convert a stone
+var stonesCanBeConverted = false;
+
 // Stones the pawn can capture
 var targetStones = [];
 

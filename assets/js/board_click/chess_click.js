@@ -97,7 +97,7 @@ $(document).ready(() => {
         for (let move of pmoves) {
           if (_.isEqual(_.sortBy(move), _.sortBy(arr))) {
             var piece = move_queue[0];
-            movePiece(piece, x_i, y_i);
+            movePiece(piece, x_i, y_i, goBoardforChess);
             currentChessBoard(
               pieces_in_play,
               contxt,
