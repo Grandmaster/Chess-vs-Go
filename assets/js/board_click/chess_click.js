@@ -104,6 +104,13 @@ $(document).ready(() => {
               canvas_chess.width,
               canvas_chess.height
             );
+            currentGoBoard(
+              goBoardforChess,
+              ctx,
+              canvas_go.width,
+              canvas_go.height,
+              boxsize
+            );
             color = switchColor(color);
             c++;
           }
