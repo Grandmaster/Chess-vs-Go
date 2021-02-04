@@ -44,6 +44,9 @@ function calculateTerritory(board, context) {
   let arr = [0, 0];
   field = [];
 
+  // Populate range
+  range = generateRange();
+
   // Break parameter
   let i = 0;
 
@@ -73,9 +76,6 @@ function calculateTerritory(board, context) {
   field = field.filter((arr) => {
     return arr.length > 2;
   });
-
-  // Repopulate range for next use of calculateTerritory
-  range = generateRange();
 
   // Display results
   displayTerritory(field, context);

@@ -62,7 +62,6 @@ $(document).ready(() => {
         let l = pawnLandingSquares(crouchingPiece, [point]);
         go_board = pawnCapturesStone(crouchingPiece, go_board, point, l);
         color = godash.oppositeColor(color);
-        console.log(go_board.moves);
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -84,7 +83,6 @@ $(document).ready(() => {
           boxsize
         );
         color = godash.oppositeColor(color);
-        console.log(go_board.moves);
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
