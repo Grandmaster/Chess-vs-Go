@@ -15,8 +15,14 @@ var stonesCanBeConverted = false;
 // Stones the pawn can capture
 var targetStones = [];
 
+// Stones the official can convert
+var naiveStones = [];
+
 // Pawn that is in position to capture
 var crouchingPiece;
+
+// Official that is in position to convert
+var forcingPiece;
 
 // Function to locate stones on the vertices of a given square
 function stonesCornerSquare(square) {
@@ -52,7 +58,7 @@ function pawnLandingSquares(piece, targets) {
   return arr;
 }
 
-// Function to display the fact that certain stones are available for capture
+// Function to display the fact that certain stones are available for capture or conversion
 function displayCaptureStones(targets, context) {
   targets.forEach((element) => {
     let x = (element.x + 1) * boxsize;

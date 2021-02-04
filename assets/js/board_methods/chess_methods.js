@@ -173,9 +173,13 @@ function movePiece(piece_obj, x_new, y_new, board) {
     for (let c of cs) {
       let s = board.moves.get(c);
       if (typeof s !== "undefined" && s !== color) {
-        console.log("poop");
+        naiveStones.push(c);
+        stonesCanBeConverted = true;
+        forcingPiece = piece_obj;
       }
     }
+    console.log(naiveStones);
+    displayCaptureStones(naiveStones, ctx);
   }
 }
 

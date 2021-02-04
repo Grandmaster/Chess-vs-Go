@@ -104,13 +104,15 @@ $(document).ready(() => {
               canvas_chess.width,
               canvas_chess.height
             );
-            currentGoBoard(
-              goBoardforChess,
-              ctx,
-              canvas_go.width,
-              canvas_go.height,
-              boxsize
-            );
+            if (naiveStones.length == 0) {
+              currentGoBoard(
+                goBoardforChess,
+                ctx,
+                canvas_go.width,
+                canvas_go.height,
+                boxsize
+              );
+            }
             color = switchColor(color);
             c++;
           }
@@ -140,6 +142,13 @@ $(document).ready(() => {
           contxt,
           canvas_chess.width,
           canvas_chess.height
+        );
+        currentGoBoard(
+          goBoardforChess,
+          ctx,
+          canvas_go.width,
+          canvas_go.height,
+          boxsize
         );
 
         // Switch color after every move
