@@ -60,7 +60,7 @@ $(document).ready(() => {
       // Capturing a stone with a pawn if all conditions are met
       if (stone !== "undefined" && stonesCanBeCaptured) {
         let l = pawnLandingSquares(crouchingPiece, [point]);
-        pawnCapturesStone(crouchingPiece, go_board, point, l);
+        go_board = pawnCapturesStone(crouchingPiece, go_board, point, l);
         color = godash.oppositeColor(color);
         console.log(go_board.moves);
 
