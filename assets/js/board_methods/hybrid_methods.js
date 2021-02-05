@@ -12,17 +12,29 @@ var stonesCanBeCaptured = false;
 // Boolean that determines whether there is an opportunity for an official to convert a stone
 var stonesCanBeConverted = false;
 
+// Boolean that determines whether there is an opportunity for the king to move a stone
+var stonesCanBeMoved = false;
+
 // Stones the pawn can capture
 var targetStones = [];
 
 // Stones the official can convert
 var naiveStones = [];
 
+// Stones the king can move
+var flyingStones = [];
+
+// Points the king can move stones to
+var empties = [];
+
 // Pawn that is in position to capture
 var crouchingPiece;
 
 // Official that is in position to convert
 var forcingPiece;
+
+// King that is in position to shift stones
+var royalPiece;
 
 // Function to locate stones on the vertices of a given square
 function stonesCornerSquare(square) {

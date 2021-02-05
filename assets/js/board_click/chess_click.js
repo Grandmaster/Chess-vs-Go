@@ -104,7 +104,7 @@ $(document).ready(() => {
               canvas_chess.width,
               canvas_chess.height
             );
-            if (naiveStones.length == 0) {
+            if (naiveStones.length == 0 && flyingStones.length == 0) {
               currentGoBoard(
                 goBoardforChess,
                 ctx,

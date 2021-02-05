@@ -168,7 +168,8 @@ function movePiece(piece_obj, x_new, y_new, board) {
   move_queue = [];
   let type = piece_obj.type.slice(6);
   let color = piece_obj.type.slice(0, 5);
-  if (type !== "pawn") {
+  // If it's an official, check to see if there are any stones it can convert
+  if (type !== "pawn" && type !== "king") {
     let cs = stonesCornerSquare([x_new, y_new]);
     naiveStones = [];
     for (let c of cs) {
@@ -180,6 +181,23 @@ function movePiece(piece_obj, x_new, y_new, board) {
       }
     }
     displayCaptureStones(naiveStones, ctx);
+  } else if (type == "king") {
+    // If it's the king, check to see if there are any stones it can move
+    let cs = stonesCornerSquare([x_new, y_new]);
+    flyingStones = [];
+    empties = [];
+    for (let c of cs) {
+      let s = board.moves.get(c);
+      if (typeof s == "undefined") {
+        empties.push(c);
+      } else if (typeof s !== "undefined" && s == color) {
+        flyingStones.push(c);
+        royalPiece = piece_obj;
+        if (empties.length > 0) stonesCanBeMoved = true;
+      }
+    }
+    console.log(flyingStones);
+    displayCaptureStones(flyingStones, ctx);
   }
 }
 
