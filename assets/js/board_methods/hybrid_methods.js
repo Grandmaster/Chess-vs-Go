@@ -106,3 +106,7 @@ function officialConvertsStone(piece, board, target, team) {
   team = godash.oppositeColor(color);
   return [board, team];
 }
+
+// In this game, when the king having moved lands on a square with friendly stones on its vertices and at least one
+// empty vertex, it can move a friendly stone from its position to an empty vertex on the square it landed on
+function kingShufflesStones(piece, board, target, vacancy, team) {}
