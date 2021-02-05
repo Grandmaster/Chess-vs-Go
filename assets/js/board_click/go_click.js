@@ -60,8 +60,9 @@ $(document).ready(() => {
       // Capturing a stone with a pawn if all conditions are met
       if (stone !== "undefined" && stonesCanBeCaptured) {
         let l = pawnLandingSquares(crouchingPiece, [point]);
-        go_board = pawnCapturesStone(crouchingPiece, go_board, point, l);
-        color = godash.oppositeColor(color);
+        let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
+        go_board = r[0];
+        color = r[1];
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -74,8 +75,9 @@ $(document).ready(() => {
         crouchingPiece = 0;
       } else if (stone !== "undefined" && stonesCanBeConverted) {
         // Converting a stone with an official if all conditions are met
-        go_board = officialConvertsStone(forcingPiece, go_board, point);
-        color = godash.oppositeColor(color);
+        let r = officialConvertsStone(forcingPiece, go_board, point, color);
+        go_board = r[0];
+        color = r[1];
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);

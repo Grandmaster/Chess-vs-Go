@@ -73,8 +73,9 @@ function displayCaptureStones(targets, context) {
 
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
-function pawnCapturesStone(piece, board, target, landing) {
+function pawnCapturesStone(piece, board, target, landing, team) {
   board = godash.removeStone(board, target);
+  let color = piece.type.slice(0, 5);
   currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   let xn = landing[0][0];
   let yn = landing[0][1];
@@ -85,12 +86,13 @@ function pawnCapturesStone(piece, board, target, landing) {
     canvas_chess.width,
     canvas_chess.height
   );
-  return board;
+  team = godash.oppositeColor(color);
+  return [board, team];
 }
 
 // In this game, when an official (except the king) having moved lands on a square with enemy stones on its vertices, it can
 // convert one of them to a stone of its own color
-function officialConvertsStone(piece, board, target) {
+function officialConvertsStone(piece, board, target, team) {
   let color = piece.type.slice(0, 5);
   board = godash.removeStone(board, target);
   board = godash.placeStone(board, target, color, false);
@@ -101,5 +103,6 @@ function officialConvertsStone(piece, board, target) {
     canvas_chess.width,
     canvas_chess.height
   );
-  return board;
+  team = godash.oppositeColor(color);
+  return [board, team];
 }
