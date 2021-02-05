@@ -179,7 +179,6 @@ function movePiece(piece_obj, x_new, y_new, board) {
         forcingPiece = piece_obj;
       }
     }
-    console.log(naiveStones);
     displayCaptureStones(naiveStones, ctx);
   }
 }
@@ -394,7 +393,6 @@ function rookRange(location, game_array) {
 
   xr.splice(xi, 1);
   yr.splice(yi, 1);
-  console.log(xr);
   for (let i of yr) {
     arr.push([x, i]);
   }

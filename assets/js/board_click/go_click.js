@@ -72,6 +72,20 @@ $(document).ready(() => {
         // Resetting for next instance
         stonesCanBeCaptured = false;
         crouchingPiece = 0;
+      } else if (stone !== "undefined" && stonesCanBeConverted) {
+        // Converting a stone with an official if all conditions are met
+        go_board = officialConvertsStone(forcingPiece, go_board, point);
+        color = godash.oppositeColor(color);
+
+        // Calculating territory controlled by each player, and displaying it
+        calculateTerritory(go_board, ctx);
+
+        // Updating chess version of go board for hybrid methods
+        goBoardforChess = go_board;
+
+        // Resetting for next instance
+        stonesCanBeConverted = false;
+        forcingPiece = 0;
       } else {
         // Placing a stone on the relevant point, if it's empty
         go_board = godash.addMove(go_board, point, color);
