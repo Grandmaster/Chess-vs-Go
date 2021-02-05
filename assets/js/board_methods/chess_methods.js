@@ -311,14 +311,6 @@ function generateMoves(piece, location, game_array) {
 
 // Function that generates the moves for the bishop, rook and queen
 function rangedOfficialMoves(name, location, game_array) {
-  // All values of x and y range from 1-8
-  var x = location[0];
-  var y = location[1];
-  var xr = _.range(1, 9);
-  var yr = _.range(1, 9);
-  var xi = xr.indexOf(x);
-  var yi = yr.indexOf(y);
-
   switch (name) {
     // Bishop's case
     case "bishop":
