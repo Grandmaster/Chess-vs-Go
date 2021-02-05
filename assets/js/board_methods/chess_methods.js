@@ -155,7 +155,7 @@ function possiblePawnCaptures(piece_obj, game_array) {
   s.forEach((element) => {
     captures.push(element);
   });
-  displayCaptureStones(targetStones, ctx);
+  displayCaptureStones(targetStones, ctx, "red");
 
   // Adding captures to move_queue
   move_queue.pop();
@@ -168,6 +168,14 @@ function movePiece(piece_obj, x_new, y_new, board) {
   move_queue = [];
   let type = piece_obj.type.slice(6);
   let color = piece_obj.type.slice(0, 5);
+  // Clear the board for easier reading
+  currentGoBoard(
+    goBoardforChess,
+    ctx,
+    canvas_go.width,
+    canvas_go.height,
+    boxsize
+  );
   // If it's an official, check to see if there are any stones it can convert
   if (type !== "pawn" && type !== "king") {
     let cs = stonesCornerSquare([x_new, y_new]);
@@ -180,7 +188,7 @@ function movePiece(piece_obj, x_new, y_new, board) {
         forcingPiece = piece_obj;
       }
     }
-    displayCaptureStones(naiveStones, ctx);
+    displayCaptureStones(naiveStones, ctx, "red");
   } else if (type == "king") {
     // If it's the king, check to see if there are any stones it can move
     let cs = stonesCornerSquare([x_new, y_new]);
@@ -196,7 +204,7 @@ function movePiece(piece_obj, x_new, y_new, board) {
       }
     }
     if (empties.length > 0 && flyingStones.length > 0) stonesCanBeMoved = true;
-    displayCaptureStones(flyingStones, ctx);
+    displayCaptureStones(flyingStones, ctx, "red");
   }
 }
 

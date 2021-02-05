@@ -77,13 +77,13 @@ function pawnLandingSquares(piece, targets) {
 }
 
 // Function to display the fact that certain stones are available for capture or conversion
-function displayCaptureStones(targets, context) {
+function displayCaptureStones(targets, context, color) {
   targets.forEach((element) => {
     let x = (element.x + 1) * boxsize;
     let y = (element.y + 1) * boxsize;
     context.beginPath();
     context.arc(x, y, boxsize / 5, 0, 2 * Math.PI, true);
-    context.strokeStyle = "red";
+    context.strokeStyle = color;
     context.lineWidth = 4;
     context.stroke();
   });

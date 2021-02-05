@@ -139,7 +139,7 @@ function floodPull(board, c, b, w, t, r) {
   floodPull(board, c_down, b, w, t, r);
 }
 
-// Function that takes in a coordinate and returns its index in the range of locations, if it is there
+// Function that takes in a coordinate and returns its index in the range of locations, if it is there.
 function findCoord(c, r) {
   var l = [c.x, c.y];
   var ind = -1;

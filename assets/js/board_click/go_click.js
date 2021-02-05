@@ -56,8 +56,14 @@ $(document).ready(() => {
     if (x_i != -1 && y_i != -1) {
       var point = new godash.Coordinate(x_i, y_i);
       let stone = go_board.moves.get(point);
-      console.log(stonesCanBeMoved);
-      console.log(stone);
+
+      // Check to see if point is a location the king can move a stone to
+      let i = -1;
+      for (let j of empties) {
+        if (point.x == j.x && point.y == j.y) {
+          i = empties.indexOf(j);
+        }
+      }
 
       // Capturing a stone with a pawn if all conditions are met
       if (stone !== undefined && stonesCanBeCaptured) {
@@ -100,7 +106,8 @@ $(document).ready(() => {
           canvas_go.height,
           boxsize
         );
-      } else if (stone == undefined && stonesCanBeMoved) {
+        displayCaptureStones([point], ctx, "green");
+      } else if (stone == undefined && stonesCanBeMoved && i !== -1) {
         // Moving the stone selected by the king to a new spot when all conditions are met
         landingPoint = point;
         let r = kingMovesStones(
@@ -122,6 +129,7 @@ $(document).ready(() => {
         // Resetting for next instance
         stonesCanBeMoved = false;
         royalPiece = 0;
+        empties = [];
       } else {
         // Placing a stone on the relevant point, if it's empty
         go_board = godash.addMove(go_board, point, color);
@@ -139,6 +147,9 @@ $(document).ready(() => {
 
         // Updating chess version of go board for hybrid methods
         goBoardforChess = go_board;
+
+        // Cleanup
+        empties = [];
       }
     }
   });
