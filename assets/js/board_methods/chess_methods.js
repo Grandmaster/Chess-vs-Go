@@ -170,6 +170,7 @@ function movePiece(piece_obj, x_new, y_new, board) {
   let color = piece_obj.type.slice(0, 5);
   if (type !== "pawn") {
     let cs = stonesCornerSquare([x_new, y_new]);
+    naiveStones = [];
     for (let c of cs) {
       let s = board.moves.get(c);
       if (typeof s !== "undefined" && s !== color) {

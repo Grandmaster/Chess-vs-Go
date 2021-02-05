@@ -90,4 +90,16 @@ function pawnCapturesStone(piece, board, target, landing) {
 
 // In this game, when an official (except the king) having moved lands on a square with enemy stones on its vertices, it can
 // convert one of them to a stone of its own color
-function officialConvertsStone(piece, board, target) {}
+function officialConvertsStone(piece, board, target) {
+  let color = piece.type.slice(0, 5);
+  board = godash.removeStone(board, target);
+  board = godash.placeStone(board, target, color, false);
+  currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
+  currentChessBoard(
+    pieces_in_play,
+    contxt,
+    canvas_chess.width,
+    canvas_chess.height
+  );
+  return board;
+}
