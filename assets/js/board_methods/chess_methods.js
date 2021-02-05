@@ -193,10 +193,9 @@ function movePiece(piece_obj, x_new, y_new, board) {
       } else if (typeof s !== "undefined" && s == color) {
         flyingStones.push(c);
         royalPiece = piece_obj;
-        if (empties.length > 0) stonesCanBeMoved = true;
       }
     }
-    console.log(flyingStones);
+    if (empties.length > 0 && flyingStones.length > 0) stonesCanBeMoved = true;
     displayCaptureStones(flyingStones, ctx);
   }
 }

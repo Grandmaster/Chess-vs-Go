@@ -27,6 +27,12 @@ var flyingStones = [];
 // Points the king can move stones to
 var empties = [];
 
+// Stone selected by king
+var flyingStone;
+
+// Point selected by king
+var landingPoint;
+
 // Pawn that is in position to capture
 var crouchingPiece;
 
@@ -121,4 +127,22 @@ function officialConvertsStone(piece, board, target, team) {
 
 // In this game, when the king having moved lands on a square with friendly stones on its vertices and at least one
 // empty vertex, it can move a friendly stone from its position to an empty vertex on the square it landed on
-function kingShufflesStones(piece, board, target, vacancy, team) {}
+function kingMovesStones(piece, board, target, vacancy, team) {
+  let color = piece.type.slice(0, 5);
+  board = godash.removeStone(board, target);
+  board = godash.addMove(board, vacancy, color);
+  currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
+  currentChessBoard(
+    pieces_in_play,
+    contxt,
+    canvas_chess.width,
+    canvas_chess.height
+  );
+  team = godash.oppositeColor(color);
+
+  // Resetting for next instance
+  flyingStone = "undefined";
+  landingPoint = "undefined";
+  royalPiece = 0;
+  return [board, team];
+}
