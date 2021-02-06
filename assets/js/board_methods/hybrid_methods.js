@@ -146,3 +146,6 @@ function kingMovesStones(piece, board, target, vacancy, team) {
   royalPiece = 0;
   return [board, team];
 }
+
+// In this game, stones can, in certain configurations, restrict the movement of enemy pieces
+function stonesRestrictPieces(board) {}
