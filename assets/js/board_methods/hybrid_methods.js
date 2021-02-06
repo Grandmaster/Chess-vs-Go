@@ -172,11 +172,24 @@ function shadedPattern(context, square, color) {
 
   // Creating pattern
   patternContext.strokeStyle = color;
+  patternContext.fillStyle = color;
   patternContext.lineWidth = 3;
   patternContext.beginPath();
   patternContext.moveTo(boxsize / 8, 0);
   patternContext.lineTo(0, boxsize / 8);
   patternContext.stroke();
+  patternContext.beginPath();
+  patternContext.moveTo(boxsize / 30, 0);
+  patternContext.lineTo(0, boxsize / 30);
+  patternContext.lineTo(0, 0);
+  patternContext.closePath();
+  patternContext.fill();
+  patternContext.beginPath();
+  patternContext.moveTo(boxsize / 8, boxsize / 8 - boxsize / 30);
+  patternContext.lineTo(boxsize / 8 - boxsize / 30, boxsize / 8);
+  patternContext.lineTo(boxsize / 8, boxsize / 8);
+  patternContext.closePath();
+  patternContext.fill();
 
   // Printing pattern on chess layer
   let x = square[0] * boxsize;
