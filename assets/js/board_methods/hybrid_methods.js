@@ -147,5 +147,41 @@ function kingMovesStones(piece, board, target, vacancy, team) {
   return [board, team];
 }
 
-// In this game, stones can, in certain configurations, restrict the movement of enemy pieces
-function stonesRestrictPieces(board) {}
+// In this game, stones can, in certain configurations, restrict the movement of enemy pieces (except the
+// knight). This function deals with the restriction of pawns and kings
+function stonesRestrictKing(piece, board, range) {
+  let x = piece.x_pos;
+  let y = piece.y_pos;
+  let color = piece.type.slice(0, 5);
+  let corners = stonesCornerSquare([x, y]);
+  let stones = [];
+  // This goes in the order: tl, tr, bl, br
+  for (let c of corners) {
+    stone = board.moves.get(c);
+    stones.push(stone);
+  }
+}
+
+// Function to draw shaded pattern on canvas
+function shadedPattern(context, square, color) {
+  // Create a pattern, offscreen
+  var patternCanvas = document.createElement("canvas");
+  var patternContext = patternCanvas.getContext("2d");
+  patternCanvas.width = boxsize / 8;
+  patternCanvas.height = boxsize / 8;
+
+  // Creating pattern
+  patternContext.strokeStyle = color;
+  patternContext.lineWidth = 3;
+  patternContext.beginPath();
+  patternContext.moveTo(boxsize / 8, 0);
+  patternContext.lineTo(0, boxsize / 8);
+  patternContext.stroke();
+
+  // Printing pattern on chess layer
+  let x = square[0] * boxsize;
+  let y = square[1] * boxsize;
+  let pattern = context.createPattern(patternCanvas, "repeat");
+  context.fillStyle = pattern;
+  context.fillRect(x, y, boxsize, boxsize);
+}
