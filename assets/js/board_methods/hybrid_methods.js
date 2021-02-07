@@ -162,6 +162,11 @@ function stonesRestrictKing(piece, board, range) {
   }
 }
 
+// In this game, chess pieces other than the king can only be brought to the field by dropping
+// them in zones that are under the control of the player. This function takes in the
+// field variable created by calculateTerritory
+function displayLandingZones(board, field) {}
+
 // Function to draw shaded pattern on canvas
 function shadedPattern(context, square, color) {
   // Create a pattern, offscreen

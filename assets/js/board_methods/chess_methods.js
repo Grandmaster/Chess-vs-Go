@@ -233,9 +233,10 @@ function findPiece(x, y, array) {
 
 // Function that returns a square from a range
 function findSquare(x, y, range) {
-  return range.find((element) => {
+  var result = range.find((element) => {
     return element[0] == x && element[1] == y;
   });
+  return range.indexOf(result);
 }
 
 // Function that displays choice of piece to insert on bench
