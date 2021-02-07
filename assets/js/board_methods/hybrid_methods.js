@@ -176,6 +176,8 @@ function displayLandingZones(board, field, color) {
     }
   }
   let area;
+  let ecolor = switchColor(color);
+  let zones = [];
   // Pulling regions of territory from the field
   if (color == "black") {
     area = field.filter((elem) => {
@@ -186,7 +188,42 @@ function displayLandingZones(board, field, color) {
       return elem[0] == 0 && elem[1] > 0;
     });
   }
-  console.log(area);
+  // Getting info from corners of each square
+  for (let square of range) {
+    let corners = stonesCornerSquare(square);
+    let stones = [];
+    for (let c of corners) {
+      let stone = board.moves.get(c);
+      stones.push(stone);
+    }
+    // Go to next square if one of the corners contains enemy stone
+    if (stones.includes(ecolor)) continue;
+
+    // Check if empty nodes belong to territory of player
+    if (stones.includes(undefined)) {
+      let emptynodes = stones.flatMap((stone, i) => {
+        stone == undefined ? i : [];
+      });
+      let f = 0;
+      for (let i of emptynodes) {
+        let c = corners[i];
+        for (let z of area) {
+          for (i = 2; i < z.length; i++) {
+            let coord = z[i];
+            if (coord.x == c.x && coord.y == c.y) {
+              f++;
+            }
+          }
+        }
+      }
+      // Go to next square if some empty nodes are in neutral territory
+      if (f !== emptynodes.length) continue;
+      // Finally, if all empty nodes belong to territory of player, add square to zones
+      if (f == emptynodes.length) zones.push(square);
+    }
+  }
+  console.log(zones);
+  return zones;
 }
 
 // Function to draw shaded pattern on canvas
