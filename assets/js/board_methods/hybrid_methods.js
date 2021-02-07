@@ -188,6 +188,9 @@ function displayLandingZones(board, field, color) {
       return elem[0] == 0 && elem[1] > 0;
     });
   }
+  area = area.flat().filter((elem) => {
+    return typeof elem !== "number";
+  });
   // Getting info from corners of each square
   for (let square of range) {
     let corners = stonesCornerSquare(square);
@@ -196,23 +199,21 @@ function displayLandingZones(board, field, color) {
       let stone = board.moves.get(c);
       stones.push(stone);
     }
-    // Go to next square if one of the corners contains enemy stone
+    // Go to next square if one of the corners contains an enemy stone
     if (stones.includes(ecolor)) continue;
 
     // Check if empty nodes belong to territory of player
     if (stones.includes(undefined)) {
       let emptynodes = stones.flatMap((stone, i) => {
-        stone == undefined ? i : [];
+        return stone === undefined ? i : [];
       });
       let f = 0;
       for (let i of emptynodes) {
         let c = corners[i];
         for (let z of area) {
-          for (i = 2; i < z.length; i++) {
-            let coord = z[i];
-            if (coord.x == c.x && coord.y == c.y) {
-              f++;
-            }
+          let coord = z;
+          if (coord.x == c.x && coord.y == c.y) {
+            f++;
           }
         }
       }
