@@ -231,6 +231,13 @@ function findPiece(x, y, array) {
   });
 }
 
+// Function that returns a square from a range
+function findSquare(x, y, range) {
+  return range.find((element) => {
+    return element[0] == x && element[1] == y;
+  });
+}
+
 // Function that displays choice of piece to insert on bench
 function choosePiece(piece, bbench, wbench) {
   var choice = piece.replace(/ /, "_");
