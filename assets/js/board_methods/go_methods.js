@@ -80,8 +80,8 @@ function calculateTerritory(board, context) {
   // Display results
   displayTerritory(field, context);
 
-  // Determine landing zones
-  displayLandingZones(board, field, "black");
+  // Determine zones controlled by player
+  displayZones(board, field, context);
 }
 
 // Function that creates range of indices to calculate territory. For now, assumes 9x9 board

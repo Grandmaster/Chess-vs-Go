@@ -70,7 +70,6 @@ $(document).ready(() => {
         let l = pawnLandingSquares(crouchingPiece, [point]);
         let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
         go_board = r[0];
-        color = r[1];
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -81,11 +80,11 @@ $(document).ready(() => {
         // Resetting for next instance
         stonesCanBeCaptured = false;
         crouchingPiece = 0;
+        color = r[1];
       } else if (stone !== undefined && stonesCanBeConverted) {
         // Converting a stone with an official if all conditions are met
         let r = officialConvertsStone(forcingPiece, go_board, point, color);
         go_board = r[0];
-        color = r[1];
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -96,6 +95,7 @@ $(document).ready(() => {
         // Resetting for next instance
         stonesCanBeConverted = false;
         forcingPiece = 0;
+        color = r[1];
       } else if (stone !== undefined && stonesCanBeMoved) {
         // Selecting a stone for the king to move
         flyingStone = point;
@@ -118,7 +118,6 @@ $(document).ready(() => {
           color
         );
         go_board = r[0];
-        color = r[1];
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -130,6 +129,7 @@ $(document).ready(() => {
         stonesCanBeMoved = false;
         royalPiece = 0;
         empties = [];
+        color = r[1];
       } else {
         // Placing a stone on the relevant point, if it's empty
         go_board = godash.addMove(go_board, point, color);
@@ -140,7 +140,6 @@ $(document).ready(() => {
           canvas_go.height,
           boxsize
         );
-        color = godash.oppositeColor(color);
 
         // Calculating territory controlled by each player, and displaying it
         calculateTerritory(go_board, ctx);
@@ -150,6 +149,7 @@ $(document).ready(() => {
 
         // Cleanup
         empties = [];
+        color = godash.oppositeColor(color);
       }
     }
   });

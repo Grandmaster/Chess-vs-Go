@@ -164,8 +164,9 @@ function stonesRestrictKing(piece, board, range) {
 
 // In this game, chess pieces other than the king can only be brought to the field by dropping
 // them in zones that are under the control of the player. This function takes in the
-// field variable created by calculateTerritory
-function displayLandingZones(board, field, color) {
+// field variable created by calculateTerritory.
+// It wouldn't be an exaggeration to say this function is the lynchpin of this app
+function displayZones(board, field, context) {
   // Generating range for chess board
   var rx = Array.from({ length: 8 }, (_, i) => i + 1);
   var ry = rx;
@@ -175,56 +176,64 @@ function displayLandingZones(board, field, color) {
       range.push([i, j]);
     }
   }
-  let area;
-  let ecolor = switchColor(color);
-  let zones = [];
-  // Pulling regions of territory from the field
-  if (color == "black") {
-    area = field.filter((elem) => {
-      return elem[0] > 0 && elem[1] == 0;
-    });
-  } else if (color == "white") {
-    area = field.filter((elem) => {
-      return elem[0] == 0 && elem[1] > 0;
-    });
-  }
-  area = area.flat().filter((elem) => {
-    return typeof elem !== "number";
-  });
-  // Getting info from corners of each square
-  for (let square of range) {
-    let corners = stonesCornerSquare(square);
-    let stones = [];
-    for (let c of corners) {
-      let stone = board.moves.get(c);
-      stones.push(stone);
-    }
-    // Go to next square if one of the corners contains an enemy stone
-    if (stones.includes(ecolor)) continue;
-
-    // Check if empty nodes belong to territory of player
-    if (stones.includes(undefined)) {
-      let emptynodes = stones.flatMap((stone, i) => {
-        return stone === undefined ? i : [];
+  // Break parameter
+  let b = 0;
+  while (b < 2) {
+    let color = b % 2 == 0 ? "black" : "white";
+    let area;
+    let ecolor = switchColor(color);
+    let zones = [];
+    // Pulling regions of territory from the field
+    if (color == "black") {
+      area = field.filter((elem) => {
+        return elem[0] > 0 && elem[1] == 0;
       });
-      let f = 0;
-      for (let i of emptynodes) {
-        let c = corners[i];
-        for (let z of area) {
-          let coord = z;
-          if (coord.x == c.x && coord.y == c.y) {
-            f++;
+    } else if (color == "white") {
+      area = field.filter((elem) => {
+        return elem[0] == 0 && elem[1] > 0;
+      });
+    }
+    area = area.flat().filter((elem) => {
+      return typeof elem !== "number";
+    });
+    // Getting info from corners of each square
+    for (let square of range) {
+      let corners = stonesCornerSquare(square);
+      let stones = [];
+      for (let c of corners) {
+        let stone = board.moves.get(c);
+        stones.push(stone);
+      }
+      // Go to next square if one of the corners contains an enemy stone
+      if (stones.includes(ecolor)) continue;
+
+      // Check if empty nodes belong to territory of player
+      if (stones.includes(undefined)) {
+        let emptynodes = stones.flatMap((stone, i) => {
+          return stone === undefined ? i : [];
+        });
+        let f = 0;
+        for (let i of emptynodes) {
+          let c = corners[i];
+          for (let z of area) {
+            let coord = z;
+            if (coord.x == c.x && coord.y == c.y) {
+              f++;
+            }
           }
         }
+        // Go to next square if some empty nodes are in neutral territory
+        if (f !== emptynodes.length) continue;
+        // Finally, if all empty nodes belong to territory of player, add square to zones
+        if (f == emptynodes.length) zones.push(square);
       }
-      // Go to next square if some empty nodes are in neutral territory
-      if (f !== emptynodes.length) continue;
-      // Finally, if all empty nodes belong to territory of player, add square to zones
-      if (f == emptynodes.length) zones.push(square);
     }
+    // Displaying zones
+    for (let sq of zones) {
+      shadedPattern(context, sq, color);
+    }
+    b++;
   }
-  console.log(zones);
-  return zones;
 }
 
 // Function to draw shaded pattern on canvas
