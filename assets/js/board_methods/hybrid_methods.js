@@ -175,6 +175,18 @@ function displayLandingZones(board, field, color) {
       range.push([i, j]);
     }
   }
+  let area;
+  // Pulling regions of territory from the field
+  if (color == "black") {
+    area = field.filter((elem) => {
+      return elem[0] > 0 && elem[1] == 0;
+    });
+  } else if (color == "white") {
+    area = field.filter((elem) => {
+      return elem[0] == 0 && elem[1] > 0;
+    });
+  }
+  console.log(area);
 }
 
 // Function to draw shaded pattern on canvas
