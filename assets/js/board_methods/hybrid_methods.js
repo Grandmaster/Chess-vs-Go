@@ -176,6 +176,7 @@ function displayZones(board, field, context) {
       range.push([i, j]);
     }
   }
+  let regions = {};
   // Break parameter
   let b = 0;
   while (b < 2) {
@@ -232,8 +233,17 @@ function displayZones(board, field, context) {
     for (let sq of zones) {
       shadedPattern(context, sq, color);
     }
+    // Variable to return
+    switch (color) {
+      case "black":
+        regions.black = zones;
+        break;
+      case "white":
+        regions.white = zones;
+    }
     b++;
   }
+  return regions;
 }
 
 // Function to draw shaded pattern on canvas
@@ -264,6 +274,24 @@ function shadedPattern(context, square, color) {
   patternContext.lineTo(boxsize / 8, boxsize / 8);
   patternContext.closePath();
   patternContext.fill();
+
+  // Printing pattern on chess layer
+  let x = square[0] * boxsize;
+  let y = square[1] * boxsize;
+  let pattern = context.createPattern(patternCanvas, "repeat");
+  context.fillStyle = pattern;
+  context.fillRect(x, y, boxsize, boxsize);
+}
+
+// Function to draw zone pattern on canvas
+function honeycombPattern(context, square, color) {
+  // Create a pattern, offscreen
+  var patternCanvas = document.createElement("canvas");
+  var patternContext = patternCanvas.getContext("2d");
+  patternCanvas.width = boxsize / 8;
+  patternCanvas.height = boxsize / 8;
+
+  // Creating pattern
 
   // Printing pattern on chess layer
   let x = square[0] * boxsize;
