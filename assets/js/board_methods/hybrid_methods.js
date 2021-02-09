@@ -42,6 +42,14 @@ var forcingPiece;
 // King that is in position to shift stones
 var royalPiece;
 
+// Data from tactile.js
+import {
+  EdgeShape,
+  numTypes,
+  tilingTypes,
+  IsohedralTiling,
+} from "../myTactile.js";
+
 // Function to locate stones on the vertices of a given square
 function stonesCornerSquare(square) {
   let x = square[0];
