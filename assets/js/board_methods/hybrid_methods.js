@@ -231,7 +231,7 @@ function displayZones(board, field, context) {
     }
     // Displaying zones
     for (let sq of zones) {
-      shadedPattern(context, sq, color);
+      honeycombPattern(context, sq, color);
     }
     // Variable to return
     switch (color) {
@@ -288,10 +288,29 @@ function honeycombPattern(context, square, color) {
   // Create a pattern, offscreen
   var patternCanvas = document.createElement("canvas");
   var patternContext = patternCanvas.getContext("2d");
-  patternCanvas.width = boxsize / 8;
-  patternCanvas.height = boxsize / 8;
+  let l = boxsize / 10;
+  let p = l * (2 + Math.sqrt(3));
+  patternCanvas.width = p;
+  patternCanvas.height = l;
 
   // Creating pattern
+  patternContext.strokeStyle = color;
+  patternContext.fillStyle = color;
+  patternContext.lineWidth = 1;
+  patternContext.beginPath();
+  patternContext.moveTo(0, l / 2);
+  patternContext.lineTo(l / 2, l / 2);
+  let r = l / 2 + l * (Math.sqrt(3) / 2);
+  patternContext.lineTo(r, 0);
+  patternContext.moveTo(l / 2, l / 2);
+  patternContext.lineTo(r, l);
+  patternContext.lineTo(p - r, l);
+  patternContext.lineTo(p - l / 2, l / 2);
+  patternContext.lineTo(p, l / 2);
+  patternContext.moveTo(p - l / 2, l / 2);
+  patternContext.lineTo(p - r, 0);
+  patternContext.lineTo(r, 0);
+  patternContext.stroke();
 
   // Printing pattern on chess layer
   let x = square[0] * boxsize;
