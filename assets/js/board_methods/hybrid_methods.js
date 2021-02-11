@@ -283,5 +283,5 @@ function shadedPattern(context, square, color) {
   context.fillRect(x, y, boxsize, boxsize);
 }
 
-// Function to draw zone pattern on canvas
-function honeycombPattern(context, square, color) {}
+// Function to draw zone pattern on canvas, implemented by tiling.js
+var honeycombPattern;
