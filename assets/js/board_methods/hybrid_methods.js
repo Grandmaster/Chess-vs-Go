@@ -6,9 +6,6 @@
 // - It is occupied by a player's stone, or
 // - The point is empty, but falls under territory (go) controlled by the player
 
-// Data for creating player zones via tiling, courtesy of TilertheCreator
-// import { TilerTheCreator } from "../../../TilerTheCreator/TilerTheCreator.js";
-
 // Boolean that determines whether there is an opportunity for a pawn to capture a stone
 var stonesCanBeCaptured = false;
 

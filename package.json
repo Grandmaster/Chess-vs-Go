@@ -26,6 +26,7 @@
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.20",
     "path": "^0.12.7",
-    "socket.io": "^2.4.0"
+    "socket.io": "^2.4.0",
+    "tactile-js": "^1.0.0"
   }
 }
