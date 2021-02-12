@@ -65,6 +65,7 @@ $(document).ready(() => {
     x_i = x_true / 75;
     y_i = y_true / 75;
     arr = [x_i, y_i];
+    console.log(move_queue[1]);
 
     // Placing the relevant piece on the target square
     if (x_true != 0 && y_true != 0) {

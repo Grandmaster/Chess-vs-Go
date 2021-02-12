@@ -58,6 +58,12 @@ function possibleMoves(piece_obj, game_array, board) {
   var moves = [];
   var captures = [];
   var color = piece_obj.type.slice(0, 5);
+  var type = piece_obj.type.slice(6);
+
+  // Taking stone restrictions into account
+  if (type == "king" || type == "pawn") {
+    stonesRestrictPawnAndKing(piece_obj, board, range, contxt);
+  }
 
   // Removing squares occupied by allies from the range
   range = range.filter((square) => {
@@ -75,7 +81,7 @@ function possibleMoves(piece_obj, game_array, board) {
   // Removing squares occupied by any piece if the moving piece is a pawn, because
   // it cannot capture with its normal moves. Also, highlights the stones the pawn
   // can capture, if any
-  if (piece_obj.type.slice(6) == "pawn") {
+  if (type == "pawn") {
     range = range.filter((square) => {
       let x = square[0];
       let y = square[1];

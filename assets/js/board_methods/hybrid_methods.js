@@ -149,16 +149,22 @@ function kingMovesStones(piece, board, target, vacancy, team) {
 
 // In this game, stones can, in certain configurations, restrict the movement of enemy pieces (except the
 // knight). This function deals with the restriction of pawns and kings
-function stonesRestrictKing(piece, board, range) {
+function stonesRestrictPawnAndKing(piece, board, range, context) {
   let x = piece.x_pos;
   let y = piece.y_pos;
   let color = piece.type.slice(0, 5);
+  let ecolor = switchColor(color);
   let corners = stonesCornerSquare([x, y]);
   let stones = [];
   // This goes in the order: tl, tr, bl, br
   for (let c of corners) {
     stone = board.moves.get(c);
     stones.push(stone);
+  }
+  if (stones[0] == ecolor && stones[1] == ecolor) {
+    let i = findSquare(x, y - 1, range);
+    let sq = range.splice(i, 1).flat();
+    shadedPattern(context, sq, ecolor);
   }
 }
 
