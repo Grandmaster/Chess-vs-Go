@@ -228,6 +228,10 @@ function displayZones(board, field, context) {
         // Finally, if all empty nodes belong to territory of player, add square to zones
         if (f == emptynodes.length) zones.push(square);
       }
+
+      // Add square to zones if the previous two cases don't apply i.e. if
+      // all the corners contain stones belonging to the player
+      zones.push(square);
     }
     // Displaying zones
     for (let sq of zones) {

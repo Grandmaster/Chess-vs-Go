@@ -26,7 +26,7 @@ honeycombPattern = function (context, square, color) {
   let x = square[0] * boxsize;
   let y = square[1] * boxsize;
   context.strokeStyle = color;
-  context.lineWidth = 0.5;
+  context.lineWidth = 0.85;
   let honeycomb = new TilerTheCreator({
     width: boxsize * 2,
     height: boxsize * 3,
