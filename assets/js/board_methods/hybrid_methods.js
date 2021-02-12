@@ -161,8 +161,22 @@ function stonesRestrictPawnAndKing(piece, board, range, context) {
     stone = board.moves.get(c);
     stones.push(stone);
   }
+
+  // Stopping the pawn/king from making lateral moves
   if (stones[0] == ecolor && stones[1] == ecolor) {
     let i = findSquare(x, y - 1, range);
+    let sq = range.splice(i, 1).flat();
+    shadedPattern(context, sq, ecolor);
+  } else if (stones[2] == ecolor && stones[3] == ecolor) {
+    let i = findSquare(x, y + 1, range);
+    let sq = range.splice(i, 1).flat();
+    shadedPattern(context, sq, ecolor);
+  } else if (stones[0] == ecolor && stones[2] == ecolor) {
+    let i = findSquare(x - 1, y, range);
+    let sq = range.splice(i, 1).flat();
+    shadedPattern(context, sq, ecolor);
+  } else if (stones[1] == ecolor && stones[3] == ecolor) {
+    let i = findSquare(x + 1, y, range);
     let sq = range.splice(i, 1).flat();
     shadedPattern(context, sq, ecolor);
   }
