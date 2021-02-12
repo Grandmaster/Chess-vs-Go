@@ -245,6 +245,13 @@ function findSquare(x, y, range) {
   return range.indexOf(result);
 }
 
+// Function that determines if two square point to the same place on the board
+function sameSquare(sq1, sq2) {
+  if (sq1[0] == sq2[0] && sq1[1] == sq2[1]) {
+    return true;
+  } else return false;
+}
+
 // Function that displays choice of piece to insert on bench
 function choosePiece(piece, bbench, wbench) {
   var choice = piece.replace(/ /, "_");

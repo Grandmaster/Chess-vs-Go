@@ -89,14 +89,14 @@ $(document).ready(() => {
         pmoves = move_queue[1];
         captures = move_queue[2];
         for (let capture of captures) {
-          if (_.isEqual(_.sortBy(capture), _.sortBy(arr))) {
+          if (sameSquare(arr, capture)) {
             var p = findPiece(x_i, y_i, pieces_in_play);
             capturePiece(p, pieces_in_play);
             pmoves = pmoves.concat(captures);
           }
         }
         for (let move of pmoves) {
-          if (_.isEqual(_.sortBy(move), _.sortBy(arr))) {
+          if (sameSquare(move, arr)) {
             var piece = move_queue[0];
             movePiece(piece, x_i, y_i, goBoardforChess);
             currentChessBoard(
