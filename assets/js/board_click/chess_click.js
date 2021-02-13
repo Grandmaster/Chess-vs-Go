@@ -102,7 +102,8 @@ $(document).ready(() => {
               pieces_in_play,
               contxt,
               canvas_chess.width,
-              canvas_chess.height
+              canvas_chess.height,
+              benches
             );
             if (naiveStones.length == 0 && flyingStones.length == 0) {
               currentGoBoard(
@@ -141,7 +142,8 @@ $(document).ready(() => {
           pieces_in_play,
           contxt,
           canvas_chess.width,
-          canvas_chess.height
+          canvas_chess.height,
+          benches
         );
         currentGoBoard(
           goBoardforChess,
@@ -154,6 +156,7 @@ $(document).ready(() => {
         // Switch color after every move
         color = switchColor(color);
       }
+      console.log(benches);
     }
   });
 });

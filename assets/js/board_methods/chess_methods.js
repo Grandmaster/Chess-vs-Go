@@ -9,12 +9,29 @@ var move_queue = [];
 var place_queue = [];
 
 // Function that constructs the board on canvas from internal state
-function currentChessBoard(piece_array, context, width, height) {
+function currentChessBoard(piece_array, context, width, height, benches) {
   context.clearRect(0, 0, width, height);
 
   // Display each piece in the array on canvas, at relevant squares
-  piece_array.forEach((val) => {
-    renderPiece(val, context);
+  piece_array.forEach((val, ind) => {
+    // Removing the piece if it is in zone of opposite color
+    let regions = displayZones(goBoardforChess, field, context);
+    let deadPiece = false;
+    let color = val.type.slice(0, 5);
+    let ecolor = switchColor(color);
+    let ezones = regions[ecolor];
+    let ebench = benches[ecolor];
+    let sq = [val.x_pos, val.y_pos];
+    ezones.forEach((square) => {
+      if (sameSquare(sq, square)) {
+        piece_array.splice(ind, 1);
+        deadPiece = true;
+        ebench.push(val);
+      }
+    });
+
+    // Draw piece on board
+    if (!deadPiece) renderPiece(val, context);
   });
 }
 
@@ -214,12 +231,19 @@ function movePiece(piece_obj, x_new, y_new, board) {
   }
 }
 
-// Function that captures a piece if moved onto by another
+// Function that captures a piece if moved onto by another, and puts the captured piece
+// in the opposing bench
 function capturePiece(piece, array, benches) {
   var l = array.indexOf(piece);
   var piece = array[l];
   var color = piece.type.slice(0, 5);
+  delete piece.x_pos;
+  delete piece.y_pos;
   var ecolor = switchColor(color);
+  var img = piece.img.replace(color, ecolor);
+  var t = piece.type.replace(color, ecolor);
+  piece.img = img;
+  piece.type = t;
   benches[ecolor].push(piece);
   array.splice(l, 1);
 }

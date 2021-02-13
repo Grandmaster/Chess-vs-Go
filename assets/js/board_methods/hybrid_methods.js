@@ -353,7 +353,3 @@ function shadedPattern(context, square, color) {
 
 // Function to draw zone pattern on canvas, implemented by tiling.js
 var honeycombPattern;
-
-// Function that destroys pieces if they are in zones of the opposite color. Also, when a piece is
-// killed, it is captured by the opposing team and put on their bench
-function zonesDestroyPiece(field, game_array) {}
