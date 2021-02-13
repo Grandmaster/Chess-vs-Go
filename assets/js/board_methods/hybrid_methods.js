@@ -153,6 +153,7 @@ function stonesRestrictPawnAndKing(piece, board, range, context) {
   let x = piece.x_pos;
   let y = piece.y_pos;
   let color = piece.type.slice(0, 5);
+  let type = piece.type.slice(6);
   let ecolor = switchColor(color);
   let corners = stonesCornerSquare([x, y]);
   let stones = [];
@@ -162,20 +163,61 @@ function stonesRestrictPawnAndKing(piece, board, range, context) {
     stones.push(stone);
   }
 
-  // Stopping the pawn/king from making lateral moves
+  // Boolean for the diagonal squares, to help in restricting king moves. The booleans become
+  // true when the diagonal squares have been removed from the range of the king
+  let diagonal = {
+    tl: false,
+    tr: false,
+    bl: false,
+    br: false,
+  };
+
+  // Stopping the pawn/king from making lateral moves, and also stopping the king
+  // from making diagonal moves, based on certain stone arrangements
   if (stones[0] == ecolor && stones[1] == ecolor) {
     let i = findSquare(x, y - 1, range);
     let sq = range.splice(i, 1).flat();
     shadedPattern(context, sq, ecolor);
-  } else if (stones[2] == ecolor && stones[3] == ecolor) {
+    if (type == "king" && stones[2] == ecolor && !diagonal.tl) {
+      let j = findSquare(x - 1, y - 1, range);
+      sq_j = range.splice(j, 1).flat();
+      shadedPattern(context, sq_j, ecolor);
+      diagonal.tl = true;
+      console.log("tl");
+    }
+    if (type == "king" && stones[3] == ecolor && !diagonal.tr) {
+      let j = findSquare(x + 1, y - 1, range);
+      sq_j = range.splice(j, 1).flat();
+      shadedPattern(context, sq_j, ecolor);
+      diagonal.tr = true;
+      console.log("tr");
+    }
+  }
+  if (stones[2] == ecolor && stones[3] == ecolor) {
     let i = findSquare(x, y + 1, range);
     let sq = range.splice(i, 1).flat();
     shadedPattern(context, sq, ecolor);
-  } else if (stones[0] == ecolor && stones[2] == ecolor) {
+    if (type == "king" && stones[1] == ecolor && !diagonal.br) {
+      let j = findSquare(x + 1, y + 1, range);
+      sq_j = range.splice(j, 1).flat();
+      shadedPattern(context, sq_j, ecolor);
+      diagonal.br = true;
+      console.log("br");
+    }
+    if (type == "king" && stones[0] == ecolor && !diagonal.bl) {
+      let j = findSquare(x - 1, y + 1, range);
+      sq_j = range.splice(j, 1).flat();
+      shadedPattern(context, sq_j, ecolor);
+      diagonal.bl = true;
+      console.log("bl");
+    }
+  }
+  if (stones[0] == ecolor && stones[2] == ecolor) {
     let i = findSquare(x - 1, y, range);
     let sq = range.splice(i, 1).flat();
     shadedPattern(context, sq, ecolor);
-  } else if (stones[1] == ecolor && stones[3] == ecolor) {
+  }
+  if (stones[1] == ecolor && stones[3] == ecolor) {
     let i = findSquare(x + 1, y, range);
     let sq = range.splice(i, 1).flat();
     shadedPattern(context, sq, ecolor);
