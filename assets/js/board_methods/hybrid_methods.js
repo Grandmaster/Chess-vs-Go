@@ -293,7 +293,9 @@ function displayZones(board, field, context) {
 
       // Add square to zones if the previous two cases don't apply i.e. if
       // all the corners contain stones belonging to the player
-      zones.push(square);
+      if (!stones.includes(ecolor) && !stones.includes(undefined)) {
+        zones.push(square);
+      }
     }
     // Displaying zones
     for (let sq of zones) {
