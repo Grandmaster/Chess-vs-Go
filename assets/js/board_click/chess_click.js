@@ -90,7 +90,7 @@ $(document).ready(() => {
         for (let capture of captures) {
           if (sameSquare(arr, capture)) {
             var p = findPiece(x_i, y_i, pieces_in_play);
-            capturePiece(p, pieces_in_play);
+            capturePiece(p, pieces_in_play, benches);
             pmoves = pmoves.concat(captures);
           }
         }

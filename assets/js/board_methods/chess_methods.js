@@ -215,8 +215,12 @@ function movePiece(piece_obj, x_new, y_new, board) {
 }
 
 // Function that captures a piece if moved onto by another
-function capturePiece(piece, array) {
+function capturePiece(piece, array, benches) {
   var l = array.indexOf(piece);
+  var piece = array[l];
+  var color = piece.type.slice(0, 5);
+  var ecolor = switchColor(color);
+  benches[ecolor].push(piece);
   array.splice(l, 1);
 }
 
