@@ -147,6 +147,15 @@ $(document).ready(() => {
         // Updating chess version of go board for hybrid methods
         goBoardforChess = go_board;
 
+        // Updating chess board
+        currentChessBoard(
+          pieces_in_play,
+          contxt,
+          canvas_chess.width,
+          canvas_chess.height,
+          benches
+        );
+
         // Cleanup
         empties = [];
         color = godash.oppositeColor(color);
