@@ -78,7 +78,8 @@ function possibleMoves(piece_obj, game_array, board) {
   range = generateMoves(
     piece_obj,
     [piece_obj.x_pos, piece_obj.y_pos],
-    game_array
+    game_array,
+    board
   );
   var moves = [];
   var captures = [];
@@ -348,8 +349,9 @@ function fillBench(pieces) {
 }
 
 // Function that generates the possible moves a piece can make, given its location
-function generateMoves(piece, location, game_array) {
+function generateMoves(piece, location, game_array, board) {
   var name = piece.type.slice(6);
+  var color = piece.type.slice(0, 5);
   var x = location[0];
   var y = location[1];
   switch (name) {
@@ -385,32 +387,40 @@ function generateMoves(piece, location, game_array) {
     case "rook":
     case "bishop":
     case "queen":
-      return (range = rangedOfficialMoves(name, location, game_array));
+      return (range = rangedOfficialMoves(
+        name,
+        location,
+        game_array,
+        board,
+        color
+      ));
   }
 }
 
 // Function that generates the moves for the bishop, rook and queen
-function rangedOfficialMoves(name, location, game_array) {
+function rangedOfficialMoves(name, location, game_array, board, color) {
   switch (name) {
     // Bishop's case
     case "bishop":
-      return bishopRange(location, game_array);
+      return bishopRange(location, game_array, board, color);
     // Rook's case
     case "rook":
-      return rookRange(location, game_array);
+      return rookRange(location, game_array, board, color);
 
     // Queen's case; moves are combination of rook and bishop moves
     case "queen":
-      arr1 = bishopRange(location, game_array);
-      arr2 = rookRange(location, game_array);
+      arr1 = bishopRange(location, game_array, board, color);
+      arr2 = rookRange(location, game_array, board, color);
       return arr1.concat(arr2);
   }
 }
 
 // Function that calculates the range of moves for the rook
-function rookRange(location, game_array) {
+function rookRange(location, game_array, board, color) {
   var x = location[0];
   var y = location[1];
+  var ecolor = switchColor(color);
+  var stoneblock = false;
   var xr = _.range(1, 9);
   var yr = _.range(1, 9);
   var xi = xr.indexOf(x);
@@ -419,14 +429,22 @@ function rookRange(location, game_array) {
   var xb = 0;
   var yb = 0;
 
-  // Code to prevent rook from jumping over pieces to its left
+  // Code to prevent rook from jumping over pieces to its left, which
+  // also implements stone restriction
   for (let i = xr[xi - 1]; i >= 1; i--) {
     var piece_block = findPiece(i, y, game_array);
+    let corners = stonesCornerSquare([i, y]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[1] == ecolor && stones[3] == ecolor) {
+      xb = i;
+      stoneblock = true;
+    }
     if (typeof piece_block !== "undefined") xb = i;
     if (xb !== 0) break;
   }
   var xbi = xr.indexOf(xb);
   xr.splice(0, xbi);
+  if (stoneblock == true) shadedPattern(ctx, [xb, y], ecolor);
   xb = 0;
   xi = xr.indexOf(x);
 

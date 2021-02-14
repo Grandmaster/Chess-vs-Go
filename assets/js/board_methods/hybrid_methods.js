@@ -54,6 +54,15 @@ function stonesCornerSquare(square) {
   return [tl, tr, bl, br];
 }
 
+// Function to return stones at corners
+function getStonesOnSquare(corners, board) {
+  let s = [];
+  corners.forEach((corner) => {
+    s.push(board.moves.get(corner));
+  });
+  return s;
+}
+
 // Function to locate square pawn would move to if it captures stone. Takes target stone coords
 function pawnLandingSquares(piece, targets) {
   let arr = [];
