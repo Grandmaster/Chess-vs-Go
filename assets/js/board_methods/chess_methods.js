@@ -436,7 +436,7 @@ function rookRange(location, game_array, board, color) {
     let corners = stonesCornerSquare([i, y]);
     let stones = getStonesOnSquare(corners, board);
     if (stones[1] == ecolor && stones[3] == ecolor) {
-      xb = i;
+      xb = i + 1;
       stoneblock = true;
     }
     if (typeof piece_block !== "undefined") xb = i;
@@ -444,40 +444,65 @@ function rookRange(location, game_array, board, color) {
   }
   var xbi = xr.indexOf(xb);
   xr.splice(0, xbi);
-  if (stoneblock == true) shadedPattern(ctx, [xb, y], ecolor);
+  if (stoneblock == true) shadedPattern(ctx, [xb - 1, y], ecolor);
+  stoneblock == false;
   xb = 0;
   xi = xr.indexOf(x);
 
-  // Same as above, but with pieces to its right
+  // Same as above, but with pieces and stones to its right
   for (let i = xr[xi + 1]; i <= 8; i++) {
     var piece_block = findPiece(i, y, game_array);
+    let corners = stonesCornerSquare([i, y]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[0] == ecolor && stones[2] == ecolor) {
+      xb = i - 1;
+      stoneblock = true;
+    }
     if (typeof piece_block !== "undefined") xb = i;
     if (xb !== 0) break;
   }
   xbi = xr.indexOf(xb);
   if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
+  if (stoneblock == true) shadedPattern(ctx, [xb + 1, y], ecolor);
+  stoneblock == false;
   xb = 0;
   xi = xr.indexOf(x);
 
   // Same as above, but with pieces above it
   for (let j = yr[yi - 1]; j >= 1; j--) {
     var piece_block = findPiece(x, j, game_array);
+    let corners = stonesCornerSquare([x, j]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[2] == ecolor && stones[3] == ecolor) {
+      yb = j + 1;
+      stoneblock = true;
+    }
     if (typeof piece_block !== "undefined") yb = j;
     if (yb !== 0) break;
   }
   ybi = yr.indexOf(yb);
   yr.splice(0, ybi);
+  if (stoneblock == true) shadedPattern(ctx, [x, yb - 1], ecolor);
+  stoneblock == false;
   yb = 0;
   yi = yr.indexOf(y);
 
   // Same as above, but with pieces below it
   for (let j = yr[yi + 1]; j <= 8; j++) {
     var piece_block = findPiece(x, j, game_array);
+    let corners = stonesCornerSquare([x, j]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[0] == ecolor && stones[1] == ecolor) {
+      yb = j - 1;
+      stoneblock = true;
+    }
     if (typeof piece_block !== "undefined") yb = j;
     if (yb !== 0) break;
   }
   ybi = yr.indexOf(yb);
   if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
+  if (stoneblock == true) shadedPattern(ctx, [x, yb + 1], ecolor);
+  stoneblock == false;
   yb = 0;
   yi = yr.indexOf(y);
 
