@@ -83,7 +83,13 @@ $(document).ready(() => {
         color = r[1];
       } else if (stone !== undefined && stonesCanBeConverted) {
         // Converting a stone with an official if all conditions are met
-        let r = officialConvertsStone(forcingPiece, go_board, point, color);
+        let r = officialConvertsStone(
+          forcingPiece,
+          go_board,
+          point,
+          color,
+          benches
+        );
         go_board = r[0];
 
         // Calculating territory controlled by each player, and displaying it
