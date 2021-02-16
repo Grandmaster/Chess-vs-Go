@@ -136,14 +136,14 @@ $(document).ready(() => {
           let check = false;
           for (let sq of land) {
             if (sameSquare(sq, [x_i, y_i])) {
-              placePiece(x_i, y_i, piece.img, piece.type);
+              placePiece(x_i, y_i, piece.img, piece.type, benches);
               check = true;
               break;
             }
           }
           if (!check) console.log("Not a valid landing zone");
         } else {
-          placePiece(x_i, y_i, piece.img, piece.type);
+          placePiece(x_i, y_i, piece.img, piece.type, benches);
           kings[color] = true;
         }
         currentChessBoard(

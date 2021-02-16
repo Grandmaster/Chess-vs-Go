@@ -65,7 +65,18 @@ function renderPiece(piece_obj, context) {
 }
 
 // Function that creates and keeps track of chess pieces added to the board
-function placePiece(x, y, piece, type) {
+function placePiece(x, y, piece, type, benches) {
+  // Removing the corresponding piece from the bench
+  let color = type.slice(0, 5);
+  let location;
+  for (let member of benches[color]) {
+    if (member.type == type) {
+      location = benches[color].indexOf(member);
+      break;
+    }
+  }
+  benches[color].splice(location, 1);
+
   // Creating new object that represents piece, and putting it in play
   var newpiece = {
     x_pos: x,
