@@ -536,9 +536,9 @@ function bishopRange(location, game_array, board, color) {
     arr.push([xb, yb]);
     let corners = stonesCornerSquare([xb, yb]);
     let stones = getStonesOnSquare(corners, board);
-    if (stones[1] == ecolor && stones[2] == ecolor) {
+    if (stones[0] == ecolor) {
       b++;
-      shadedPattern(ctx, [xb - 1, yb - 1], ecolor);
+      shadedPattern(contxt, [xb - 1, yb - 1], ecolor);
     }
     for (let piece of game_array) {
       if (piece.x_pos == xb && piece.y_pos == yb) {
@@ -554,6 +554,12 @@ function bishopRange(location, game_array, board, color) {
     xc += 1;
     yc += 1;
     arr.push([xc, yc]);
+    let corners = stonesCornerSquare([xc, yc]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[3] == ecolor) {
+      b++;
+      shadedPattern(contxt, [xc + 1, yc + 1], ecolor);
+    }
     for (let piece of game_array) {
       if (piece.x_pos == xc && piece.y_pos == yc) {
         b++;
@@ -568,6 +574,12 @@ function bishopRange(location, game_array, board, color) {
     xd -= 1;
     yd += 1;
     arr.push([xd, yd]);
+    let corners = stonesCornerSquare([xd, yd]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[2] == ecolor) {
+      b++;
+      shadedPattern(contxt, [xd - 1, yd + 1], ecolor);
+    }
     for (let piece of game_array) {
       if (piece.x_pos == xd && piece.y_pos == yd) {
         b++;
@@ -582,6 +594,12 @@ function bishopRange(location, game_array, board, color) {
     xe += 1;
     ye -= 1;
     arr.push([xe, ye]);
+    let corners = stonesCornerSquare([xe, ye]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[1] == ecolor) {
+      b++;
+      shadedPattern(contxt, [xe + 1, ye - 1], ecolor);
+    }
     for (let piece of game_array) {
       if (piece.x_pos == xe && piece.y_pos == ye) {
         b++;
