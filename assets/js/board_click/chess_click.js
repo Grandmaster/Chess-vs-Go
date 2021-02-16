@@ -130,14 +130,16 @@ $(document).ready(() => {
       // Place piece if the first two cases don't apply, and place_queue is not empty
       if (c == 0 && place_queue.length !== 0) {
         var piece = place_queue.pop();
-        switch (color) {
-          case "black":
+        let land = displayZones(goBoardforChess, field, contxt)[color];
+        let check = false;
+        for (let sq of land) {
+          if (sameSquare(sq, [x_i, y_i])) {
             placePiece(x_i, y_i, piece.img, piece.type);
+            check = true;
             break;
-
-          case "white":
-            placePiece(x_i, y_i, piece.img, piece.type);
+          }
         }
+        if (!check) console.log("Not a valid landing zone");
         currentChessBoard(
           pieces_in_play,
           contxt,
