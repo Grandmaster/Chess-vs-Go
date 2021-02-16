@@ -420,7 +420,6 @@ function rookRange(location, game_array, board, color) {
   var x = location[0];
   var y = location[1];
   var ecolor = switchColor(color);
-  var stoneblock = false;
   var xr = _.range(1, 9);
   var yr = _.range(1, 9);
   var xi = xr.indexOf(x);
@@ -437,15 +436,13 @@ function rookRange(location, game_array, board, color) {
     let stones = getStonesOnSquare(corners, board);
     if (stones[1] == ecolor && stones[3] == ecolor) {
       xb = i + 1;
-      stoneblock = true;
+      shadedPattern(contxt, [i, y], ecolor);
     }
     if (typeof piece_block !== "undefined") xb = i;
     if (xb !== 0) break;
   }
   var xbi = xr.indexOf(xb);
   xr.splice(0, xbi);
-  if (stoneblock == true) shadedPattern(ctx, [xb - 1, y], ecolor);
-  stoneblock == false;
   xb = 0;
   xi = xr.indexOf(x);
 
@@ -456,15 +453,13 @@ function rookRange(location, game_array, board, color) {
     let stones = getStonesOnSquare(corners, board);
     if (stones[0] == ecolor && stones[2] == ecolor) {
       xb = i - 1;
-      stoneblock = true;
+      shadedPattern(contxt, [i, y], ecolor);
     }
     if (typeof piece_block !== "undefined") xb = i;
     if (xb !== 0) break;
   }
   xbi = xr.indexOf(xb);
   if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
-  if (stoneblock == true) shadedPattern(ctx, [xb + 1, y], ecolor);
-  stoneblock == false;
   xb = 0;
   xi = xr.indexOf(x);
 
@@ -475,15 +470,13 @@ function rookRange(location, game_array, board, color) {
     let stones = getStonesOnSquare(corners, board);
     if (stones[2] == ecolor && stones[3] == ecolor) {
       yb = j + 1;
-      stoneblock = true;
+      shadedPattern(contxt, [x, j], ecolor);
     }
     if (typeof piece_block !== "undefined") yb = j;
     if (yb !== 0) break;
   }
   ybi = yr.indexOf(yb);
   yr.splice(0, ybi);
-  if (stoneblock == true) shadedPattern(ctx, [x, yb - 1], ecolor);
-  stoneblock == false;
   yb = 0;
   yi = yr.indexOf(y);
 
@@ -494,15 +487,13 @@ function rookRange(location, game_array, board, color) {
     let stones = getStonesOnSquare(corners, board);
     if (stones[0] == ecolor && stones[1] == ecolor) {
       yb = j - 1;
-      stoneblock = true;
+      shadedPattern(contxt, [x, j], ecolor);
     }
     if (typeof piece_block !== "undefined") yb = j;
     if (yb !== 0) break;
   }
   ybi = yr.indexOf(yb);
   if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
-  if (stoneblock == true) shadedPattern(ctx, [x, yb + 1], ecolor);
-  stoneblock == false;
   yb = 0;
   yi = yr.indexOf(y);
 
@@ -523,7 +514,6 @@ function bishopRange(location, game_array, board, color) {
   var y = location[1];
   var arr = [];
   var ecolor = switchColor(color);
-  var stoneblock = false;
 
   // break parameter
   var b = 0;
