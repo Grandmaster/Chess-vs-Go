@@ -65,106 +65,111 @@ $(document).ready(() => {
         }
       }
 
-      // Capturing a stone with a pawn if all conditions are met
-      if (stone !== undefined && stonesCanBeCaptured) {
-        let l = pawnLandingSquares(crouchingPiece, [point]);
-        let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
-        go_board = r[0];
-
-        // Calculating territory controlled by each player, and displaying it
-        calculateTerritory(go_board, ctx);
-
-        // Updating chess version of go board for hybrid methods
-        goBoardforChess = go_board;
-
-        // Resetting for next instance
-        stonesCanBeCaptured = false;
-        crouchingPiece = 0;
-        color = r[1];
-      } else if (stone !== undefined && stonesCanBeConverted) {
-        // Converting a stone with an official if all conditions are met
-        let r = officialConvertsStone(
-          forcingPiece,
-          go_board,
-          point,
-          color,
-          benches
-        );
-        go_board = r[0];
-
-        // Calculating territory controlled by each player, and displaying it
-        calculateTerritory(go_board, ctx);
-
-        // Updating chess version of go board for hybrid methods
-        goBoardforChess = go_board;
-
-        // Resetting for next instance
-        stonesCanBeConverted = false;
-        forcingPiece = 0;
-        color = r[1];
-      } else if (stone !== undefined && stonesCanBeMoved) {
-        // Selecting a stone for the king to move
-        flyingStone = point;
-        currentGoBoard(
-          go_board,
-          ctx,
-          canvas_go.width,
-          canvas_go.height,
-          boxsize
-        );
-        displayCaptureStones([point], ctx, "green");
-      } else if (stone == undefined && stonesCanBeMoved && i !== -1) {
-        // Moving the stone selected by the king to a new spot when all conditions are met
-        landingPoint = point;
-        let r = kingMovesStones(
-          royalPiece,
-          go_board,
-          flyingStone,
-          landingPoint,
-          color
-        );
-        go_board = r[0];
-
-        // Calculating territory controlled by each player, and displaying it
-        calculateTerritory(go_board, ctx);
-
-        // Updating chess version of go board for hybrid methods
-        goBoardforChess = go_board;
-
-        // Resetting for next instance
-        stonesCanBeMoved = false;
-        royalPiece = 0;
-        empties = [];
-        color = r[1];
+      // Check to see if king is present, if not do nothing
+      if (!kings[color]) {
+        console.log("Please put your king on the board");
       } else {
-        // Placing a stone on the relevant point, if it's empty
-        go_board = godash.addMove(go_board, point, color);
-        currentGoBoard(
-          go_board,
-          ctx,
-          canvas_go.width,
-          canvas_go.height,
-          boxsize
-        );
+        // Capturing a stone with a pawn if all conditions are met
+        if (stone !== undefined && stonesCanBeCaptured) {
+          let l = pawnLandingSquares(crouchingPiece, [point]);
+          let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
+          go_board = r[0];
 
-        // Calculating territory controlled by each player, and displaying it
-        calculateTerritory(go_board, ctx);
+          // Calculating territory controlled by each player, and displaying it
+          calculateTerritory(go_board, ctx);
 
-        // Updating chess version of go board for hybrid methods
-        goBoardforChess = go_board;
+          // Updating chess version of go board for hybrid methods
+          goBoardforChess = go_board;
 
-        // Updating chess board
-        currentChessBoard(
-          pieces_in_play,
-          contxt,
-          canvas_chess.width,
-          canvas_chess.height,
-          benches
-        );
+          // Resetting for next instance
+          stonesCanBeCaptured = false;
+          crouchingPiece = 0;
+          color = r[1];
+        } else if (stone !== undefined && stonesCanBeConverted) {
+          // Converting a stone with an official if all conditions are met
+          let r = officialConvertsStone(
+            forcingPiece,
+            go_board,
+            point,
+            color,
+            benches
+          );
+          go_board = r[0];
 
-        // Cleanup
-        empties = [];
-        color = godash.oppositeColor(color);
+          // Calculating territory controlled by each player, and displaying it
+          calculateTerritory(go_board, ctx);
+
+          // Updating chess version of go board for hybrid methods
+          goBoardforChess = go_board;
+
+          // Resetting for next instance
+          stonesCanBeConverted = false;
+          forcingPiece = 0;
+          color = r[1];
+        } else if (stone !== undefined && stonesCanBeMoved) {
+          // Selecting a stone for the king to move
+          flyingStone = point;
+          currentGoBoard(
+            go_board,
+            ctx,
+            canvas_go.width,
+            canvas_go.height,
+            boxsize
+          );
+          displayCaptureStones([point], ctx, "green");
+        } else if (stone == undefined && stonesCanBeMoved && i !== -1) {
+          // Moving the stone selected by the king to a new spot when all conditions are met
+          landingPoint = point;
+          let r = kingMovesStones(
+            royalPiece,
+            go_board,
+            flyingStone,
+            landingPoint,
+            color
+          );
+          go_board = r[0];
+
+          // Calculating territory controlled by each player, and displaying it
+          calculateTerritory(go_board, ctx);
+
+          // Updating chess version of go board for hybrid methods
+          goBoardforChess = go_board;
+
+          // Resetting for next instance
+          stonesCanBeMoved = false;
+          royalPiece = 0;
+          empties = [];
+          color = r[1];
+        } else {
+          // Placing a stone on the relevant point, if it's empty
+          go_board = godash.addMove(go_board, point, color);
+          currentGoBoard(
+            go_board,
+            ctx,
+            canvas_go.width,
+            canvas_go.height,
+            boxsize
+          );
+
+          // Calculating territory controlled by each player, and displaying it
+          calculateTerritory(go_board, ctx);
+
+          // Updating chess version of go board for hybrid methods
+          goBoardforChess = go_board;
+
+          // Updating chess board
+          currentChessBoard(
+            pieces_in_play,
+            contxt,
+            canvas_chess.width,
+            canvas_chess.height,
+            benches
+          );
+
+          // Cleanup
+          empties = [];
+          color = godash.oppositeColor(color);
+        }
       }
     }
   });
