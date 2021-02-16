@@ -468,7 +468,7 @@ function rookRange(location, game_array, board, color) {
   xb = 0;
   xi = xr.indexOf(x);
 
-  // Same as above, but with pieces above it
+  // Same as above, but with pieces and stones above it
   for (let j = yr[yi - 1]; j >= 1; j--) {
     var piece_block = findPiece(x, j, game_array);
     let corners = stonesCornerSquare([x, j]);
@@ -487,7 +487,7 @@ function rookRange(location, game_array, board, color) {
   yb = 0;
   yi = yr.indexOf(y);
 
-  // Same as above, but with pieces below it
+  // Same as above, but with pieces and stones below it
   for (let j = yr[yi + 1]; j <= 8; j++) {
     var piece_block = findPiece(x, j, game_array);
     let corners = stonesCornerSquare([x, j]);
@@ -518,10 +518,12 @@ function rookRange(location, game_array, board, color) {
 }
 
 // Function that calculates the range of moves for the bishop
-function bishopRange(location, game_array) {
+function bishopRange(location, game_array, board, color) {
   var x = location[0];
   var y = location[1];
   var arr = [];
+  var ecolor = switchColor(color);
+  var stoneblock = false;
 
   // break parameter
   var b = 0;
@@ -532,6 +534,12 @@ function bishopRange(location, game_array) {
     xb -= 1;
     yb -= 1;
     arr.push([xb, yb]);
+    let corners = stonesCornerSquare([xb, yb]);
+    let stones = getStonesOnSquare(corners, board);
+    if (stones[1] == ecolor && stones[2] == ecolor) {
+      b++;
+      shadedPattern(ctx, [xb - 1, yb - 1], ecolor);
+    }
     for (let piece of game_array) {
       if (piece.x_pos == xb && piece.y_pos == yb) {
         b++;
