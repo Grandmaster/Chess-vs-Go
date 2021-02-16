@@ -65,57 +65,61 @@ $(document).ready(() => {
     x_i = x_true / 75;
     y_i = y_true / 75;
     arr = [x_i, y_i];
+    var c = 0;
 
-    // Placing the relevant piece on the target square
-    if (x_true != 0 && y_true != 0) {
-      // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
-      var c = 0;
-      if (move_queue.length == 0) {
-        for (let piece of pieces_in_play) {
-          if (piece.x_pos == x_i && piece.y_pos == y_i) {
-            possibleMoves(piece, pieces_in_play, goBoardforChess);
-            var piecetype = piece.type.slice(6);
-            if (piecetype == "pawn") {
-              possiblePawnCaptures(piece, pieces_in_play);
+    // Ending the game if one of the kings dies
+    if (!kings[color] && firstmove[color]) {
+      console.log(`${color} lost already.`);
+    } else {
+      if (x_true != 0 && y_true != 0) {
+        // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
+        if (move_queue.length == 0) {
+          for (let piece of pieces_in_play) {
+            if (piece.x_pos == x_i && piece.y_pos == y_i) {
+              possibleMoves(piece, pieces_in_play, goBoardforChess);
+              var piecetype = piece.type.slice(6);
+              if (piecetype == "pawn") {
+                possiblePawnCaptures(piece, pieces_in_play);
+              }
+              c++;
             }
-            c++;
           }
         }
-      }
 
-      // Move existing piece and/or capture, if move_queue is not empty
-      if (move_queue.length != 0 && c == 0) {
-        pmoves = move_queue[1];
-        captures = move_queue[2];
-        for (let capture of captures) {
-          if (sameSquare(arr, capture)) {
-            var p = findPiece(x_i, y_i, pieces_in_play);
-            capturePiece(p, pieces_in_play, benches);
-            pmoves = pmoves.concat(captures);
+        // Move existing piece and/or capture, if move_queue is not empty
+        if (move_queue.length != 0 && c == 0) {
+          pmoves = move_queue[1];
+          captures = move_queue[2];
+          for (let capture of captures) {
+            if (sameSquare(arr, capture)) {
+              var p = findPiece(x_i, y_i, pieces_in_play);
+              capturePiece(p, pieces_in_play, benches);
+              pmoves = pmoves.concat(captures);
+            }
           }
-        }
-        for (let move of pmoves) {
-          if (sameSquare(move, arr)) {
-            var piece = move_queue[0];
-            movePiece(piece, x_i, y_i, goBoardforChess);
-            currentChessBoard(
-              pieces_in_play,
-              contxt,
-              canvas_chess.width,
-              canvas_chess.height,
-              benches
-            );
-            if (naiveStones.length == 0 && flyingStones.length == 0) {
-              currentGoBoard(
-                goBoardforChess,
-                ctx,
-                canvas_go.width,
-                canvas_go.height,
-                boxsize
+          for (let move of pmoves) {
+            if (sameSquare(move, arr)) {
+              var piece = move_queue[0];
+              movePiece(piece, x_i, y_i, goBoardforChess);
+              currentChessBoard(
+                pieces_in_play,
+                contxt,
+                canvas_chess.width,
+                canvas_chess.height,
+                benches
               );
+              if (naiveStones.length == 0 && flyingStones.length == 0) {
+                currentGoBoard(
+                  goBoardforChess,
+                  ctx,
+                  canvas_go.width,
+                  canvas_go.height,
+                  boxsize
+                );
+              }
+              color = switchColor(color);
+              c++;
             }
-            color = switchColor(color);
-            c++;
           }
         }
       }
@@ -145,6 +149,7 @@ $(document).ready(() => {
         } else {
           placePiece(x_i, y_i, piece.img, piece.type, benches);
           kings[color] = true;
+          firstmove[color] = true;
         }
         currentChessBoard(
           pieces_in_play,

@@ -14,6 +14,12 @@ var kings = {
   white: false,
 };
 
+// Variable to keep track of whether the players have started the game
+var firstmove = {
+  black: false,
+  white: false,
+};
+
 // Function that constructs the board on canvas from internal state
 function currentChessBoard(piece_array, context, width, height, benches) {
   context.clearRect(0, 0, width, height);
@@ -36,6 +42,9 @@ function currentChessBoard(piece_array, context, width, height, benches) {
         val.type = val.type.replace(color, ecolor);
         val.img = val.img.replace(color, ecolor);
         ebench.push(val);
+        if (val.type.slice(6) == "king") {
+          kings[color] = false;
+        }
       }
     });
     if (!deadPiece) arr.push(val);
@@ -270,6 +279,22 @@ function capturePiece(piece, array, benches) {
   piece.type = piece.type.replace(color, ecolor);
   benches[ecolor].push(piece);
   array.splice(l, 1);
+  if (piece.type.slice(6) == "king") {
+    kings[color] = false;
+  }
+}
+
+// Function that determines if kings are alive, and ends the game if not
+function livingKing(array, color) {
+  for (let piece of array) {
+    if (piece.type.slice(6) == "king" && piece.type.slice(0, 5) == color) {
+      kings[color] = false;
+      break;
+    }
+  }
+  if (!kings[color]) {
+    console.log(`${color} loses!`);
+  }
 }
 
 // Function that switches the color of play
