@@ -9,9 +9,24 @@ var port = 3000;
 // Using code from assets folder
 app.use(express.static("assets"));
 
-// Serving file necessary for tiling canvas
+// Serving tactile.js, for tiling canvas
 app.get("/js/util/tactile.js", (req, res) => {
   res.sendFile(path.join(__dirname, "./node_modules/tactile-js/tactile.js"));
+});
+
+// Serving socket.io, for multiplayer functionality
+app.get("/socket/socket.io.js", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "./node_modules/socket.io-client/dist/socket.io.js")
+  );
+});
+
+// Socket connection to allow 2 people to play the game
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 // Displaying home page
