@@ -27,6 +27,10 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+  // Handling click events on go layer
+  socket.on("go click", (event) => {
+    console.log("Go click happened!");
+  });
 });
 
 // Displaying home page

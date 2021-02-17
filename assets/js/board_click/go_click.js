@@ -20,12 +20,14 @@ $(document).ready(() => {
 
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
-    // Since this is the top layer, pass event to chess layer with mouse location
+    // Since this is the top layer, pass event to chess layer with mouse location,
+    // also pass to backend for multiplayer
     var clickEvent = new MouseEvent("click", {
       clientX: event.clientX,
       clientY: event.clientY,
     });
     canvas_chess.dispatchEvent(clickEvent);
+    socket.emit("go click", clickEvent);
 
     // Finding where on the board the click happened
     var rect = canvas_go.getBoundingClientRect();
