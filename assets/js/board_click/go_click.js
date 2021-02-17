@@ -18,6 +18,11 @@ $(document).ready(() => {
   var go_board = new godash.Board(9);
   goBoardforChess = go_board;
 
+  // Receiving the event from backend i.e the other player
+  socket.on("return", (x, y) => {
+    console.log([x, y]);
+  });
+
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
     // Since this is the top layer, pass event to chess layer with mouse location,
@@ -27,7 +32,7 @@ $(document).ready(() => {
       clientY: event.clientY,
     });
     canvas_chess.dispatchEvent(clickEvent);
-    socket.emit("go click", clickEvent);
+    socket.emit("canvas click", clickEvent.clientX, clickEvent.clientY);
 
     // Finding where on the board the click happened
     var rect = canvas_go.getBoundingClientRect();

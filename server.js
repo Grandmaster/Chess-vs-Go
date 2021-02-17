@@ -27,9 +27,11 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
-  // Handling click events on go layer
-  socket.on("go click", (event) => {
-    console.log("Go click happened!");
+  // Handling click events on canvas
+  socket.on("canvas click", (x, y) => {
+    console.log("click on canvas happened!");
+    console.log([x, y]);
+    socket.broadcast.emit("return", x, y);
   });
 });
 
