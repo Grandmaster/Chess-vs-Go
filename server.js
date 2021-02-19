@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
 
 // Displaying home page
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./index.html"));
+  res.sendFile(path.join(__dirname, "./assets/html/index.html"));
 });
 
 // Starting server
