@@ -10,7 +10,7 @@ var port = 3000;
 app.use(express.static("assets"));
 
 // Serving tactile.js, for tiling canvas
-app.get("/js/util/tactile.js", (req, res) => {
+app.get("/js/game/util/tactile.js", (req, res) => {
   res.sendFile(path.join(__dirname, "./node_modules/tactile-js/tactile.js"));
 });
 
@@ -41,8 +41,8 @@ app.get("/", function (req, res) {
 });
 
 // Serving game page
-app.get("/index.html", function (req, res) {
-  res.sendFile(path.join(__dirname, "./assets/html/index.html"));
+app.get("/game.html", function (req, res) {
+  res.sendFile(path.join(__dirname, "./assets/html/game.html"));
 });
 
 // Starting server
