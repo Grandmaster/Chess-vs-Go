@@ -35,14 +35,17 @@ io.on("connection", (socket) => {
   });
 });
 
-// Displaying home page
+// Serving home page
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./assets/html/home.html"));
 });
 
-// Serving game page
-app.get("/game.html", function (req, res) {
-  res.sendFile(path.join(__dirname, "./assets/html/game.html"));
+// Serving html pages
+app.get("/:page", function (req, res) {
+  let page = req.params["page"];
+  if (page.slice(-4) == "html") {
+    res.sendFile(path.join(__dirname, `./assets/html/${page}`));
+  }
 });
 
 // Starting server
