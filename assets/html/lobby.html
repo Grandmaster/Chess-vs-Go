@@ -21,6 +21,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css"
     />
+    <link rel="stylesheet" href="../css/lobby.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,6 +47,29 @@
         </div>
       </div>
     </nav>
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-12">
+        <div class="tile is-parent">
+          <div class="tile is-child is-12">
+            <p id="intro">
+              Hello there! Welcome to Chess-vs-Go, an online game that combines
+              the classic board games of Chess and Go. This game (and site) is
+              still being worked on, but I hope you enjoy the game. Join the
+              chat, and see if anyone else is willing to play.
+            </p>
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child is-6">
+            <h2>Join the chat!</h2>
+          </div>
+          <div class="tile is-child">
+            <h2>Available games:</h2>
+            <ul id="gamelist"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="../js/setup/lobby.js"></script>
 </html>
