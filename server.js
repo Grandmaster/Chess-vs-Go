@@ -1,6 +1,7 @@
 // Code that displays the game via server
 var express = require("express");
 var path = require("path");
+const mongoose = require("mongoose");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
@@ -8,6 +9,14 @@ var port = 3000;
 
 // Using code from assets folder
 app.use(express.static("assets"));
+
+// Connecting to database
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost:27017/chess-vs-go-chat",
+  {
+    useNewUrlParser: true,
+  }
+);
 
 // Serving tactile.js, for tiling canvas
 app.get("/js/game/util/tactile.js", (req, res) => {
