@@ -33,6 +33,10 @@ io.on("connection", (socket) => {
     console.log([x, y]);
     socket.broadcast.emit("return", x, y);
   });
+  // Implementing chat in lobby
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
+  });
 });
 
 // Serving home page

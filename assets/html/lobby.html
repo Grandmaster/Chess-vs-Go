@@ -59,17 +59,34 @@
             </p>
           </div>
         </div>
-        <div class="tile is-parent">
-          <div class="tile is-child is-6">
-            <h2>Join the chat!</h2>
+        <div class="tile">
+          <div class="tile is-parent is-6 is-vertical">
+            <div class="tile is-child">
+              <h2 class="title">Join the chat!</h2>
+            </div>
+            <div class="tile is-child">
+              <div id="chatbox">
+                <ul id="chatlist"></ul>
+              </div>
+            </div>
+            <div class="tile is-child">
+              <form id="chatline">
+                <input type="text" />
+              </form>
+            </div>
           </div>
-          <div class="tile is-child">
-            <h2>Available games:</h2>
-            <ul id="gamelist"></ul>
+          <div class="tile is-parent is-vertical">
+            <div class="tile is-child">
+              <h2 class="title">Available games:</h2>
+            </div>
+            <div class="tile is-child">
+              <ul id="gamelist"></ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
+  <script src="./socket/socket.io.js"></script>
   <script src="../js/setup/lobby.js"></script>
 </html>
