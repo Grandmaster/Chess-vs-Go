@@ -2,6 +2,7 @@
 var express = require("express");
 var path = require("path");
 const mongoose = require("mongoose");
+const Message = require("./chatModel.js");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
@@ -10,13 +11,30 @@ var port = 3000;
 // Using code from assets folder
 app.use(express.static("assets"));
 
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Connecting to database
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost:27017/chess-vs-go-chat",
   {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   }
 );
+
+// Saving chat messages to database
+app.post("/message", ({ body }, res) => {
+  console.log(body);
+  Message.create(body)
+    .then((dbMessage) => {
+      res.json(dbMessage);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
 // Serving tactile.js, for tiling canvas
 app.get("/js/game/util/tactile.js", (req, res) => {

@@ -18,6 +18,16 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   if (input.value.length > 0) {
     socket.emit("chat message", `${tagname}: ${input.value}`);
+    fetch("/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: tagname,
+        message: input.value,
+      }),
+    });
     input.value = "";
   }
 });
