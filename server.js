@@ -34,11 +34,29 @@ app.get("/message", (req, res) => {
   });
 });
 
+// Getting all requests from database
+app.get("/request", (req, res) => {
+  Request.find({}).then((dbRequests) => {
+    res.send(dbRequests);
+  });
+});
+
 // Saving chat messages to database
 app.post("/message", ({ body }, res) => {
   Message.create(body)
     .then((dbMessage) => {
       res.json(dbMessage);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
+// Saving request to database
+app.post("/request", ({ body }, res) => {
+  Request.create(body)
+    .then((dbRequest) => {
+      res.json(dbRequest);
     })
     .catch((err) => {
       res.json(err);

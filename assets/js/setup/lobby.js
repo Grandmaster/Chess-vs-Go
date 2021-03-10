@@ -13,6 +13,21 @@ fetch("/message").then(async (res) => {
   }
 });
 
+// Same as above, but with requests
+fetch("/request").then(async (res) => {
+  let result = await res.json();
+  let gamelist = document.getElementById("gamelist");
+  for (let entry of result) {
+    let req = document.createElement("li");
+    let link = document.createElement("span");
+    req.textContent = `${entry.user} wants to play a `;
+    link.textContent = "game";
+    link.id = `${entry.user}`;
+    req.append(link);
+    gamelist.appendChild(req);
+  }
+});
+
 // Getting the tagname from localStorage
 var tagname = localStorage.getItem("tag");
 if (tagname !== null) {
@@ -57,7 +72,7 @@ let requestButton = document.getElementById("request");
 requestButton.addEventListener("click", (event) => {
   if (requestMade == true) return;
   let gamelist = document.getElementById("gamelist");
-  var req = document.createElement("li");
+  let req = document.createElement("li");
   let link = document.createElement("span");
   req.textContent = `${tagname} wants to play a `;
   link.textContent = "game";
@@ -65,6 +80,17 @@ requestButton.addEventListener("click", (event) => {
   req.append(link);
   gamelist.appendChild(req);
   requestMade = true;
+
+  // Saving request in server
+  fetch("/request", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: tagname,
+    }),
+  });
 });
 
 // Variable to prevent multiple requests per person per page
