@@ -1,6 +1,18 @@
 // Javascript file that handles what happens on the lobby page
 // =======================================================================
 
+// Getting the messages of the chat from database, and printing them on screen
+fetch("/message").then(async (res) => {
+  let result = await res.json();
+  var chatlist = document.getElementById("chatlist");
+  for (let entry of result) {
+    let message = `${entry.user}: ${entry.message}`;
+    var item = document.createElement("li");
+    item.textContent = message;
+    chatlist.appendChild(item);
+  }
+});
+
 // Getting the tagname from localStorage
 var tagname = localStorage.getItem("tag");
 if (tagname !== null) {

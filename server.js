@@ -24,9 +24,15 @@ mongoose.connect(
   }
 );
 
+// Getting all messages from database
+app.get("/message", (req, res) => {
+  Message.find({}).then((dbMessages) => {
+    res.send(dbMessages);
+  });
+});
+
 // Saving chat messages to database
 app.post("/message", ({ body }, res) => {
-  console.log(body);
   Message.create(body)
     .then((dbMessage) => {
       res.json(dbMessage);
