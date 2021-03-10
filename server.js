@@ -2,11 +2,14 @@
 var express = require("express");
 var path = require("path");
 const mongoose = require("mongoose");
-const Message = require("./chatModel.js");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
 var port = 3000;
+
+// Models
+const Message = require("./models/chatModel.js");
+const Request = require("./models/requestModel.js");
 
 // Using code from assets folder
 app.use(express.static("assets"));

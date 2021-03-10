@@ -51,3 +51,21 @@ socket.on("chat message", (msg) => {
   item.textContent = msg;
   chatlist.appendChild(item);
 });
+
+// Creating a game request when the request game button is clicked on
+let requestButton = document.getElementById("request");
+requestButton.addEventListener("click", (event) => {
+  if (requestMade == true) return;
+  let gamelist = document.getElementById("gamelist");
+  var req = document.createElement("li");
+  let link = document.createElement("span");
+  req.textContent = `${tagname} wants to play a `;
+  link.textContent = "game";
+  link.id = `${tagname}`;
+  req.append(link);
+  gamelist.appendChild(req);
+  requestMade = true;
+});
+
+// Variable to prevent multiple requests per person per page
+let requestMade = false;

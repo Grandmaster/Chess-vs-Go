@@ -3,3 +3,9 @@
   font-size: large;
   font-weight: 300;
 }
+
+span {
+  color: lightblue;
+  text-decoration: underline;
+  text-decoration-color: lightblue;
+}
