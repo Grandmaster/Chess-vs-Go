@@ -81,6 +81,12 @@ requestButton.addEventListener("click", (event) => {
   gamelist.appendChild(req);
   requestMade = true;
 
+  // Changing button nature, to allow user to cancel request
+  requestButton.innerHTML = "Cancel request";
+  requestButton.id = "cancel";
+  requestButton.classList.remove("is-primary");
+  requestButton.classList.add("is-danger");
+
   // Saving request in server
   fetch("/request", {
     method: "POST",
