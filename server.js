@@ -18,6 +18,9 @@ app.use(express.static("assets"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Routes
+require("./routes/apiRoutes.js")(app);
+
 // Connecting to database
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost:27017/chess-vs-go-chat",
@@ -26,42 +29,6 @@ mongoose.connect(
     useUnifiedTopology: true,
   }
 );
-
-// Getting all messages from database
-app.get("/message", (req, res) => {
-  Message.find({}).then((dbMessages) => {
-    res.send(dbMessages);
-  });
-});
-
-// Getting all requests from database
-app.get("/request", (req, res) => {
-  Request.find({}).then((dbRequests) => {
-    res.send(dbRequests);
-  });
-});
-
-// Saving chat messages to database
-app.post("/message", ({ body }, res) => {
-  Message.create(body)
-    .then((dbMessage) => {
-      res.json(dbMessage);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-// Saving request to database
-app.post("/request", ({ body }, res) => {
-  Request.create(body)
-    .then((dbRequest) => {
-      res.json(dbRequest);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
 
 // Serving tactile.js, for tiling canvas
 app.get("/js/game/util/tactile.js", (req, res) => {
