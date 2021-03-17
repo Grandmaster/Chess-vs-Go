@@ -39,6 +39,9 @@ if (tagname !== null) {
 
 // Implementing chat functionality: sending the message to the server
 var socket = io();
+socket.on("connect", () => {
+  socket.emit("init", tagname);
+});
 var form = document.getElementById("chatline");
 var input = document.getElementsByTagName("input")[0];
 form.addEventListener("submit", (event) => {
@@ -69,35 +72,55 @@ socket.on("chat message", (msg) => {
 
 // Creating a game request when the request game button is clicked on
 let requestButton = document.getElementById("request");
-requestButton.addEventListener("click", (event) => {
-  if (requestMade == true) return;
-  let gamelist = document.getElementById("gamelist");
-  let req = document.createElement("li");
-  let link = document.createElement("span");
-  req.textContent = `${tagname} wants to play a `;
-  link.textContent = "game";
-  link.id = `${tagname}`;
-  req.append(link);
-  gamelist.appendChild(req);
-  requestMade = true;
+requestButton.addEventListener("click", () => {
+  if (requestButton.id == "request") {
+    if (requestMade == true) return;
+    let gamelist = document.getElementById("gamelist");
+    let req = document.createElement("li");
+    let link = document.createElement("span");
+    req.textContent = `${tagname} wants to play a `;
+    link.textContent = "game";
+    link.id = `${tagname}`;
+    req.append(link);
+    gamelist.appendChild(req);
+    requestMade = true;
+    requestCancelled = false;
 
-  // Changing button nature, to allow user to cancel request
-  requestButton.innerHTML = "Cancel request";
-  requestButton.id = "cancel";
-  requestButton.classList.remove("is-primary");
-  requestButton.classList.add("is-danger");
+    // Changing button nature, to allow user to cancel request
+    requestButton.innerHTML = "Cancel request";
+    requestButton.id = "cancel";
+    requestButton.classList.remove("is-primary");
+    requestButton.classList.add("is-danger");
 
-  // Saving request in server
-  fetch("/request", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user: tagname,
-    }),
-  });
+    // Saving request in server
+    fetch("/request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: tagname,
+      }),
+    });
+  } else if (requestButton.id == "cancel") {
+    if (requestCancelled) return;
+
+    // Removing request from server
+    fetch(`/request/${tagname}`, {
+      method: "DELETE",
+    });
+
+    // Changing the button back
+    requestButton.innerHTML = "Request Game";
+    requestButton.classList.remove("is-danger");
+    requestButton.classList.add("is-primary");
+
+    // Prevent multiple instances
+    requestCancelled = true;
+    requestMade = false;
+  }
 });
 
 // Variable to prevent multiple requests per person per page
 let requestMade = false;
+let requestCancelled = false;

@@ -4,9 +4,6 @@
 // Models
 const db = require("../models");
 
-// Dependencies
-const path = require("path");
-
 module.exports = function (app) {
   // Getting all messages from database
   app.get("/message", (req, res) => {
@@ -42,5 +39,14 @@ module.exports = function (app) {
       .catch((err) => {
         res.json(err);
       });
+  });
+
+  // Deleting request from database
+  app.delete("/request/:user", (req, res) => {
+    let name = req.params.user;
+    db.Request.deleteOne({ user: name }).catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
   });
 };
