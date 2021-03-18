@@ -114,6 +114,12 @@ requestButton.addEventListener("click", () => {
     requestButton.innerHTML = "Request Game";
     requestButton.classList.remove("is-danger");
     requestButton.classList.add("is-primary");
+    requestButton.id = "request";
+
+    // Removing the request from the page
+    let link = document.getElementById(tagname);
+    let req = link.parentElement;
+    req.remove();
 
     // Prevent multiple instances
     requestCancelled = true;
