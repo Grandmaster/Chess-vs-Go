@@ -102,6 +102,9 @@ requestButton.addEventListener("click", () => {
         user: tagname,
       }),
     });
+
+    // Making request visible to other users
+    socket.emit("make request", tagname);
   } else if (requestButton.id == "cancel") {
     if (requestCancelled) return;
 
@@ -121,6 +124,9 @@ requestButton.addEventListener("click", () => {
     let req = link.parentElement;
     req.remove();
 
+    // Using connection to remove request on all users' pages
+    socket.emit("cancel request", tagname);
+
     // Prevent multiple instances
     requestCancelled = true;
     requestMade = false;
@@ -130,3 +136,22 @@ requestButton.addEventListener("click", () => {
 // Variable to prevent multiple requests per person per page
 let requestMade = false;
 let requestCancelled = false;
+
+// Removing request of other users
+socket.on("cancel request", (user) => {
+  let link = document.getElementById(user);
+  let req = link.parentElement;
+  req.remove();
+});
+
+// Adding requests of other users
+socket.on("make request", (user) => {
+  let gamelist = document.getElementById("gamelist");
+  let req = document.createElement("li");
+  let link = document.createElement("span");
+  req.textContent = `${user} wants to play a `;
+  link.textContent = "game";
+  link.id = `${user}`;
+  req.append(link);
+  gamelist.appendChild(req);
+});

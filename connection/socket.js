@@ -20,5 +20,13 @@ module.exports = async function (io) {
     socket.on("chat message", (msg) => {
       io.emit("chat message", msg);
     });
+    // Make request
+    socket.on("make request", (user) => {
+      socket.broadcast.emit("make request", user);
+    });
+    // Cancel request
+    socket.on("cancel request", (tagname) => {
+      socket.broadcast.emit("cancel request", tagname);
+    });
   });
 };
