@@ -155,3 +155,10 @@ socket.on("make request", (user) => {
   req.append(link);
   gamelist.appendChild(req);
 });
+
+// Removing request upon disconnection
+window.addEventListener("beforeunload", () => {
+  fetch(`/request/${tagname}`, {
+    method: "DELETE",
+  });
+});
