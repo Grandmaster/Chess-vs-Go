@@ -154,11 +154,31 @@ socket.on("make request", (user) => {
   link.id = `${user}`;
   req.append(link);
   gamelist.appendChild(req);
+
+  // Add click event for game link, to begin the game
+  link.addEventListener("click", () => {
+    socket.emit("create room", `${user} vs ${tagname}`, tagname);
+  });
 });
 
-// Removing request upon disconnection
+// Removing request when leaving the lobby
 window.addEventListener("beforeunload", () => {
   fetch(`/request/${tagname}`, {
     method: "DELETE",
   });
+});
+
+// Entering room created by other users for game
+socket.on("enter room", (room) => {
+  let strarr = room.split(" ");
+  let namechk = strarr[0];
+  if (namechk == tagname) {
+    socket.emit("enter room", room, tagname);
+  }
+});
+
+// Going to play game against other player
+socket.on("join game", (gamename) => {
+  localStorage.setItem("game", gamename);
+  window.open("/game.html", "_self");
 });

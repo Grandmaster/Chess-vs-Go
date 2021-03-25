@@ -28,5 +28,17 @@ module.exports = async function (io) {
     socket.on("cancel request", (tagname) => {
       socket.broadcast.emit("cancel request", tagname);
     });
+    // Create game against other player
+    socket.on("create room", (room, name) => {
+      socket.join(room);
+      console.log(`${name} has joined ${room}.`);
+      socket.broadcast.emit("enter room", room);
+    });
+    // Enter game against other player
+    socket.on("enter room", (room, name) => {
+      socket.join(room);
+      console.log(`${name} has joined ${room}`);
+      io.to(room).emit("join game", room);
+    });
   });
 };

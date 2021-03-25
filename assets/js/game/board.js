@@ -4,6 +4,13 @@ const canvas = document.getElementById("base_layer");
 canvas.width = 750;
 canvas.height = 750;
 
+// Game title
+let gamename = localStorage.getItem("game");
+if (gamename !== null) {
+  let title = document.getElementById("game title");
+  title.innerHTML = gamename;
+}
+
 // Initial data
 let context = canvas.getContext("2d");
 let margin = 150;
@@ -14,12 +21,12 @@ context.strokeStyle = "black";
 context.lineWidth = 1;
 var boxnum = 8;
 var boxsize = (canvas.width - margin) / boxnum;
-x_counter = 0;
-y_counter = 0;
+let x_counter = 0;
+let y_counter = 0;
 let y_count_prev = y_counter;
-alt_counter = 0;
-gridpoints_array = [];
-gridpoints_labels = [];
+let alt_counter = 0;
+let gridpoints_array = [];
+let gridpoints_labels = [];
 
 // Function to help change color of squares
 function flip(counter, val1, val2) {
