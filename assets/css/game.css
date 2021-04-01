@@ -1,10 +1,18 @@
-#base_layer {
+#base_layer,
+#your_bench,
+#enemy_bench {
   background-image: url("../images/Melamine-wood-001.png");
 }
 html,
 body {
   width: 100%;
   height: 100%;
+}
+#game {
+  content: "";
+  display: table;
+  clear: both;
+  width: 70%;
 }
 #choice {
   display: none;
@@ -17,4 +25,14 @@ body {
 canvas {
   width: 750px;
   height: 750px;
+  float: left;
+  margin: 15px;
+}
+#your_bench,
+#enemy_bench {
+  width: 10%;
+  height: 700px;
+}
+#enemy_bench {
+  float: right;
 }

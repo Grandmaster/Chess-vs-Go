@@ -51,35 +51,40 @@
       </div>
     </nav>
     <h1 id="game title"></h1>
-    <!-- Will need to find a way to scale the canvas -->
-    <div style="position: relative" class="canvas-container">
-      <canvas
-        id="base_layer"
-        style="position: absolute; left: 0; top: 0; z-index: 0"
-      ></canvas>
-      <canvas
-        id="go_layer"
-        style="position: absolute; left: 0; top: 0; z-index: 2"
-      ></canvas>
-      <canvas
-        id="chess_layer"
-        style="position: absolute; left: 0; top: 0; z-index: 1"
-      ></canvas>
-      <div id="choice" style="position: absolute; z-index: 3">
-        <p>black pawn</p>
-        <p>white pawn</p>
-        <p>black knight</p>
-        <p>white knight</p>
-        <p>black king</p>
-        <p>white king</p>
-        <p>black rook</p>
-        <p>white rook</p>
-        <p>black bishop</p>
-        <p>white bishop</p>
-        <p>black queen</p>
-        <p>white queen</p>
+    <main id="game">
+      <canvas id="your_bench"></canvas>
+      <!-- Will need to find a way to scale the canvas -->
+      <div style="position: relative" class="canvas-container">
+        <canvas
+          id="base_layer"
+          style="position: absolute; left: 0; top: 0; z-index: 0"
+        ></canvas>
+        <canvas
+          id="go_layer"
+          style="position: absolute; left: 0; top: 0; z-index: 2"
+        ></canvas>
+        <canvas
+          id="chess_layer"
+          style="position: absolute; left: 0; top: 0; z-index: 1"
+        ></canvas>
+        <div id="choice" style="position: absolute; z-index: 3">
+          <p>black pawn</p>
+          <p>white pawn</p>
+          <p>black knight</p>
+          <p>white knight</p>
+          <p>black king</p>
+          <p>white king</p>
+          <p>black rook</p>
+          <p>white rook</p>
+          <p>black bishop</p>
+          <p>white bishop</p>
+          <p>black queen</p>
+          <p>white queen</p>
+        </div>
       </div>
-    </div>
+      <canvas id="enemy_bench"></canvas>
+    </main>
+
     <script src="../js/game/board.js"></script>
     <script src="./socket/socket.io.js"></script>
     <script type="module" src="../js/game/util/tiling.js"></script>
