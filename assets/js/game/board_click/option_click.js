@@ -8,7 +8,7 @@ $(document).ready(() => {
   // Pick a piece to put on the board when corresponding option is clicked
   options.addEventListener("click", (event) => {
     let str = event.target.innerHTML;
-    chosen_piece = choosePiece(str, benches.black, benches.white);
+    chosen_piece = choosePiece(str, benches);
     if (chosen_piece == undefined) {
       console.log("Piece not found on bench");
       return;

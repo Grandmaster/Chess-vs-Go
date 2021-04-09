@@ -82,5 +82,3 @@ for (let y = margin / 2; y <= boxsize * boxnum; y += boxsize) {
     x_counter++;
   }
 }
-
-// console.log(gridpoints_array);

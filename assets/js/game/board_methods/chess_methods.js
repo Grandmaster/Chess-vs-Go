@@ -41,7 +41,7 @@ function currentChessBoard(piece_array, context, width, height, benches) {
         delete val.y_pos;
         val.type = val.type.replace(color, ecolor);
         val.img = val.img.replace(color, ecolor);
-        ebench.push(val);
+        ebench[val.type.slice(6)].amount++;
         if (val.type.slice(6) == "king") {
           kings[color] = false;
         }
@@ -77,14 +77,8 @@ function renderPiece(piece_obj, context) {
 function placePiece(x, y, piece, type, benches) {
   // Removing the corresponding piece from the bench
   let color = type.slice(0, 5);
-  let location;
-  for (let member of benches[color]) {
-    if (member.type == type) {
-      location = benches[color].indexOf(member);
-      break;
-    }
-  }
-  benches[color].splice(location, 1);
+  let t = type.slice(6);
+  benches[color][t].amount--;
 
   // Creating new object that represents piece, and putting it in play
   var newpiece = {
@@ -269,16 +263,14 @@ function movePiece(piece_obj, x_new, y_new, board) {
 // Function that captures a piece if moved onto by another, and puts the captured piece
 // in the opposing bench
 function capturePiece(piece, array, benches) {
-  var l = array.indexOf(piece);
-  var piece = array[l];
+  var type = piece.type.slice(6);
   var color = piece.type.slice(0, 5);
   delete piece.x_pos;
   delete piece.y_pos;
   var ecolor = switchColor(color);
   piece.img = piece.img.replace(color, ecolor);
   piece.type = piece.type.replace(color, ecolor);
-  benches[ecolor].push(piece);
-  array.splice(l, 1);
+  benches[ecolor][type].amount++;
   if (piece.type.slice(6) == "king") {
     kings[color] = false;
   }
@@ -324,63 +316,73 @@ function findSquare(x, y, range) {
 
 // Function that determines if two square point to the same place on the board
 function sameSquare(sq1, sq2) {
-  if (sq1[0] == sq2[0] && sq1[1] == sq2[1]) {
-    return true;
-  } else return false;
+  return sq1[0] == sq2[0] && sq1[1] == sq2[1];
 }
 
 // Function that displays choice of piece to insert on bench
-function choosePiece(piece, bbench, wbench) {
+function choosePiece(piece, benches) {
   var choice = piece.replace(/ /, "_");
   var color = choice.slice(0, 5);
-  switch (color) {
-    case "black":
-      return bbench.find((element) => {
-        return element.type == choice;
-      });
-    case "white":
-      return wbench.find((element) => {
-        return element.type == choice;
-      });
-  }
+  var type = choice.slice(6);
+  return benches[color][type].data;
 }
 
 // Function that fills the bench of each player
+// TODO: Change implementation of benches from array to object
 function fillBench(pieces) {
   // There should be 8 pawns, 2 officials of each type, 1 queen and 1 king on a bench
 
-  var black_bench = [];
-  var white_bench = [];
+  var black_bench = {};
+  var white_bench = {};
 
   for (let name in pieces) {
     var piece = {
       type: name,
       img: pieces[name],
     };
+    var type = name.slice(6);
     switch (name) {
       case "black_pawn":
-        black_bench = black_bench.concat(Array(8).fill(piece));
+        black_bench[type] = {
+          data: piece,
+          amount: 8,
+        };
         break;
       case "white_pawn":
-        white_bench = white_bench.concat(Array(8).fill(piece));
+        white_bench[type] = {
+          data: piece,
+          amount: 8,
+        };
         break;
       case "black_bishop":
       case "black_knight":
       case "black_rook":
-        black_bench = black_bench.concat(Array(2).fill(piece));
+        black_bench[type] = {
+          data: piece,
+          amount: 2,
+        };
         break;
       case "white_knight":
       case "white_rook":
       case "white_bishop":
-        white_bench = white_bench.concat(Array(2).fill(piece));
+        white_bench[type] = {
+          data: piece,
+          amount: 2,
+        };
         break;
       case "black_king":
       case "black_queen":
-        black_bench.push(piece);
+        black_bench[type] = {
+          data: piece,
+          amount: 1,
+        };
         break;
       case "white_king":
       case "white_queen":
-        white_bench.push(piece);
+        white_bench[type] = {
+          data: piece,
+          amount: 1,
+        };
         break;
     }
   }
@@ -388,6 +390,36 @@ function fillBench(pieces) {
     black: black_bench,
     white: white_bench,
   };
+}
+
+// Function to render benches on the page
+function renderBenches(benches, playerCanvas, enemyCanvas) {
+  let playerContext = playerCanvas.getContext("2d");
+  let enemyContext = enemyCanvas.getContext("2d");
+
+  // Create pattern to fill player canvas
+  let patternCanvas = document.createElement("canvas");
+  let patternContext = patternCanvas.getContext("2d");
+  patternCanvas.width = playerCanvas.width;
+  patternCanvas.height = playerCanvas.height / 6;
+  let w = patternCanvas.width;
+  let h = patternCanvas.height;
+
+  // Design pattern
+  patternContext.strokeStyle = "black";
+  patternContext.lineWidth = 1;
+  patternContext.strokeRect(0, 0, patternCanvas.width, patternCanvas.height);
+  patternContext.beginPath();
+  patternContext.arc(w * (2 / 3), h, h / 5, 0, Math.PI, true);
+  patternContext.fill();
+
+  // Printing pattern on bench canvases
+  let playerPattern = playerContext.createPattern(patternCanvas, "repeat-y");
+  playerContext.fillStyle = playerPattern;
+  playerContext.fillRect(0, 0, playerCanvas.width, playerCanvas.height);
+  let enemyPattern = enemyContext.createPattern(patternCanvas, "repeat-y");
+  enemyContext.fillStyle = enemyPattern;
+  enemyContext.fillRect(0, 0, enemyCanvas.width, enemyCanvas.height);
 }
 
 // Function that generates the possible moves a piece can make, given its location

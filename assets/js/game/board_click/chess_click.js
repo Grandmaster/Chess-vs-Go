@@ -30,6 +30,15 @@ var options = document.getElementById("choice");
 // Fill benches
 var benches = fillBench(chess_pieces);
 
+// Display benches on page
+const canvas_player = document.getElementById("your_bench");
+const canvas_enemy = document.getElementById("enemy_bench");
+canvas_player.width = 200;
+canvas_enemy.width = 200;
+canvas_player.height = 700;
+canvas_enemy.height = 700;
+renderBenches(benches, canvas_player, canvas_enemy);
+
 $(document).ready(() => {
   // Black goes first, for now
   var color = "black";
@@ -42,14 +51,14 @@ $(document).ready(() => {
     let y_point = Math.floor(event.clientY - rect.top);
 
     // The piece images are drawn from the top-left corner of the squares. So those are the target pixels
-    xp = Math.floor(x_point - boxsize / 2);
-    yp = Math.floor(y_point - boxsize / 2);
-    x_true = 0;
-    y_true = 0;
+    let xp = Math.floor(x_point - boxsize / 2);
+    let yp = Math.floor(y_point - boxsize / 2);
+    let x_true = 0;
+    let y_true = 0;
 
     // Code to find the nearest playable point to the target pixel, if within a certain range. Uses lodash
-    x_range = _.range(xp - 20, xp + 21, 1);
-    y_range = _.range(yp - 20, yp + 21, 1);
+    let x_range = _.range(xp - 20, xp + 21, 1);
+    let y_range = _.range(yp - 20, yp + 21, 1);
     for (let x of x_range) {
       for (let y of y_range) {
         if (x % 75 == 0) {
@@ -62,9 +71,9 @@ $(document).ready(() => {
     }
 
     // Getting index of chosen square, for movement
-    x_i = x_true / 75;
-    y_i = y_true / 75;
-    arr = [x_i, y_i];
+    let x_i = x_true / 75;
+    let y_i = y_true / 75;
+    let arr = [x_i, y_i];
     var c = 0;
 
     // Ending the game if one of the kings dies
@@ -88,8 +97,8 @@ $(document).ready(() => {
 
         // Move existing piece and/or capture, if move_queue is not empty
         if (move_queue.length != 0 && c == 0) {
-          pmoves = move_queue[1];
-          captures = move_queue[2];
+          let pmoves = move_queue[1];
+          let captures = move_queue[2];
           for (let capture of captures) {
             if (sameSquare(arr, capture)) {
               var p = findPiece(x_i, y_i, pieces_in_play);
@@ -133,7 +142,7 @@ $(document).ready(() => {
 
       // Place piece if the first two cases don't apply, and place_queue is not empty
       if (c == 0 && place_queue.length !== 0) {
-        var piece = place_queue.pop();
+        piece = place_queue.pop();
         var type = piece.type.slice(6);
         if (type !== "king") {
           let land = displayZones(goBoardforChess, field, contxt)[color];
