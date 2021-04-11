@@ -393,7 +393,7 @@ function fillBench(pieces) {
 }
 
 // Function to render benches on the page
-function renderBenches(benches, playerCanvas, enemyCanvas) {
+function renderBenches(benches, playerCanvas, enemyCanvas, color) {
   let playerContext = playerCanvas.getContext("2d");
   let enemyContext = enemyCanvas.getContext("2d");
 
@@ -420,6 +420,7 @@ function renderBenches(benches, playerCanvas, enemyCanvas) {
   let enemyPattern = enemyContext.createPattern(patternCanvas, "repeat-y");
   enemyContext.fillStyle = enemyPattern;
   enemyContext.fillRect(0, 0, enemyCanvas.width, enemyCanvas.height);
+  let ecolor = switchColor(color);
 
   // Putting images of pieces on the benches
   let benchkeys = Object.keys(benches.white);
@@ -436,7 +437,7 @@ function renderBenches(benches, playerCanvas, enemyCanvas) {
         playerCanvas.height / 6
       );
     };
-    imgp.src = benches.white[t].data.img;
+    imgp.src = benches[color][t].data.img;
     // Enemy
     let imge = new Image();
     imge.onload = () => {
@@ -448,7 +449,7 @@ function renderBenches(benches, playerCanvas, enemyCanvas) {
         enemyCanvas.height / 6
       );
     };
-    imge.src = benches.black[t].data.img;
+    imge.src = benches[ecolor][t].data.img;
   }
 }
 

@@ -37,12 +37,11 @@ canvas_player.width = 200;
 canvas_enemy.width = 200;
 canvas_player.height = 700;
 canvas_enemy.height = 700;
-renderBenches(benches, canvas_player, canvas_enemy);
+// Getting color from storage
+var color = localStorage.getItem("color");
+renderBenches(benches, canvas_player, canvas_enemy, color);
 
 $(document).ready(() => {
-  // Black goes first, for now
-  var color = "black";
-
   // Event listener for clicks on the board
   canvas_chess.addEventListener("click", (event) => {
     // Finding where on the board the click happened
