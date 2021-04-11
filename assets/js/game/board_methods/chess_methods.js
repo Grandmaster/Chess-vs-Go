@@ -328,7 +328,6 @@ function choosePiece(piece, benches) {
 }
 
 // Function that fills the bench of each player
-// TODO: Change implementation of benches from array to object
 function fillBench(pieces) {
   // There should be 8 pawns, 2 officials of each type, 1 queen and 1 king on a bench
 
