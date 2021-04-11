@@ -410,7 +410,7 @@ function renderBenches(benches, playerCanvas, enemyCanvas, color) {
   patternContext.lineWidth = 1;
   patternContext.strokeRect(0, 0, patternCanvas.width, patternCanvas.height);
   patternContext.beginPath();
-  patternContext.arc(w * (2 / 3), h, h / 5, 0, Math.PI, true);
+  patternContext.arc(w, h, h * 0.3, 0, 2 * Math.PI, true);
   patternContext.fill();
 
   // Printing pattern on bench canvases
@@ -420,7 +420,13 @@ function renderBenches(benches, playerCanvas, enemyCanvas, color) {
   let enemyPattern = enemyContext.createPattern(patternCanvas, "repeat-y");
   enemyContext.fillStyle = enemyPattern;
   enemyContext.fillRect(0, 0, enemyCanvas.width, enemyCanvas.height);
+
+  // Prepare for rendering bench data
   let ecolor = switchColor(color);
+  playerContext.fillStyle = "white";
+  enemyContext.fillStyle = "white";
+  playerContext.font = "30px Helvetica";
+  enemyContext.font = "30px Helvetica";
 
   // Putting images of pieces on the benches
   let benchkeys = Object.keys(benches.white);
@@ -438,6 +444,8 @@ function renderBenches(benches, playerCanvas, enemyCanvas, color) {
       );
     };
     imgp.src = benches[color][t].data.img;
+    let nump = benches[color][t].amount;
+    playerContext.fillText(`${nump}`, w * 0.9, (i + 1) * h);
     // Enemy
     let imge = new Image();
     imge.onload = () => {
@@ -450,6 +458,8 @@ function renderBenches(benches, playerCanvas, enemyCanvas, color) {
       );
     };
     imge.src = benches[ecolor][t].data.img;
+    let nume = benches[ecolor][t].amount;
+    enemyContext.fillText(`${nume}`, w * 0.9, (i + 1) * h);
   }
 }
 
