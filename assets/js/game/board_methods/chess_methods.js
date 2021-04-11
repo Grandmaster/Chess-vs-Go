@@ -420,6 +420,36 @@ function renderBenches(benches, playerCanvas, enemyCanvas) {
   let enemyPattern = enemyContext.createPattern(patternCanvas, "repeat-y");
   enemyContext.fillStyle = enemyPattern;
   enemyContext.fillRect(0, 0, enemyCanvas.width, enemyCanvas.height);
+
+  // Putting images of pieces on the benches
+  let benchkeys = Object.keys(benches.white);
+  for (let i = 0; i <= 5; i++) {
+    let t = benchkeys[i];
+    // Player
+    let imgp = new Image();
+    imgp.onload = () => {
+      playerContext.drawImage(
+        imgp,
+        0,
+        (i * playerCanvas.height) / 6,
+        playerCanvas.width,
+        playerCanvas.height / 6
+      );
+    };
+    imgp.src = benches.white[t].data.img;
+    // Enemy
+    let imge = new Image();
+    imge.onload = () => {
+      enemyContext.drawImage(
+        imge,
+        0,
+        (i * enemyCanvas.height) / 6,
+        enemyCanvas.width,
+        enemyCanvas.height / 6
+      );
+    };
+    imge.src = benches.black[t].data.img;
+  }
 }
 
 // Function that generates the possible moves a piece can make, given its location
