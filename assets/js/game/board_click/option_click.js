@@ -26,6 +26,18 @@ $(document).ready(() => {
     let d = Math.ceil(y_point / h);
     let str = `${color}_${pieceObj[d]}`;
     chosen_piece = choosePiece(str, benches);
+
+    // Visual confirmation of player choice
+    let context = canvas_player.getContext("2d");
+    context.fillStyle = "lightgreen";
+    context.fillRect(0, (d - 1) * h, canvas_player.width, h);
+    let img = new Image();
+    img.onload = () => {
+      context.drawImage(img, 0, (d - 1) * h, canvas_player.width, h);
+    };
+    img.src = chosen_piece.img;
+
+    // Putting piece in play
     if (chosen_piece == undefined) {
       console.log("Piece not found on bench");
       return;

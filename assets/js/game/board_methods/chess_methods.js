@@ -56,6 +56,9 @@ function currentChessBoard(piece_array, context, width, height, benches) {
     // Draw piece on board
     renderPiece(val, context);
   });
+
+  // Update benches
+  renderBenches(benches, canvas_player, canvas_enemy, color);
 }
 
 // Function that draws the image of the piece on the canvas
