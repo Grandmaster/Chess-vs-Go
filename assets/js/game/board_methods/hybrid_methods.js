@@ -4,6 +4,9 @@
 // Socket global variable
 var socket = io();
 
+// Boolean that determines whether player has moved
+var moved = false;
+
 // Boolean that determines whether there is an opportunity for a pawn to capture a stone
 var stonesCanBeCaptured = false;
 
@@ -98,9 +101,8 @@ function displayCaptureStones(targets, context, color) {
 
 // In this game, pawns can kill stones by capturing them, which moves the pawn to the square diagonal to
 // its previous square, connected by the stone
-function pawnCapturesStone(piece, board, target, landing, team) {
+function pawnCapturesStone(piece, board, target, landing) {
   board = godash.removeStone(board, target);
-  let color = piece.type.slice(0, 5);
   currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   let xn = landing[0][0];
   let yn = landing[0][1];
@@ -111,16 +113,14 @@ function pawnCapturesStone(piece, board, target, landing, team) {
     canvas_chess.width,
     canvas_chess.height
   );
-  team = godash.oppositeColor(color);
-  return [board, team];
+  return board;
 }
 
 // In this game, when an official (except the king) having moved lands on a square with enemy stones on its vertices, it can
 // convert one of them to a stone of its own color
 function officialConvertsStone(piece, board, target, team, benches) {
-  let color = piece.type.slice(0, 5);
   board = godash.removeStone(board, target);
-  board = godash.placeStone(board, target, color, false);
+  board = godash.placeStone(board, target, team, false);
   currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   currentChessBoard(
     pieces_in_play,
@@ -129,16 +129,14 @@ function officialConvertsStone(piece, board, target, team, benches) {
     canvas_chess.height,
     benches
   );
-  team = godash.oppositeColor(color);
-  return [board, team];
+  return board;
 }
 
 // In this game, when the king having moved lands on a square with friendly stones on its vertices and at least one
 // empty vertex, it can move a friendly stone from its position to an empty vertex on the square it landed on
 function kingMovesStones(piece, board, target, vacancy, team) {
-  let color = piece.type.slice(0, 5);
   board = godash.removeStone(board, target);
-  board = godash.addMove(board, vacancy, color);
+  board = godash.addMove(board, vacancy, team);
   currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   currentChessBoard(
     pieces_in_play,
@@ -146,13 +144,12 @@ function kingMovesStones(piece, board, target, vacancy, team) {
     canvas_chess.width,
     canvas_chess.height
   );
-  team = godash.oppositeColor(color);
 
   // Resetting for next instance
   flyingStone = "undefined";
   landingPoint = "undefined";
   royalPiece = 0;
-  return [board, team];
+  return board;
 }
 
 // In this game, stones can, in certain configurations, restrict the movement of enemy pieces (except the

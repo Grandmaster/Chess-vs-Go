@@ -34,5 +34,11 @@ module.exports = async function (io) {
       console.log(`${name} has joined ${room}`);
       io.to(room).emit("join game", room);
     });
+    // Sending move to opponent
+    socket.on("send move", (goboard, chessboard, benches, room) => {
+      console.log("sent move");
+      socket.to(room).emit("receive move", goboard, chessboard, benches);
+      // io.emit("receive move", goboard, chessboard, benches); <==== This works, but sends to everybody
+    });
   });
 };

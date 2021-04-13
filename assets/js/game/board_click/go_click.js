@@ -10,6 +10,16 @@ var ctx = canvas_go.getContext("2d");
 // Go board variable to pass to chess side of the game
 var goBoardforChess;
 
+// Initialize socket
+var socket = io();
+
+// Variable to determine if player has moved already
+var moved_go = moved;
+
+// Getting data from storage
+var color = localStorage.getItem("color");
+var roomname = localStorage.getItem("game");
+
 $(document).ready(() => {
   // Object that keeps track of go/weiqi/baduk state of game, courtesy of godash
   var go_board = new godash.Board(9);
@@ -47,8 +57,8 @@ $(document).ready(() => {
     }
 
     // Getting index of chosen point to pass to godash.board
-    x_i = x_true / 75 - 1;
-    y_i = y_true / 75 - 1;
+    let x_i = x_true / 75 - 1;
+    let y_i = y_true / 75 - 1;
 
     // Gameplay on the relevant point
     if (x_i != -1 && y_i != -1) {
@@ -63,15 +73,15 @@ $(document).ready(() => {
         }
       }
 
-      // Check to see if king is present, if not do nothing
-      if (!kings[color]) {
+      // Check to see if king is present or if the player has moved, if not present or yes do nothing
+      if (!kings[color] || moved_go) {
         console.log("Please put your king on the board");
       } else {
         // Capturing a stone with a pawn if all conditions are met
         if (stone !== undefined && stonesCanBeCaptured) {
           let l = pawnLandingSquares(crouchingPiece, [point]);
           let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
-          go_board = r[0];
+          go_board = r;
 
           // Calculating territory controlled by each player, and displaying it
           calculateTerritory(go_board, ctx);
@@ -82,7 +92,10 @@ $(document).ready(() => {
           // Resetting for next instance
           stonesCanBeCaptured = false;
           crouchingPiece = 0;
-          color = r[1];
+
+          // Sending move to opponent, and waiting for reply
+          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
+          moved_go = true;
         } else if (stone !== undefined && stonesCanBeConverted) {
           // Converting a stone with an official if all conditions are met
           let r = officialConvertsStone(
@@ -92,7 +105,7 @@ $(document).ready(() => {
             color,
             benches
           );
-          go_board = r[0];
+          go_board = r;
 
           // Calculating territory controlled by each player, and displaying it
           calculateTerritory(go_board, ctx);
@@ -103,7 +116,10 @@ $(document).ready(() => {
           // Resetting for next instance
           stonesCanBeConverted = false;
           forcingPiece = 0;
-          color = r[1];
+
+          // Sending move to opponent, and waiting for reply
+          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
+          moved_go = true;
         } else if (stone !== undefined && stonesCanBeMoved) {
           // Selecting a stone for the king to move
           flyingStone = point;
@@ -125,7 +141,7 @@ $(document).ready(() => {
             landingPoint,
             color
           );
-          go_board = r[0];
+          go_board = r;
 
           // Calculating territory controlled by each player, and displaying it
           calculateTerritory(go_board, ctx);
@@ -137,7 +153,10 @@ $(document).ready(() => {
           stonesCanBeMoved = false;
           royalPiece = 0;
           empties = [];
-          color = r[1];
+
+          // Sending move to opponent, and waiting for reply
+          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
+          moved_go = true;
         } else {
           // Placing a stone on the relevant point, if it's empty
           go_board = godash.addMove(go_board, point, color);
@@ -166,9 +185,28 @@ $(document).ready(() => {
 
           // Cleanup
           empties = [];
-          color = godash.oppositeColor(color);
+
+          // Sending move to opponent, and waiting for reply
+          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
+          moved_go = true;
         }
       }
     }
+  });
+  // Receiving move from opponent
+  socket.on("receive move", (goboard, chessboard, rosters) => {
+    console.log("move received");
+    go_board = goboard;
+    pieces_in_play = chessboard;
+    benches = rosters;
+    moved_go = false;
+    currentChessBoard(
+      pieces_in_play,
+      contxt,
+      canvas_chess.width,
+      canvas_chess.height,
+      benches
+    );
+    currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
   });
 });

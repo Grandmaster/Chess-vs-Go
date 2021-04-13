@@ -14,12 +14,6 @@ var kings = {
   white: false,
 };
 
-// Variable to keep track of whether the players have started the game
-var firstmove = {
-  black: false,
-  white: false,
-};
-
 // Function that constructs the board on canvas from internal state
 function currentChessBoard(piece_array, context, width, height, benches) {
   context.clearRect(0, 0, width, height);

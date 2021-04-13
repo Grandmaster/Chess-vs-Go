@@ -30,6 +30,13 @@ var options = document.getElementById("choice");
 // Fill benches
 var benches = fillBench(chess_pieces);
 
+// Variable to determine if player has moved already
+var moved_chess = moved;
+var firstmove = false;
+
+// Initialize socket
+var socket = io();
+
 // Display benches on page
 const canvas_player = document.getElementById("your_bench");
 const canvas_enemy = document.getElementById("enemy_bench");
@@ -37,8 +44,11 @@ canvas_player.width = 200;
 canvas_enemy.width = 200;
 canvas_player.height = 700;
 canvas_enemy.height = 700;
-// Getting color from storage
+
+// Getting data from storage
 var color = localStorage.getItem("color");
+var roomname = localStorage.getItem("game");
+
 renderBenches(benches, canvas_player, canvas_enemy, color);
 
 $(document).ready(() => {
@@ -75,8 +85,9 @@ $(document).ready(() => {
     let arr = [x_i, y_i];
     var c = 0;
 
-    // Ending the game if one of the kings dies
-    if (!kings[color] && firstmove[color]) {
+    // Do nothing if player do not have a king on the board (unless it is the first move) or
+    // if the player has already moved
+    if ((!kings[color] && firstmove) || moved_chess) {
       console.log(`${color} lost already.`);
     } else {
       if (x_true != 0 && y_true != 0) {
@@ -125,17 +136,19 @@ $(document).ready(() => {
                   boxsize
                 );
               }
+              // Sending move to opponent, and waiting for reply
+              socket.emit(
+                "send move",
+                goBoardforChess,
+                pieces_in_play,
+                benches,
+                roomname
+              );
+              moved_chess = true;
               c++;
             }
           }
         }
-      }
-
-      // Display piece options if player wants to place a piece on an empty square
-      if (c == 0 && place_queue.length == 0) {
-        options.style.display = "block";
-        options.style.left = x_i;
-        options.style.top = y_i;
       }
 
       // Place piece if the first two cases don't apply, and place_queue is not empty
@@ -156,7 +169,7 @@ $(document).ready(() => {
         } else {
           placePiece(x_i, y_i, piece.img, piece.type, benches);
           kings[color] = true;
-          firstmove[color] = true;
+          firstmove = true;
         }
         currentChessBoard(
           pieces_in_play,
@@ -172,7 +185,39 @@ $(document).ready(() => {
           canvas_go.height,
           boxsize
         );
+        // Sending move to opponent, and waiting for reply
+        socket.emit(
+          "send move",
+          goBoardforChess,
+          pieces_in_play,
+          benches,
+          roomname
+        );
+        moved_chess = true;
       }
     }
+  });
+
+  // Receiving move from opponent
+  socket.on("receive move", (goboard, chessboard, rosters) => {
+    console.log("move received");
+    goBoardforChess = goboard;
+    pieces_in_play = chessboard;
+    benches = rosters;
+    moved_chess = false;
+    currentGoBoard(
+      goBoardforChess,
+      ctx,
+      canvas_go.width,
+      canvas_go.height,
+      boxsize
+    );
+    currentChessBoard(
+      pieces_in_play,
+      contxt,
+      canvas_chess.width,
+      canvas_chess.height,
+      benches
+    );
   });
 });
