@@ -10,12 +10,6 @@ module.exports = async function (io) {
         console.log(`${tagname} disconnected!`);
       });
     });
-    // Handling click events on canvas
-    socket.on("canvas click", (x, y) => {
-      console.log("click on canvas happened!");
-      console.log([x, y]);
-      socket.broadcast.emit("return", x, y);
-    });
     // Implementing chat in lobby
     socket.on("chat message", (msg) => {
       io.emit("chat message", msg);

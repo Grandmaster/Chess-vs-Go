@@ -11,17 +11,9 @@ var ctx = canvas_go.getContext("2d");
 var goBoardforChess;
 
 $(document).ready(() => {
-  // Black goes first
-  color = godash.BLACK;
-
   // Object that keeps track of go/weiqi/baduk state of game, courtesy of godash
   var go_board = new godash.Board(9);
   goBoardforChess = go_board;
-
-  // Receiving the event from backend i.e the other player
-  socket.on("return", (x, y) => {
-    console.log([x, y]);
-  });
 
   // Event listener for clicks on the board
   canvas_go.addEventListener("click", (event) => {
@@ -32,18 +24,17 @@ $(document).ready(() => {
       clientY: event.clientY,
     });
     canvas_chess.dispatchEvent(clickEvent);
-    socket.emit("canvas click", clickEvent.clientX, clickEvent.clientY);
 
     // Finding where on the board the click happened
     var rect = canvas_go.getBoundingClientRect();
     let x_point = Math.floor(event.clientX - rect.left);
     let y_point = Math.floor(event.clientY - rect.top);
-    x_true = 0;
-    y_true = 0;
+    let x_true = 0;
+    let y_true = 0;
 
     // Code to find the nearest playable point to the clicked pixel, if within a certain range. Uses lodash
-    x_range = _.range(x_point - 20, x_point + 21, 1);
-    y_range = _.range(y_point - 20, y_point + 21, 1);
+    let x_range = _.range(x_point - 20, x_point + 21, 1);
+    let y_range = _.range(y_point - 20, y_point + 21, 1);
     for (let x of x_range) {
       for (let y of y_range) {
         if (x % 75 == 0) {

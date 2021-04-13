@@ -125,7 +125,6 @@ $(document).ready(() => {
                   boxsize
                 );
               }
-              color = switchColor(color);
               c++;
             }
           }
@@ -173,11 +172,7 @@ $(document).ready(() => {
           canvas_go.height,
           boxsize
         );
-
-        // Switch color after every move
-        color = switchColor(color);
       }
-      console.log(benches);
     }
   });
 });
