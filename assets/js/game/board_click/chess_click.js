@@ -45,9 +45,10 @@ canvas_enemy.width = 200;
 canvas_player.height = 700;
 canvas_enemy.height = 700;
 
-// Getting data from storage
+// Getting data from storage, and joining game room with other player
 var color = localStorage.getItem("color");
 var roomname = localStorage.getItem("game");
+socket.emit("game start", roomname);
 
 renderBenches(benches, canvas_player, canvas_enemy, color);
 
@@ -205,13 +206,6 @@ $(document).ready(() => {
     pieces_in_play = chessboard;
     benches = rosters;
     moved_chess = false;
-    currentGoBoard(
-      goBoardforChess,
-      ctx,
-      canvas_go.width,
-      canvas_go.height,
-      boxsize
-    );
     currentChessBoard(
       pieces_in_play,
       contxt,

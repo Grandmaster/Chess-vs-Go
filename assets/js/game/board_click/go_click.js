@@ -200,13 +200,6 @@ $(document).ready(() => {
     pieces_in_play = chessboard;
     benches = rosters;
     moved_go = false;
-    currentChessBoard(
-      pieces_in_play,
-      contxt,
-      canvas_chess.width,
-      canvas_chess.height,
-      benches
-    );
     currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
   });
 });
