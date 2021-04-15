@@ -34,6 +34,9 @@ var benches = fillBench(chess_pieces);
 var moved_chess = moved;
 var firstmove = false;
 
+// Variable to render go board as array for socket.io
+var boardForSocket;
+
 // Initialize socket
 var socket = io();
 
@@ -138,9 +141,10 @@ $(document).ready(() => {
                 );
               }
               // Sending move to opponent, and waiting for reply
+              boardForSocket = arrayOfMoves(goBoardforChess);
               socket.emit(
                 "send move",
-                goBoardforChess,
+                boardForSocket,
                 pieces_in_play,
                 benches,
                 roomname
@@ -187,9 +191,10 @@ $(document).ready(() => {
           boxsize
         );
         // Sending move to opponent, and waiting for reply
+        boardForSocket = arrayOfMoves(goBoardforChess);
         socket.emit(
           "send move",
-          goBoardforChess,
+          boardForSocket,
           pieces_in_play,
           benches,
           roomname
@@ -200,9 +205,8 @@ $(document).ready(() => {
   });
 
   // Receiving move from opponent
-  socket.on("receive move", (goboard, chessboard, rosters) => {
+  socket.on("receive move", (_goboard, chessboard, rosters) => {
     console.log("move received");
-    goBoardforChess = goboard;
     pieces_in_play = chessboard;
     benches = rosters;
     moved_chess = false;

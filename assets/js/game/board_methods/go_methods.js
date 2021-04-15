@@ -208,3 +208,27 @@ function displayTerritory(field, context) {
     }
   });
 }
+
+// Function to render board data as array to send via socket.io
+function arrayOfMoves(board) {
+  let arr = [];
+  board.moves.forEach((val, key) => {
+    arr.push({
+      color: val,
+      x: key.x,
+      y: key.y,
+    });
+  });
+  return arr;
+}
+
+// Function to reconstruct board from array of moves
+function reconstructBoard(array, board, godash) {
+  let arr = [];
+  let startColor = array[0].color;
+  array.forEach((data) => {
+    let c = new godash.Coordinate(data.x, data.y);
+    arr.push(c);
+  });
+  return godash.constructBoard(arr, board, startColor);
+}

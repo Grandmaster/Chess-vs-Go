@@ -42,8 +42,7 @@ module.exports = async function (io) {
     socket.on("send move", (goboard, chessboard, benches, room) => {
       console.log("sent move");
       console.log(goboard);
-      io.to(room).emit("receive move", goboard, chessboard, benches);
-      // io.emit("receive move", goboard, chessboard, benches); <==== This works, but sends to everybody
+      socket.to(room).emit("receive move", goboard, chessboard, benches);
     });
   });
 };

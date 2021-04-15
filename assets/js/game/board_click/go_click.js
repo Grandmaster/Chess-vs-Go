@@ -194,12 +194,15 @@ $(document).ready(() => {
     }
   });
   // Receiving move from opponent
-  socket.on("receive move", (goboard, chessboard, rosters) => {
+  socket.on("receive move", (goboard, chessboard, _rosters) => {
     console.log("move received");
-    go_board = goboard;
-    pieces_in_play = chessboard;
-    benches = rosters;
-    moved_go = false;
-    currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
+    if (goboard.length > 0) {
+      go_board = reconstructBoard(goboard, go_board, godash);
+      console.log(go_board);
+      goBoardforChess = go_board;
+      pieces_in_play = chessboard;
+      moved_go = false;
+      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
+    }
   });
 });
