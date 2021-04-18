@@ -31,7 +31,6 @@ var options = document.getElementById("choice");
 var benches = fillBench(chess_pieces);
 
 // Variable to determine if player has moved already
-var moved_chess = moved;
 var firstmove = false;
 
 // Variable to render go board as array for socket.io
@@ -91,8 +90,8 @@ $(document).ready(() => {
 
     // Do nothing if player do not have a king on the board (unless it is the first move) or
     // if the player has already moved
-    if ((!kings[color] && firstmove) || moved_chess) {
-      console.log(`${color} lost already.`);
+    if ((!kings[color] && firstmove) || moved) {
+      console.log("Either put your king on the board, or wait for your turn.");
     } else {
       if (x_true != 0 && y_true != 0) {
         // Populate move_queue with possible moves and captures if existing piece is clicked on, and move_queue is empty
@@ -149,7 +148,7 @@ $(document).ready(() => {
                 benches,
                 roomname
               );
-              moved_chess = true;
+              moved = true;
               c++;
             }
           }
@@ -199,7 +198,7 @@ $(document).ready(() => {
           benches,
           roomname
         );
-        moved_chess = true;
+        moved = true;
       }
     }
   });
@@ -209,7 +208,7 @@ $(document).ready(() => {
     console.log("move received");
     pieces_in_play = chessboard;
     benches = rosters;
-    moved_chess = false;
+    moved = false;
     currentChessBoard(
       pieces_in_play,
       contxt,

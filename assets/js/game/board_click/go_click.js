@@ -13,9 +13,6 @@ var goBoardforChess;
 // Initialize socket
 var socket = io();
 
-// Variable to determine if player has moved already
-var moved_go = moved;
-
 // Getting data from storage
 var color = localStorage.getItem("color");
 var roomname = localStorage.getItem("game");
@@ -74,8 +71,8 @@ $(document).ready(() => {
       }
 
       // Check to see if king is present or if the player has moved, if not present or yes do nothing
-      if (!kings[color] || moved_go) {
-        console.log("Please put your king on the board");
+      if (!kings[color] || moved) {
+        console.log("Either put your king on the board, or wait for your turn");
       } else {
         // Capturing a stone with a pawn if all conditions are met
         if (stone !== undefined && stonesCanBeCaptured) {
@@ -94,8 +91,15 @@ $(document).ready(() => {
           crouchingPiece = 0;
 
           // Sending move to opponent, and waiting for reply
-          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
-          moved_go = true;
+          let goBoardforSocket = arrayOfMoves(go_board);
+          socket.emit(
+            "send move",
+            goBoardforSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
+          moved = true;
         } else if (stone !== undefined && stonesCanBeConverted) {
           // Converting a stone with an official if all conditions are met
           let r = officialConvertsStone(
@@ -118,8 +122,15 @@ $(document).ready(() => {
           forcingPiece = 0;
 
           // Sending move to opponent, and waiting for reply
-          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
-          moved_go = true;
+          let goBoardforSocket = arrayOfMoves(go_board);
+          socket.emit(
+            "send move",
+            goBoardforSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
+          moved = true;
         } else if (stone !== undefined && stonesCanBeMoved) {
           // Selecting a stone for the king to move
           flyingStone = point;
@@ -155,8 +166,15 @@ $(document).ready(() => {
           empties = [];
 
           // Sending move to opponent, and waiting for reply
-          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
-          moved_go = true;
+          let goBoardforSocket = arrayOfMoves(go_board);
+          socket.emit(
+            "send move",
+            goBoardforSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
+          moved = true;
         } else {
           // Placing a stone on the relevant point, if it's empty
           go_board = godash.addMove(go_board, point, color);
@@ -187,8 +205,15 @@ $(document).ready(() => {
           empties = [];
 
           // Sending move to opponent, and waiting for reply
-          socket.emit("send move", go_board, pieces_in_play, benches, roomname);
-          moved_go = true;
+          let goBoardforSocket = arrayOfMoves(go_board);
+          socket.emit(
+            "send move",
+            goBoardforSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
+          moved = true;
         }
       }
     }
@@ -197,11 +222,11 @@ $(document).ready(() => {
   socket.on("receive move", (goboard, chessboard, _rosters) => {
     console.log("move received");
     if (goboard.length > 0) {
-      go_board = reconstructBoard(goboard, go_board, godash);
+      go_board = reconstructBoard(goboard, godash);
       console.log(go_board);
       goBoardforChess = go_board;
       pieces_in_play = chessboard;
-      moved_go = false;
+      moved = false;
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     }
   });
