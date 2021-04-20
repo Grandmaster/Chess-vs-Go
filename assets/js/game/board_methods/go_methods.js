@@ -224,12 +224,10 @@ function arrayOfMoves(board) {
 
 // Function to reconstruct board from array of moves
 function reconstructBoard(array, godash) {
-  let arr = [];
-  let startColor = array[0].color;
+  let board = new godash.Board(9);
   array.forEach((data) => {
     let c = new godash.Coordinate(data.x, data.y);
-    arr.push(c);
+    board = godash.addMove(board, c, data.color);
   });
-  let board = new godash.Board(9);
-  return godash.constructBoard(arr, board, startColor);
+  return board;
 }
