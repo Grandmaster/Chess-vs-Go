@@ -3,8 +3,8 @@
 
 // Layer of canvas with the chess pieces
 const canvas_chess = document.getElementById("chess_layer");
-canvas_chess.width = 750;
-canvas_chess.height = 750;
+canvas_chess.width = canvas.width;
+canvas_chess.height = canvas.width;
 var contxt = canvas_chess.getContext("2d");
 
 // Object that stores chess pieces that can be used on Canvas, by storing the url of the image;

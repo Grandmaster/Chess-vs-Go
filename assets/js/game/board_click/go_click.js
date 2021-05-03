@@ -3,8 +3,8 @@
 
 // Layer of canvas that will have the go stones
 const canvas_go = document.getElementById("go_layer");
-canvas_go.width = 750;
-canvas_go.height = 750;
+canvas_go.width = canvas.width;
+canvas_go.height = canvas.width;
 var ctx = canvas_go.getContext("2d");
 
 // Go board variable to pass to chess side of the game
@@ -211,7 +211,8 @@ $(document).ready(() => {
             goBoardforSocket,
             pieces_in_play,
             benches,
-            roomname
+            roomname,
+            point
           );
           moved = true;
         }
@@ -219,11 +220,16 @@ $(document).ready(() => {
     }
   });
   // Receiving move from opponent
-  socket.on("receive move", (goboard, chessboard, _rosters) => {
+  socket.on("receive move", (goboard, chessboard, _rosters, point) => {
     console.log("move received");
-    if (goboard.length > 0) {
+    if (point !== null) {
+      var c = new godash.Coordinate(point.x, point.y);
+      go_board = godash.addMove(go_board, c, godash.oppositeColor(color));
+      goBoardforChess = go_board;
+      moved = false;
+      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
+    } else if (goboard.length > 0) {
       go_board = reconstructBoard(goboard, godash);
-      console.log(go_board);
       goBoardforChess = go_board;
       pieces_in_play = chessboard;
       moved = false;
