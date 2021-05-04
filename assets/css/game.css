@@ -12,7 +12,7 @@ body {
   content: "";
   display: table;
   clear: both;
-  width: 70%;
+  width: 1000px;
 }
 #choice {
   display: none;
@@ -23,8 +23,8 @@ body {
   height: 100%;
 }
 canvas {
-  width: 750px;
-  height: 750px;
+  width: 700px;
+  height: 700px;
   float: left;
   margin: 15px;
 }
@@ -35,4 +35,13 @@ canvas {
 }
 #enemy_bench {
   float: right;
+}
+@media screen and (max-width: 1000px) {
+  canvas {
+    width: 500px;
+    height: 500px;
+  }
+  #game {
+    width: 700px;
+  }
 }
