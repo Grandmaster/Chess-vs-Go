@@ -12,7 +12,7 @@ body {
   content: "";
   display: table;
   clear: both;
-  width: 1000px;
+  width: 1050px;
 }
 #choice {
   display: none;
@@ -23,8 +23,8 @@ body {
   height: 100%;
 }
 canvas {
-  width: 700px;
-  height: 700px;
+  width: 750px;
+  height: 750px;
   float: left;
   margin: 15px;
 }
@@ -40,8 +40,13 @@ canvas {
   canvas {
     width: 500px;
     height: 500px;
+    margin: 15px;
   }
   #game {
-    width: 700px;
+    width: 750px;
+  }
+  #your_bench,
+  #enemy_bench {
+    height: 500px;
   }
 }

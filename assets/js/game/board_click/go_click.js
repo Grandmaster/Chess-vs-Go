@@ -44,18 +44,18 @@ $(document).ready(() => {
     let y_range = _.range(y_point - 20, y_point + 21, 1);
     for (let x of x_range) {
       for (let y of y_range) {
-        if (x % 75 == 0) {
+        if (x % boxsize == 0) {
           x_true = x;
         }
-        if (y % 75 == 0) {
+        if (y % boxsize == 0) {
           y_true = y;
         }
       }
     }
 
     // Getting index of chosen point to pass to godash.board
-    let x_i = x_true / 75 - 1;
-    let y_i = y_true / 75 - 1;
+    let x_i = x_true / boxsize - 1;
+    let y_i = y_true / boxsize - 1;
 
     // Gameplay on the relevant point
     if (x_i != -1 && y_i != -1) {

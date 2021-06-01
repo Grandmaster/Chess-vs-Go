@@ -67,26 +67,28 @@ $(document).ready(() => {
     let yp = Math.floor(y_point - boxsize / 2);
     let x_true = 0;
     let y_true = 0;
+    console.log(`${xp}, ${yp}`);
 
     // Code to find the nearest playable point to the target pixel, if within a certain range. Uses lodash
     let x_range = _.range(xp - 20, xp + 21, 1);
     let y_range = _.range(yp - 20, yp + 21, 1);
     for (let x of x_range) {
       for (let y of y_range) {
-        if (x % 75 == 0) {
+        if (x % boxsize == 0) {
           x_true = x;
         }
-        if (y % 75 == 0) {
+        if (y % boxsize == 0) {
           y_true = y;
         }
       }
     }
 
     // Getting index of chosen square, for movement
-    let x_i = x_true / 75;
-    let y_i = y_true / 75;
+    let x_i = x_true / boxsize;
+    let y_i = y_true / boxsize;
     let arr = [x_i, y_i];
     var c = 0;
+    console.log(arr);
 
     // Do nothing if player do not have a king on the board (unless it is the first move) or
     // if the player has already moved
@@ -153,52 +155,52 @@ $(document).ready(() => {
             }
           }
         }
-      }
 
-      // Place piece if the first two cases don't apply, and place_queue is not empty
-      if (c == 0 && place_queue.length !== 0) {
-        piece = place_queue.pop();
-        var type = piece.type.slice(6);
-        if (type !== "king") {
-          let land = displayZones(goBoardforChess, field, contxt)[color];
-          let check = false;
-          for (let sq of land) {
-            if (sameSquare(sq, [x_i, y_i])) {
-              placePiece(x_i, y_i, piece.img, piece.type, benches);
-              check = true;
-              break;
+        // Place piece if the first two cases don't apply, and place_queue is not empty
+        if (c == 0 && place_queue.length !== 0) {
+          piece = place_queue.pop();
+          var type = piece.type.slice(6);
+          if (type !== "king") {
+            let land = displayZones(goBoardforChess, field, contxt)[color];
+            let check = false;
+            for (let sq of land) {
+              if (sameSquare(sq, [x_i, y_i])) {
+                placePiece(x_i, y_i, piece.img, piece.type, benches);
+                check = true;
+                break;
+              }
             }
+            if (!check) console.log("Not a valid landing zone");
+          } else {
+            placePiece(x_i, y_i, piece.img, piece.type, benches);
+            kings[color] = true;
+            firstmove = true;
           }
-          if (!check) console.log("Not a valid landing zone");
-        } else {
-          placePiece(x_i, y_i, piece.img, piece.type, benches);
-          kings[color] = true;
-          firstmove = true;
+          currentChessBoard(
+            pieces_in_play,
+            contxt,
+            canvas_chess.width,
+            canvas_chess.height,
+            benches
+          );
+          currentGoBoard(
+            goBoardforChess,
+            ctx,
+            canvas_go.width,
+            canvas_go.height,
+            boxsize
+          );
+          // Sending move to opponent, and waiting for reply
+          boardForSocket = arrayOfMoves(goBoardforChess);
+          socket.emit(
+            "send move",
+            boardForSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
+          moved = true;
         }
-        currentChessBoard(
-          pieces_in_play,
-          contxt,
-          canvas_chess.width,
-          canvas_chess.height,
-          benches
-        );
-        currentGoBoard(
-          goBoardforChess,
-          ctx,
-          canvas_go.width,
-          canvas_go.height,
-          boxsize
-        );
-        // Sending move to opponent, and waiting for reply
-        boardForSocket = arrayOfMoves(goBoardforChess);
-        socket.emit(
-          "send move",
-          boardForSocket,
-          pieces_in_play,
-          benches,
-          roomname
-        );
-        moved = true;
       }
     }
   });
