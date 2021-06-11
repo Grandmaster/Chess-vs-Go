@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 var app = express();
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
-var port = process.env.MONGODB_URI || 3000;
+var port = process.env.PORT || 3000;
 
 // Using code from assets folder
 app.use(express.static("assets"));
