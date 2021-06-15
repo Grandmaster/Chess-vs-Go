@@ -67,7 +67,6 @@ $(document).ready(() => {
     let yp = Math.floor(y_point - boxsize / 2);
     let x_true = 0;
     let y_true = 0;
-    console.log(`${xp}, ${yp}`);
 
     // Code to find the nearest playable point to the target pixel, if within a certain range. Uses lodash
     let x_range = _.range(xp - 20, xp + 21, 1);
@@ -140,6 +139,7 @@ $(document).ready(() => {
                   canvas_go.height,
                   boxsize
                 );
+                moved = true;
               }
               // Sending move to opponent, and waiting for reply
               boardForSocket = arrayOfMoves(goBoardforChess);
@@ -150,7 +150,6 @@ $(document).ready(() => {
                 benches,
                 roomname
               );
-              moved = true;
               c++;
             }
           }

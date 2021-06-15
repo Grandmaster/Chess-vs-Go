@@ -142,7 +142,8 @@ function kingMovesStones(piece, board, target, vacancy, team) {
     pieces_in_play,
     contxt,
     canvas_chess.width,
-    canvas_chess.height
+    canvas_chess.height,
+    benches
   );
 
   // Resetting for next instance

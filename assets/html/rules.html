@@ -64,47 +64,149 @@
       game also apply in this one.
     </p>
     <br />
-    <h2>Basic game structure</h2>
-    <p>
-      This section details the moves a player can make during each turn over the
-      course of the game. At the beginning:
-    </p>
-    <ul>
-      <li>
-        <strong>Turn 1</strong>: With no stones and no pieces on the board, your
-        first move must be to place the king on the board. No other move will be
-        accepted at this stage. There are rules to placing pieces on the board,
-        but they are ignored this turn so that the game may begin. To place your
-        king (or any other piece) on the board, click on the corresponding piece
-        on your bench, then click on the square you want to place your piece on.
-      </li>
-      <li>
-        <strong>Early Turns</strong>: At this point in the game, the only piece
-        you will have out is your king, so the only moves you can make are to
-        either move your king to a different square, or place a stone on the
-        board. To place a stone, click on the destination point. To move your
-        king (or any other piece), click on the piece, then click on one of the
-        highlighted squares that indicate its range.
-      </li>
-      <li>
-        <strong>With at least one Zone on the Board</strong>: When you have one
-        or more zones on the board (more on them below) you gain the ability to
-        place a piece from your bench on the board. You can only place pieces
-        from your bench onto zones you control. To place a piece, click on the
-        piece, then click on any square that is a zone you control.
-      </li>
-      <li>
-        <strong>With at least one Enemy Piece/Stone on the Board</strong>: You
-        can capture enemy pieces and capture/destroy enemy stones with your
-        pieces/stones. There are many ways to do this, which will be explained
-        below.
-      </li>
-    </ul>
-    <p>
-      With a few exceptions, you can only do one of these things per turn. The
-      game ends when your king is killed (there is no check).
-    </p>
+    <section class="section content">
+      <h2>Basic game structure</h2>
+      <p>
+        This section details the moves a player can make during each turn over
+        the course of the game. At the beginning:
+      </p>
+      <ul>
+        <li>
+          <strong>Turn 1</strong>: With no stones and no pieces on the board,
+          your first move must be to place the king on the board. No other move
+          will be accepted at this stage. There are rules to placing pieces on
+          the board, but they are ignored this turn so that the game may begin.
+          To place your king (or any other piece) on the board, click on the
+          corresponding piece on your bench, then click on the square you want
+          to place your piece on.
+        </li>
+        <li>
+          <strong>Early Turns</strong>: At this point in the game, the only
+          piece you will have out is your king, so the only moves you can make
+          are to either move your king to a different square, or place a stone
+          on the board. To place a stone, click on the destination point. To
+          move your king (or any other piece), click on the piece, then click on
+          one of the highlighted squares that indicate its range.
+        </li>
+        <li>
+          <strong>With at least one Zone on the Board</strong>: When you have
+          one or more zones on the board (more on them below) you gain the
+          ability to place a piece from your bench on the board. You can only
+          place pieces from your bench onto zones you control. To place a piece,
+          click on the piece, then click on any square that is a zone you
+          control.
+        </li>
+        <li>
+          <strong>With at least one Enemy Piece/Stone on the Board</strong>: You
+          can capture enemy pieces and capture/destroy enemy stones with your
+          pieces/stones. There are many ways to do this, which will be explained
+          below.
+        </li>
+      </ul>
+      <p>
+        With a few exceptions, you can only do one of these things per turn. The
+        game ends when your king is killed (there is no check).
+      </p>
+    </section>
     <br />
-    <h2>Zones</h2>
+    <section class="section">
+      <h2>Pieces</h2>
+      <p>
+        This section details the extra abilities chess pieces have in this game,
+        in addition to their normal abilities. They usually relate to
+        interactions with stones on the board.
+      </p>
+      <ul>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-vertical">
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>King</strong>: In addition to his normal abilities,
+                  whenever the king moves from one square to another, it can
+                  move a friendly stone on one of the corners of the landing
+                  square to an empty corner on the same square. The king can
+                  basically move stones already placed on the board, and it is
+                  the only piece that can do so.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>Official</strong>: In addition to all their other
+                  abilities, when an official moves from one square to another,
+                  it has the ability to convert an enemy stone on a corner of
+                  its landing square to a friendly stone.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>Pawn</strong>: In addition to all its normal
+                  abilities, the pawn can capture stones diagonally. That means
+                  that the pawn can capture a stone that shares a corner with
+                  both its starting square and its landing square if the pawn
+                  were to capture diagonally. Also, pawns can move one step in
+                  any cardinal direction. Refer to images on the side.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </section>
+    <section class="section">
+      <h2>Stones</h2>
+      <p>
+        This section details the extra abilities stones have in this game, in
+        addition to their inherited abilities. They relate to the way stones
+        interact with pieces in the game.
+      </p>
+      <ul>
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-vertical">
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>Zones</strong>: Stones can form zones on squares on
+                  the board. A square becomes a zone of a player if the square
+                  either has four stones of the player's color on all four
+                  corners, or a corner is a point that exists as territory (the
+                  Go kind) belonging to the player. A piece is immediately
+                  captured if it exists in a zone of the opposite color. Refer
+                  to images.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>Walls</strong>: When two stones of the same color are
+                  adjacent to each other, they form a wall that can restrict the
+                  ranges of pieces. Refer to images.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child is-6">
+                <li>
+                  <strong>Empty Triangle</strong>: A stone that forms the corner
+                  of an empty triangle cannot be captured by a pawn, or jumped
+                  over by a king.
+                </li>
+              </div>
+              <div class="tile is-child is-6"></div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </section>
   </body>
 </html>

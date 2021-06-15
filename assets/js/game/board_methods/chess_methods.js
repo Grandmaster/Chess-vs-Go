@@ -252,7 +252,10 @@ function movePiece(piece_obj, x_new, y_new, board) {
         royalPiece = piece_obj;
       }
     }
-    if (empties.length > 0 && flyingStones.length > 0) stonesCanBeMoved = true;
+    if (empties.length > 0 && flyingStones.length > 0) {
+      stonesCanBeMoved = true;
+      console.log("Stone can be moved");
+    }
     displayCaptureStones(flyingStones, ctx, "red");
   }
 }
