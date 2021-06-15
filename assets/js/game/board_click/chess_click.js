@@ -10,18 +10,18 @@ var contxt = canvas_chess.getContext("2d");
 // Object that stores chess pieces that can be used on Canvas, by storing the url of the image;
 // Pieces made in Krita.
 const chess_pieces = {
-  black_pawn: "./images/Pawn - black.png",
-  white_pawn: "./images/Pawn - white.png",
-  black_king: "./images/King - black.png",
-  white_king: "./images/King - white.png",
-  black_knight: "./images/Knight - black.png",
-  white_knight: "./images/Knight - white.png",
-  black_rook: "./images/Rook - black.png",
-  white_rook: "./images/Rook - white.png",
-  black_bishop: "./images/Bishop - black.png",
-  white_bishop: "./images/Bishop - white.png",
-  black_queen: "./images/Queen - black.png",
-  white_queen: "./images/Queen - white.png",
+  black_pawn: "./images/pieces/Pawn - black.png",
+  white_pawn: "./images/pieces/Pawn - white.png",
+  black_king: "./images/pieces/King - black.png",
+  white_king: "./images/pieces/King - white.png",
+  black_knight: "./images/pieces/Knight - black.png",
+  white_knight: "./images/pieces/Knight - white.png",
+  black_rook: "./images/pieces/Rook - black.png",
+  white_rook: "./images/pieces/Rook - white.png",
+  black_bishop: "./images/pieces/Bishop - black.png",
+  white_bishop: "./images/pieces/Bishop - white.png",
+  black_queen: "./images/pieces/Queen - black.png",
+  white_queen: "./images/pieces/Queen - white.png",
 };
 
 // Options of piece to put on board
