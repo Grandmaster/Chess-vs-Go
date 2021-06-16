@@ -41,6 +41,7 @@ module.exports = async function (io) {
     // Sending move to opponent
     socket.on("send move", (goboard, chessboard, benches, room, point) => {
       console.log("sent move");
+      console.log(goboard);
       socket.to(room).emit("receive move", goboard, chessboard, benches, point);
     });
   });

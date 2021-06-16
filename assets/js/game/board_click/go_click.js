@@ -79,6 +79,7 @@ $(document).ready(() => {
           let l = pawnLandingSquares(crouchingPiece, [point]);
           let r = pawnCapturesStone(crouchingPiece, go_board, point, l, color);
           go_board = r;
+          console.log(go_board);
 
           // Calculating territory controlled by each player, and displaying it
           calculateTerritory(go_board, ctx);
@@ -228,7 +229,7 @@ $(document).ready(() => {
       goBoardforChess = go_board;
       moved = false;
       currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
-    } else if (goboard.length > 0) {
+    } else {
       go_board = reconstructBoard(goboard, godash);
       goBoardforChess = go_board;
       pieces_in_play = chessboard;

@@ -103,7 +103,6 @@ function displayCaptureStones(targets, context, color) {
 // its previous square, connected by the stone
 function pawnCapturesStone(piece, board, target, landing) {
   board = godash.removeStone(board, target);
-  currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   let xn = landing[0][0];
   let yn = landing[0][1];
   movePiece(piece, xn, yn);
@@ -111,8 +110,10 @@ function pawnCapturesStone(piece, board, target, landing) {
     pieces_in_play,
     contxt,
     canvas_chess.width,
-    canvas_chess.height
+    canvas_chess.height,
+    benches
   );
+  currentGoBoard(board, ctx, canvas_go.width, canvas_go.height, boxsize);
   return board;
 }
 

@@ -87,9 +87,8 @@ $(document).ready(() => {
     let y_i = y_true / boxsize;
     let arr = [x_i, y_i];
     var c = 0;
-    console.log(arr);
 
-    // Do nothing if player do not have a king on the board (unless it is the first move) or
+    // Do nothing if player does not have a king on the board (unless it is the first move) or
     // if the player has already moved
     if ((!kings[color] && firstmove) || moved) {
       console.log("Either put your king on the board, or wait for your turn.");
@@ -141,25 +140,26 @@ $(document).ready(() => {
                 );
                 moved = true;
               }
-              // Sending move to opponent, and waiting for reply
-              boardForSocket = arrayOfMoves(goBoardforChess);
-              socket.emit(
-                "send move",
-                boardForSocket,
-                pieces_in_play,
-                benches,
-                roomname
-              );
+
               c++;
             }
           }
+          // Sending move to opponent, and waiting for reply
+          boardForSocket = arrayOfMoves(goBoardforChess);
+          socket.emit(
+            "send move",
+            boardForSocket,
+            pieces_in_play,
+            benches,
+            roomname
+          );
         }
 
         // Place piece if the first two cases don't apply, and place_queue is not empty
         if (c == 0 && place_queue.length !== 0) {
           piece = place_queue.pop();
           var type = piece.type.slice(6);
-          if (type !== "king") {
+          if (type !== "king" && type !== "pawn") {
             let land = displayZones(goBoardforChess, field, contxt)[color];
             let check = false;
             for (let sq of land) {
@@ -170,6 +170,8 @@ $(document).ready(() => {
               }
             }
             if (!check) console.log("Not a valid landing zone");
+          } else if (!firstmove && type == "pawn") {
+            console.log("Your first move must place the king on the board.");
           } else {
             placePiece(x_i, y_i, piece.img, piece.type, benches);
             kings[color] = true;
