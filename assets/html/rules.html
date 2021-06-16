@@ -222,29 +222,62 @@
       <ul>
         <div class="tile is-ancestor">
           <div class="tile is-parent is-vertical">
-            <div class="tile is-parent">
-              <div class="tile is-child is-6">
+            <div class="tile is-parent is-vertical">
+              <div class="tile is-child is-12">
                 <li>
                   <strong>Zones</strong>: Stones can form zones on squares on
                   the board. A square becomes a zone of a player if the square
                   either has four stones of the player's color on all four
                   corners, or a corner is a point that exists as territory (the
-                  Go kind) belonging to the player. A piece is immediately
-                  captured if it exists in a zone of the opposite color. Refer
-                  to images.
+                  Go kind) belonging to the player. However, if an enemy stone
+                  exists inside territory belonging to a player, all points in
+                  the region containing the enemy stone do not count towards
+                  zone formation. A piece is immediately captured if it exists
+                  in a zone of the opposite color.
                 </li>
               </div>
-              <div class="tile is-child is-6"></div>
+              <div class="tile is-child is-12">
+                <img
+                  src="../images/rules/Zone examples 1.png"
+                  alt="Zone formed by stones on four corners"
+                />
+                <img
+                  src="../images/rules/Zone examples 2.png"
+                  alt="Zone formed by stones on some corners and other 
+                empty corner points in territory belonging to player"
+                />
+                <img
+                  src="../images/rules/Zone examples 3.png"
+                  alt="Another example of a zone"
+                />
+                <img
+                  src="../images/rules/Zone examples 4.png"
+                  alt="Enemy stone prevents zone formation"
+                />
+              </div>
+              <div class="tile is-child is-12">
+                <img
+                  src="../images/rules/Zone capture 1.png"
+                  alt="Piece moves into danger square"
+                />
+                <img
+                  src="../images/rules/Zone capture 2.png"
+                  alt="Danger square becomes a zone"
+                />
+                <img
+                  src="../images/rules/Zone capture 3.png"
+                  alt="Piece is captured"
+                />
+              </div>
             </div>
-            <div class="tile is-parent">
-              <div class="tile is-child is-6">
+            <div class="tile is-parent is-vertical">
+              <div class="tile is-child is-12">
                 <li>
-                  <strong>Walls</strong>: When two stones of the same color are
-                  adjacent to each other, they form a wall that can restrict the
-                  ranges of pieces. Refer to images.
+                  <strong>Walls</strong>: Stones in certain arrangements on the
+                  board can restrict the range of moving pieces.
                 </li>
               </div>
-              <div class="tile is-child is-6"></div>
+              <div class="tile is-child is-12"></div>
             </div>
             <div class="tile is-parent">
               <div class="tile is-child is-6">

@@ -78,7 +78,7 @@ function calculateTerritory(board, context) {
   });
 
   // Display results
-  displayTerritory(field, context);
+  // displayTerritory(field, context);
 
   // Determine zones controlled by player
   let regions = displayZones(board, field, context);

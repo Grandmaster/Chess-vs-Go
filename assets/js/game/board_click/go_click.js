@@ -228,13 +228,13 @@ $(document).ready(() => {
       go_board = godash.addMove(go_board, c, godash.oppositeColor(color));
       goBoardforChess = go_board;
       moved = false;
-      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     } else {
       go_board = reconstructBoard(goboard, godash);
       goBoardforChess = go_board;
       pieces_in_play = chessboard;
       moved = false;
-      currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
     }
+    currentGoBoard(go_board, ctx, canvas_go.width, canvas_go.height, boxsize);
+    calculateTerritory(go_board, ctx);
   });
 });
