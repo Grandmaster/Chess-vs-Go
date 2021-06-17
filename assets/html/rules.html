@@ -83,10 +83,12 @@
         <li>
           <strong>Early Turns</strong>: At this point in the game, the only
           piece you will have out is your king, so the only moves you can make
-          are to either move your king to a different square, or place a stone
-          on the board. To place a stone, click on the destination point. To
-          move your king (or any other piece), click on the piece, then click on
-          one of the highlighted squares that indicate its range.
+          are to either move your king to a different square, place a stone on
+          the board, or place a pawn on the board. To place a stone, click on
+          the destination point. The same thing applies to pawns, except that
+          you click on the center of the destination square. move your king (or
+          any other chess piece), click on the chess piece, then click on one of
+          the highlighted squares that indicate its range.
         </li>
         <li>
           <strong>With at least one Zone on the Board</strong>: When you have
@@ -232,8 +234,12 @@
                   Go kind) belonging to the player. However, if an enemy stone
                   exists inside territory belonging to a player, all points in
                   the region containing the enemy stone do not count towards
-                  zone formation. A piece is immediately captured if it exists
-                  in a zone of the opposite color.
+                  zone formation. For example, if you had a group with two eyes
+                  and an enemy stone was in one of them, all the points in the
+                  eye with the enemy stone would not count towards zone
+                  formation, but all the points in the other eye would. A piece
+                  is immediately captured if it exists in a zone of the opposite
+                  color.
                 </li>
               </div>
               <div class="tile is-child is-12">
@@ -274,20 +280,33 @@
               <div class="tile is-child is-12">
                 <li>
                   <strong>Walls</strong>: Stones in certain arrangements on the
-                  board can restrict the range of moving pieces.
+                  board can restrict the range of moving pieces. Note that the
+                  knight is the only piece that cannot be blocked off by stones,
+                  because it jumps from square to square.
                 </li>
               </div>
-              <div class="tile is-child is-12"></div>
-            </div>
-            <div class="tile is-parent">
-              <div class="tile is-child is-6">
-                <li>
-                  <strong>Empty Triangle</strong>: A stone that forms the corner
-                  of an empty triangle cannot be captured by a pawn, or jumped
-                  over by a king.
-                </li>
+              <div class="tile is-child is-12">
+                <img
+                  src="../images/rules/Stones block pieces 1.png"
+                  alt="Stones block rook"
+                />
+                <img
+                  src="../images/rules/Stones block pieces 2.png"
+                  alt="Stones block bishop"
+                />
+                <img
+                  src="../images/rules/Stones block pieces 3.png"
+                  alt="Stones block queen"
+                />
+                <img
+                  src="../images/rules/Stones block pieces 4.png"
+                  alt="Stones block king"
+                />
+                <img
+                  src="../images/rules/Stones block pieces 5.png"
+                  alt="Stones block pawn"
+                />
               </div>
-              <div class="tile is-child is-6"></div>
             </div>
           </div>
         </div>
