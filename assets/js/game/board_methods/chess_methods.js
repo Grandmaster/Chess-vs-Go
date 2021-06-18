@@ -18,41 +18,53 @@ var kings = {
 function currentChessBoard(piece_array, context, width, height, benches) {
   context.clearRect(0, 0, width, height);
   let arr = [];
+  let ecolor = switchColor(color);
+  let regions = displayZones(goBoardforChess, field, context);
 
   // Remove all pieces that are in zones of opposite color
-  piece_array.forEach((val) => {
-    let regions = displayZones(goBoardforChess, field, context);
+  piece_array.forEach((val, ind) => {
     let deadPiece = false;
-    let color = val.type.slice(0, 5);
-    let ecolor = switchColor(color);
-    let ezones = regions[ecolor];
-    let ebench = benches[ecolor];
+    let loopcolor = val.type.slice(0, 5);
+    let loopecolor = switchColor(loopcolor);
+    let ezones = regions[loopecolor];
+    let ebench = benches[loopecolor];
     let sq = [val.x_pos, val.y_pos];
     ezones.forEach((square) => {
       if (sameSquare(sq, square)) {
         deadPiece = true;
         delete val.x_pos;
         delete val.y_pos;
-        val.type = val.type.replace(color, ecolor);
-        val.img = val.img.replace(color, ecolor);
+        val.type = val.type.replace(loopcolor, loopecolor);
+        val.img = val.img.replace(loopcolor, loopecolor);
         ebench[val.type.slice(6)].amount++;
         if (val.type.slice(6) == "king") {
-          kings[color] = false;
+          kings[loopcolor] = false;
         }
       }
     });
     if (!deadPiece) arr.push(val);
   });
   piece_array = arr;
+  kings[color] = false;
+  kings[ecolor] = false;
 
   // Display each piece in the array on canvas, at relevant squares
-  piece_array.forEach((val, ind) => {
+  piece_array.forEach((val) => {
     // Draw piece on board
     renderPiece(val, context);
+    // Check if opposite king is present
+    if (val.type.slice(6) == "king") {
+      if (val.type.slice(0, 5) == color) kings[color] = true;
+      else if (val.type.slice(0, 5) == ecolor) kings[ecolor] = true;
+    }
   });
 
   // Update benches
   renderBenches(benches, canvas_player, canvas_enemy, color);
+
+  // End the game if a king is dead
+  if (!kings[color] && firstmove) console.log("You lose!");
+  else if (!kings[ecolor] && firstmove) console.log("You win!");
 }
 
 // Function that draws the image of the piece on the canvas
@@ -271,21 +283,10 @@ function capturePiece(piece, array, benches) {
   piece.img = piece.img.replace(color, ecolor);
   piece.type = piece.type.replace(color, ecolor);
   benches[ecolor][type].amount++;
+  var i = array.indexOf(piece);
+  array.splice(i, 1);
   if (piece.type.slice(6) == "king") {
     kings[color] = false;
-  }
-}
-
-// Function that determines if kings are alive, and ends the game if not
-function livingKing(array, color) {
-  for (let piece of array) {
-    if (piece.type.slice(6) == "king" && piece.type.slice(0, 5) == color) {
-      kings[color] = false;
-      break;
-    }
-  }
-  if (!kings[color]) {
-    console.log(`${color} loses!`);
   }
 }
 

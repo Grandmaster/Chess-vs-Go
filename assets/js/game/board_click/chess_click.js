@@ -146,6 +146,7 @@ $(document).ready(() => {
           }
           // Sending move to opponent, and waiting for reply
           boardForSocket = arrayOfMoves(goBoardforChess);
+          console.log(pieces_in_play);
           socket.emit(
             "send move",
             boardForSocket,

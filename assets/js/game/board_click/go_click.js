@@ -187,7 +187,7 @@ $(document).ready(() => {
             boxsize
           );
 
-          // Calculating territory controlled by each player, and displaying it
+          // Updating territory calculation for players
           calculateTerritory(go_board, ctx);
 
           // Updating chess version of go board for hybrid methods

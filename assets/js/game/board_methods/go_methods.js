@@ -79,9 +79,6 @@ function calculateTerritory(board, context) {
 
   // Display results
   // displayTerritory(field, context);
-
-  // Determine zones controlled by player
-  let regions = displayZones(board, field, context);
 }
 
 // Function that creates range of indices to calculate territory. For now, assumes 9x9 board
