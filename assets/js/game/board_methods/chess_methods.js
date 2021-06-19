@@ -396,6 +396,8 @@ function fillBench(pieces) {
 function renderBenches(benches, playerCanvas, enemyCanvas, color) {
   let playerContext = playerCanvas.getContext("2d");
   let enemyContext = enemyCanvas.getContext("2d");
+  playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
+  enemyContext.clearRect(0, 0, enemyCanvas.width, enemyCanvas.height);
 
   // Create pattern to fill player canvas
   let patternCanvas = document.createElement("canvas");

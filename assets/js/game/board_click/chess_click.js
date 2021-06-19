@@ -142,6 +142,7 @@ $(document).ready(() => {
               }
 
               c++;
+              break;
             }
           }
           // Sending move to opponent, and waiting for reply
