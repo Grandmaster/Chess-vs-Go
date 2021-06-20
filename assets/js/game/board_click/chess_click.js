@@ -117,6 +117,7 @@ $(document).ready(() => {
               var p = findPiece(x_i, y_i, pieces_in_play);
               capturePiece(p, pieces_in_play, benches);
               pmoves = pmoves.concat(captures);
+              break;
             }
           }
           for (let move of pmoves) {
@@ -147,7 +148,6 @@ $(document).ready(() => {
           }
           // Sending move to opponent, and waiting for reply
           boardForSocket = arrayOfMoves(goBoardforChess);
-          console.log(pieces_in_play);
           socket.emit(
             "send move",
             boardForSocket,

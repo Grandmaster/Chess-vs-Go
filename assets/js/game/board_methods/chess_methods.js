@@ -473,14 +473,14 @@ function generateMoves(piece, location, game_array, board) {
   var y = location[1];
   switch (name) {
     case "pawn":
-      return (range = [
+      return [
         [x - 1, y],
         [x + 1, y],
         [x, y + 1],
         [x, y - 1],
-      ]);
+      ];
     case "knight":
-      return (range = [
+      return [
         [x + 1, y + 2],
         [x - 1, y + 2],
         [x + 1, y - 2],
@@ -489,9 +489,9 @@ function generateMoves(piece, location, game_array, board) {
         [x + 2, y - 1],
         [x - 2, y + 1],
         [x - 2, y - 1],
-      ]);
+      ];
     case "king":
-      return (range = [
+      return [
         [x - 1, y],
         [x - 1, y - 1],
         [x - 1, y + 1],
@@ -500,17 +500,11 @@ function generateMoves(piece, location, game_array, board) {
         [x + 1, y + 1],
         [x + 1, y],
         [x + 1, y - 1],
-      ]);
+      ];
     case "rook":
     case "bishop":
     case "queen":
-      return (range = rangedOfficialMoves(
-        name,
-        location,
-        game_array,
-        board,
-        color
-      ));
+      return rangedOfficialMoves(name, location, game_array, board, color);
   }
 }
 
@@ -526,8 +520,8 @@ function rangedOfficialMoves(name, location, game_array, board, color) {
 
     // Queen's case; moves are combination of rook and bishop moves
     case "queen":
-      arr1 = bishopRange(location, game_array, board, color);
-      arr2 = rookRange(location, game_array, board, color);
+      let arr1 = bishopRange(location, game_array, board, color);
+      let arr2 = rookRange(location, game_array, board, color);
       return arr1.concat(arr2);
   }
 }
@@ -554,9 +548,12 @@ function rookRange(location, game_array, board, color) {
     if (stones[1] == ecolor && stones[3] == ecolor) {
       xb = i + 1;
       shadedPattern(contxt, [i, y], ecolor);
+      break;
     }
-    if (typeof piece_block !== "undefined") xb = i;
-    if (xb !== 0) break;
+    if (typeof piece_block !== "undefined") {
+      xb = i;
+      break;
+    }
   }
   var xbi = xr.indexOf(xb);
   xr.splice(0, xbi);
@@ -571,9 +568,12 @@ function rookRange(location, game_array, board, color) {
     if (stones[0] == ecolor && stones[2] == ecolor) {
       xb = i - 1;
       shadedPattern(contxt, [i, y], ecolor);
+      break;
     }
-    if (typeof piece_block !== "undefined") xb = i;
-    if (xb !== 0) break;
+    if (typeof piece_block !== "undefined") {
+      xb = i;
+      break;
+    }
   }
   xbi = xr.indexOf(xb);
   if (xb !== 0) xr.splice(xbi + 1, xr.length - xbi);
@@ -588,9 +588,12 @@ function rookRange(location, game_array, board, color) {
     if (stones[2] == ecolor && stones[3] == ecolor) {
       yb = j + 1;
       shadedPattern(contxt, [x, j], ecolor);
+      break;
     }
-    if (typeof piece_block !== "undefined") yb = j;
-    if (yb !== 0) break;
+    if (typeof piece_block !== "undefined") {
+      yb = j;
+      break;
+    }
   }
   ybi = yr.indexOf(yb);
   yr.splice(0, ybi);
@@ -605,9 +608,12 @@ function rookRange(location, game_array, board, color) {
     if (stones[0] == ecolor && stones[1] == ecolor) {
       yb = j - 1;
       shadedPattern(contxt, [x, j], ecolor);
+      break;
     }
-    if (typeof piece_block !== "undefined") yb = j;
-    if (yb !== 0) break;
+    if (typeof piece_block !== "undefined") {
+      yb = j;
+      break;
+    }
   }
   ybi = yr.indexOf(yb);
   if (yb !== 0) yr.splice(ybi + 1, yr.length - ybi);
