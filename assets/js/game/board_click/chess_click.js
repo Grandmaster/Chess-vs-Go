@@ -30,8 +30,9 @@ var options = document.getElementById("choice");
 // Fill benches
 var benches = fillBench(chess_pieces);
 
-// Variable to determine if player has moved already
+// Variable to determine if player/enemy has made their initial move
 var firstmove = false;
+var efirstmove = false;
 
 // Variable to render go board as array for socket.io
 var boardForSocket;
@@ -221,5 +222,6 @@ $(document).ready(() => {
       canvas_chess.height,
       benches
     );
+    efirstmove = true;
   });
 });

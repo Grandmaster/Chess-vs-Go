@@ -6,6 +6,7 @@ function currentGoBoard(board, context, width, height, boxsize) {
   // Clearing the board for each state update
   context.clearRect(0, 0, width, height);
   stoneCount = 0;
+  var ecolor = switchColor(color);
 
   // Placing a stone on the relevant point on the board for each stone in input board
   board.moves.forEach((val, key) => {
@@ -22,6 +23,17 @@ function currentGoBoard(board, context, width, height, boxsize) {
     context.fillStyle = val;
     context.fill();
   });
+
+  // Ending the game if one of the kings is dead
+  ctx.font = "150px Arial";
+  ctx.textAlign = "center";
+  if (!kings[color] && firstmove) {
+    ctx.fillStyle = "red";
+    ctx.fillText("You Lose!", canvas_chess.width / 2, canvas_chess.height / 2);
+  } else if (!kings[ecolor] && firstmove && efirstmove) {
+    ctx.fillStyle = "blue";
+    ctx.fillText("You Win!", canvas_chess.width / 2, canvas_chess.height / 2);
+  }
 }
 
 // Range of indices for calculating territory.

@@ -63,8 +63,15 @@ function currentChessBoard(piece_array, context, width, height, benches) {
   renderBenches(benches, canvas_player, canvas_enemy, color);
 
   // End the game if a king is dead
-  if (!kings[color] && firstmove) console.log("You lose!");
-  else if (!kings[ecolor] && firstmove) console.log("You win!");
+  ctx.font = "150px Arial";
+  ctx.textAlign = "center";
+  if (!kings[color] && firstmove) {
+    ctx.fillStyle = "red";
+    ctx.fillText("You Lose!", canvas_chess.width / 2, canvas_chess.height / 2);
+  } else if (!kings[ecolor] && firstmove && efirstmove) {
+    ctx.fillStyle = "blue";
+    ctx.fillText("You Win!", canvas_chess.width / 2, canvas_chess.height / 2);
+  }
 }
 
 // Function that draws the image of the piece on the canvas
