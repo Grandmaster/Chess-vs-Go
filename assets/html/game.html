@@ -50,7 +50,7 @@
         </div>
       </div>
     </nav>
-    <h1 id="game title"></h1>
+    <h1 id="game title" class="title"></h1>
     <main id="game">
       <canvas id="your_bench"></canvas>
       <!-- Will need to find a way to scale the canvas -->
@@ -70,6 +70,22 @@
       </div>
       <canvas id="enemy_bench"></canvas>
     </main>
+    <aside class="tile is-ancestor">
+      <div class="tile is-vertical is-12">
+        <div class="tile is-child is-12">
+          <h2 class="title">Chat with your opponent...</h2>
+          <ul id="chatlist"></ul>
+        </div>
+        <div class="tile is-child is-12">
+          <form id="chatline">
+            <label>
+              Your message:
+              <input type="text" />
+            </label>
+          </form>
+        </div>
+      </div>
+    </aside>
 
     <script src="../js/game/board.js"></script>
     <script src="./socket/socket.io.js"></script>
@@ -82,5 +98,6 @@
     <script src="../js/game/board_click/chess_click.js"></script>
     <script src="../js/game/board_click/option_click.js"></script>
     <script src="../js/game/npm_modules.js"></script>
+    <script src="../js/game/chat.js"></script>
   </body>
 </html>

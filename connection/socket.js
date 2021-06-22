@@ -44,5 +44,9 @@ module.exports = async function (io) {
       console.log(goboard);
       socket.to(room).emit("receive move", goboard, chessboard, benches, point);
     });
+    // Sending message to opponent
+    socket.on("game chat message", (message, room) => {
+      socket.to(room).emit("message", message);
+    });
   });
 };

@@ -74,7 +74,7 @@ socket.on("chat message", (msg) => {
 let requestButton = document.getElementById("request");
 requestButton.addEventListener("click", () => {
   if (requestButton.id == "request") {
-    if (requestMade == true) return;
+    if (requestMade) return;
     let gamelist = document.getElementById("gamelist");
     let req = document.createElement("li");
     let link = document.createElement("span");

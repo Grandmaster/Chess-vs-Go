@@ -28,6 +28,22 @@ canvas {
   float: left;
   margin: 15px;
 }
+.title {
+  text-align: center;
+}
+main {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10%;
+}
+aside,
+form {
+  width: 100%;
+}
+form,
+#chatlist {
+  margin-left: 2%;
+}
 #your_bench,
 #enemy_bench {
   width: 10%;
