@@ -51,9 +51,61 @@ canvas_enemy.height = 700;
 // Getting data from storage, and joining game room with other player
 var color = localStorage.getItem("color");
 var roomname = localStorage.getItem("game");
+var turn = localStorage.getItem("order");
+var tagname = localStorage.getItem("tag");
 socket.emit("game start", roomname);
 
 renderBenches(benches, canvas_player, canvas_enemy, color);
+
+// Running turn timer
+var time = 90000;
+var etime = 90000; // milliseconds for the entire turn, equal to 1:30 mins
+var names = $("h1 > span");
+let t1 = names[0];
+let t2 = names[2];
+var timer;
+var etimer;
+if (t1.id == tagname) {
+  timer = t1;
+  etimer = t2;
+} else {
+  timer = t2;
+  etimer = t1;
+}
+var turntimer = setInterval(function () {
+  // Handling your turn
+  timeKeeper(timer, time);
+  var test = nextTurn(time, moved, turntimer, enemyturntimer, false, timer);
+  if ((turn == "second" || moved) && !test) {
+    ctx.font = "85px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "green";
+    ctx.fillText(
+      "Opponent's turn...",
+      canvas_chess.width / 2,
+      canvas_chess.height / 2
+    );
+    time = 90000;
+    turn = null;
+    timer.textContent = "(1:30)";
+    moved = true;
+    console.log("in the click function");
+  } else if (!moved) {
+    time -= 1000;
+  }
+}, 1000);
+var enemyturntimer = setInterval(function () {
+  // Handling enemy turn
+  timeKeeper(etimer, etime);
+  nextTurn(etime, moved, enemyturntimer, turntimer, true, etimer);
+  if (turn == "first" || !moved) {
+    etime = 90000;
+    turn = null;
+    etimer.textContent = "(1:30)";
+  } else if (moved) {
+    etime -= 1000;
+  }
+}, 1000);
 
 $(document).ready(() => {
   // Event listener for clicks on the board

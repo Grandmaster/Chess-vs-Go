@@ -6,9 +6,15 @@ canvas.height = 750;
 
 // Game title
 let gamename = localStorage.getItem("game");
+let spans = document.getElementsByTagName("h1")[1].children;
 if (gamename !== null) {
   let title = document.getElementById("game title");
-  title.innerHTML = gamename;
+  title.textContent = gamename;
+  let strarr = gamename.split(" ");
+  let n1 = strarr[0];
+  let n2 = strarr[2];
+  spans[0].id = n1;
+  spans[2].id = n2;
 }
 
 // Initial data

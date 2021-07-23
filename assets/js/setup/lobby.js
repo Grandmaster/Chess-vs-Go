@@ -158,8 +158,16 @@ socket.on("make request", (user) => {
   // Add click event for game link, to begin the game
   link.addEventListener("click", () => {
     let chosenColor = Math.random() < 0.5 ? "white" : "black";
+    let firstTurn = Math.random() < 0.5 ? "first" : "second";
     localStorage.setItem("color", chosenColor);
-    socket.emit("create room", `${user} vs ${tagname}`, tagname, chosenColor);
+    localStorage.setItem("order", firstTurn);
+    socket.emit(
+      "create room",
+      `${user} vs ${tagname}`,
+      tagname,
+      chosenColor,
+      firstTurn
+    );
   });
 });
 
@@ -171,12 +179,15 @@ window.addEventListener("beforeunload", () => {
 });
 
 // Entering room created by other users for game
-socket.on("enter room", (room, color) => {
+socket.on("enter room", (room, color, turn) => {
   let strarr = room.split(" ");
   let namechk = strarr[0];
+  let enemy = strarr[2];
   if (namechk == tagname) {
     if (color == "white") localStorage.setItem("color", "black");
     else if (color == "black") localStorage.setItem("color", "white");
+    if (turn == "first") localStorage.setItem("order", "second");
+    else if (turn == "second") localStorage.setItem("order", "first");
     socket.emit("enter room", room, tagname);
   }
 });

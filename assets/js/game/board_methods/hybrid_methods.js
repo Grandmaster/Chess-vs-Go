@@ -43,6 +43,70 @@ var forcingPiece;
 // King that is in position to shift stones
 var royalPiece;
 
+// Function to keep track of the elapsed time per turn
+function timeKeeper(span, time) {
+  var min = Math.floor(time / 60000);
+  var sec = (time - min * 60000) / 1000;
+  let strsec = sec.toString();
+  let formattedSec = ("00" + strsec).slice(-2);
+  span.textContent = `(${min}:${formattedSec})`;
+}
+
+// Function to change game state when a player ends his/her turn
+function nextTurn(time, move, interval, enemyinterval, e, count) {
+  let b = true; // boolean to prevent both situations from playing out together
+  let end = false;
+  if (time == -1000) {
+    // If player runs out of time...
+    clearInterval(interval);
+    clearInterval(enemyinterval);
+    currentChessBoard(
+      pieces_in_play,
+      contxt,
+      canvas_chess.width,
+      canvas_chess.height,
+      benches
+    );
+    currentGoBoard(
+      goBoardforChess,
+      ctx,
+      canvas_go.width,
+      canvas_go.height,
+      boxsize
+    );
+    ctx.font = "150px Arial";
+    ctx.textAlign = "center";
+    if (!e) {
+      ctx.fillStyle = "red";
+      ctx.fillText(
+        "You Lose!",
+        canvas_chess.width / 2,
+        canvas_chess.height / 2
+      );
+    } else {
+      ctx.fillStyle = "blue";
+      ctx.fillText("You Win!", canvas_chess.width / 2, canvas_chess.height / 2);
+    }
+    moved = true;
+    count.textContent = "(0:00)";
+    b = false;
+    end = true;
+  } else if (move && !e && b) {
+    // If player makes a move...
+    ctx.font = "85px Arial";
+    ctx.textAlign = "justify";
+    ctx.fillStyle = "green";
+    ctx.fillText(
+      "Opponent's turn...",
+      canvas_chess.width / 2,
+      canvas_chess.height / 2
+    );
+    time = 90000;
+    console.log("In the hybrid function");
+  }
+  return end;
+}
+
 // Function to locate stones on the vertices of a given square
 function stonesCornerSquare(square) {
   let x = square[0];
