@@ -17,6 +17,6 @@ Once a new mechanic is added to the game, not only will the Rules page be update
 
 ## Special thanks
 Special thanks go to:
-- duckpunch's (godash)[https://github.com/duckpunch/godash/], a library that not only contains the logic for playing the game of Go, but is also flexible enough for users to place and remove stones ignoring the rules of Go, a feature crucial to the development of this game, and with no equivalent in chess libraries (that I could find, so I had to code the entire ruleset and logic for the chess portion of this game myself :unamused:).
-- bryanrasmussen's (TilerTheCreator)[https://github.com/bryanrasmussen/TilerTheCreator], and by extension isohedral's (tactile-js)[https://github.com/isohedral/tactile-js], a tiling library that allows one to create any tiled pattern on a surface, used to create the honeycomb pattern for zones in this game.
+- duckpunch's [godash](https://github.com/duckpunch/godash/), a library that not only contains the logic for playing the game of Go, but is also flexible enough for users to place and remove stones ignoring the rules of Go, a feature crucial to the development of this game, and with no equivalent in chess libraries (that I could find, so I had to code the entire ruleset and logic for the chess portion of this game myself :unamused:).
+- bryanrasmussen's [TilerTheCreator](https://github.com/bryanrasmussen/TilerTheCreator), and by extension isohedral's [tactile-js](https://github.com/isohedral/tactile-js), a tiling library that allows one to create any tiled pattern on a surface, used to create the honeycomb pattern for zones in this game.
 
