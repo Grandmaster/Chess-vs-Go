@@ -12,6 +12,7 @@ Some of the things to add to gameplay include:
 - **Promotion**: The ability to promote a pawn to an official piece in this new game will involve various factors, and will be added to the game as it develops. The idea is that the pawn will have to enter an enemy zone to promote, but if a zone is formed _around_ the pawn, it will be killed. Once promoted, the official will only be killed if it moves to another enemy zone, it is killed by an enemy official, or the zone it is on is destroyed and reformed. Basically, it will not be killed for staying in the zone it was formed in. As you can see, this will be somewhat challenging to code, which is why it isn't already a feature. 
 - **Castling**: Similar to promotion, the concept of castling must be modified to make sense in this game. My plan is that castling will only be possible if neither the king nor the rook have moved since the rook is summoned, they share a file or rank, and none of the squares between them are occupied by enemy pieces or blocked by stones.
 - **Ko**: This is a programming challenge, that I simply have not gotten around to yet. Will be implemented.
+- **Board Sizes**: The current version only allows play on a 9x9 board at the moment. In the future, I will implement functionality for playing the game at different board sizes.
 
 Once a new mechanic is added to the game, not only will the Rules page be updated, but this page will be as well. So be sure to check back frequently if you are interested in the game.
 
