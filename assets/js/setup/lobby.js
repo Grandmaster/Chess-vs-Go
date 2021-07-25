@@ -157,6 +157,7 @@ socket.on("make request", (user) => {
 
   // Add click event for game link, to begin the game
   link.addEventListener("click", () => {
+    console.log("link clicked!");
     let chosenColor = Math.random() < 0.5 ? "white" : "black";
     let firstTurn = Math.random() < 0.5 ? "first" : "second";
     localStorage.setItem("color", chosenColor);

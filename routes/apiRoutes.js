@@ -28,6 +28,7 @@ module.exports = function (app) {
       .catch((err) => {
         res.json(err);
       });
+    console.log(body.message);
   });
 
   // Saving request to database
