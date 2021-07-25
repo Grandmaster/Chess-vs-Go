@@ -25,6 +25,22 @@ fetch("/request").then(async (res) => {
     link.id = `${entry.user}`;
     req.append(link);
     gamelist.appendChild(req);
+
+    // Add click event for each game link, to begin the game
+    link.addEventListener("click", () => {
+      console.log("link clicked!");
+      let chosenColor = Math.random() < 0.5 ? "white" : "black";
+      let firstTurn = Math.random() < 0.5 ? "first" : "second";
+      localStorage.setItem("color", chosenColor);
+      localStorage.setItem("order", firstTurn);
+      socket.emit(
+        "create room",
+        `${link.id} vs ${tagname}`,
+        tagname,
+        chosenColor,
+        firstTurn
+      );
+    });
   }
 });
 
