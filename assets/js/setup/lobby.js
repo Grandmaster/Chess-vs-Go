@@ -193,6 +193,10 @@ window.addEventListener("beforeunload", () => {
   fetch(`/request/${tagname}`, {
     method: "DELETE",
   });
+  socket.emit("cancel request", tagname);
+  let link = document.getElementById(tagname);
+  let req = link.parentElement;
+  req.remove();
 });
 
 // Entering room created by other users for game
