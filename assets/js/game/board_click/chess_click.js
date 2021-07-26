@@ -89,7 +89,6 @@ var turntimer = setInterval(function () {
     turn = null;
     timer.textContent = "(1:30)";
     moved = true;
-    console.log("in the click function");
   } else if (!moved) {
     time -= 1000;
   }
@@ -165,18 +164,20 @@ $(document).ready(() => {
         if (move_queue.length != 0 && c == 0) {
           let pmoves = move_queue[1];
           let captures = move_queue[2];
+          let captest = false;
           for (let capture of captures) {
             if (sameSquare(arr, capture)) {
               var p = findPiece(x_i, y_i, pieces_in_play);
               capturePiece(p, pieces_in_play, benches);
               pmoves = pmoves.concat(captures);
+              captest = true;
               break;
             }
           }
           for (let move of pmoves) {
             if (sameSquare(move, arr)) {
               var piece = move_queue[0];
-              movePiece(piece, x_i, y_i, goBoardforChess);
+              movePiece(piece, x_i, y_i, goBoardforChess, captest);
               currentChessBoard(
                 pieces_in_play,
                 contxt,

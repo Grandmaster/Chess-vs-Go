@@ -68,9 +68,13 @@ function currentChessBoard(piece_array, context, width, height, benches) {
   if (!kings[color] && firstmove) {
     ctx.fillStyle = "red";
     ctx.fillText("You Lose!", canvas_chess.width / 2, canvas_chess.height / 2);
+    clearInterval(turntimer);
+    clearInterval(enemyturntimer);
   } else if (!kings[ecolor] && firstmove && efirstmove) {
     ctx.fillStyle = "blue";
     ctx.fillText("You Win!", canvas_chess.width / 2, canvas_chess.height / 2);
+    clearInterval(turntimer);
+    clearInterval(enemyturntimer);
   }
 }
 
@@ -121,10 +125,22 @@ function possibleMoves(piece_obj, game_array, board) {
   var captures = [];
   var color = piece_obj.type.slice(0, 5);
   var type = piece_obj.type.slice(6);
+  var x = piece_obj.x_pos;
+  var y = piece_obj.y_pos; // to use to prevent pawn from capturing stone into occupied square
 
   // Taking stone restrictions into account
   if (type == "king" || type == "pawn") {
     stonesRestrictPawnAndKing(piece_obj, board, range, contxt);
+  }
+
+  // Removing squares outside range of board
+  if (type == "king" || type == "knight" || type == "pawn") {
+    let modrange = [];
+    for (let sq of range) {
+      if (sq[0] < 1 || sq[0] > 8 || sq[1] < 1 || sq[1] > 8) continue;
+      modrange.push(sq);
+    }
+    range = modrange;
   }
 
   // Removing squares occupied by allies from the range
@@ -156,13 +172,23 @@ function possibleMoves(piece_obj, game_array, board) {
     });
     targetStones = [];
     let stones = stonesCornerSquare([piece_obj.x_pos, piece_obj.y_pos]);
+    let land = [
+      [x - 1, y - 1],
+      [x + 1, y - 1],
+      [x - 1, y + 1],
+      [x + 1, y + 1],
+    ];
+    let i = 0;
     for (let c of stones) {
       let stone = board.moves.get(c);
-      if (typeof stone !== "undefined" && stone !== color) {
+      let standing_piece = findPiece(land[i][0], land[i][1], game_array);
+      let e = typeof standing_piece;
+      if (typeof stone !== "undefined" && stone !== color && e == "undefined") {
         targetStones.push(c);
         stonesCanBeCaptured = true;
         crouchingPiece = piece_obj;
       }
+      i++;
     }
   }
 
@@ -230,7 +256,7 @@ function possiblePawnCaptures(piece_obj, game_array) {
   move_queue.push(captures);
 }
 // Function that moves a piece already on the board
-function movePiece(piece_obj, x_new, y_new, board) {
+function movePiece(piece_obj, x_new, y_new, board, capture) {
   piece_obj.x_pos = x_new;
   piece_obj.y_pos = y_new;
   move_queue = [];
@@ -245,7 +271,7 @@ function movePiece(piece_obj, x_new, y_new, board) {
     boxsize
   );
   // If it's an official, check to see if there are any stones it can convert
-  if (type !== "pawn" && type !== "king") {
+  if (type !== "pawn" && type !== "king" && !capture) {
     let cs = stonesCornerSquare([x_new, y_new]);
     naiveStones = [];
     for (let c of cs) {
@@ -257,7 +283,7 @@ function movePiece(piece_obj, x_new, y_new, board) {
       }
     }
     displayCaptureStones(naiveStones, ctx, "red");
-  } else if (type == "king") {
+  } else if (type == "king" && !capture) {
     // If it's the king, check to see if there are any stones it can move
     let cs = stonesCornerSquare([x_new, y_new]);
     flyingStones = [];

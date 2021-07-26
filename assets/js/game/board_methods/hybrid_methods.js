@@ -102,7 +102,6 @@ function nextTurn(time, move, interval, enemyinterval, e, count) {
       canvas_chess.height / 2
     );
     time = 90000;
-    console.log("In the hybrid function");
   }
   return end;
 }
