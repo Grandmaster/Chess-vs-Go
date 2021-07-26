@@ -8,6 +8,7 @@ module.exports = async function (io) {
       console.log(`${tagname} connected!`);
       socket.on("disconnect", () => {
         console.log(`${tagname} disconnected!`);
+        io.emit("take down request", `${tagname}`);
       });
     });
     // Implementing chat in lobby

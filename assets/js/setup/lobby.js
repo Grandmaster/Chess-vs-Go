@@ -199,6 +199,16 @@ window.addEventListener("beforeunload", () => {
   req.remove();
 });
 
+// Removing request after a certain user leaves lobby (to cover cases missed by beforeunload)
+socket.on("take down request", (user) => {
+  fetch(`/request/${tagname}`, {
+    method: "DELETE",
+  });
+  let link = document.getElementById(tagname);
+  let req = link.parentElement;
+  req.remove();
+});
+
 // Entering room created by other users for game
 socket.on("enter room", (room, color, turn) => {
   let strarr = room.split(" ");
