@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Grandmaster/Chess-vs-Go#readme",
   "dependencies": {
     "browserify": "^17.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "godash": "^1.5.0",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.21",
